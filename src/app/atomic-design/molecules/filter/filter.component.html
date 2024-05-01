@@ -1,0 +1,19 @@
+<div class="filter">
+  <div class="filter__dropdown">
+    <button class="poppins-regular filter__dropdown__button" type="button">
+      {{ buttonText }}
+      <atom-icon class="filter__dropdown__icon" [iconName]="'keyboard_arrow_down'"></atom-icon>
+    </button>
+    <div class="poppins-regular filter__dropdown__content">
+      <p class="filter__dropdown__content__param" (click)="updateButtonText(sizePagination1)">{{sizePagination1}}</p>
+      <p class="filter__dropdown__content__param" (click)="updateButtonText(sizePagination2)">{{sizePagination2}}</p>
+      <p class="filter__dropdown__content__param" (click)="updateButtonText(sizePagination3)">{{sizePagination3}}</p>
+    </div>
+  </div>
+  <div>
+    <button class="poppins-regular filter__button" (click)="updateButtonIcon()">
+      AZ
+      <atom-icon class="filter__dropdown__icon" [iconName]="buttonIcon"></atom-icon>
+    </button>
+  </div>
+</div>

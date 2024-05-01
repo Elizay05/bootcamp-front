@@ -1,0 +1,42 @@
+ <div style="display: flex; flex-direction: row; gap: 5px;">   
+    <div style="display: flex; flex-direction: column;">
+        <molecule-button-icon [icon]="'add'" [text]="'Crear'"></molecule-button-icon>
+        <br>
+        <molecule-button-icon [icon]="'more_vert'" ></molecule-button-icon>
+    </div>
+    <div style="display: flex; flex-direction: column;">
+        <atom-button [text]="'Crear versión'"></atom-button>
+        <br>
+        <atom-button [text]="'Aceptar'"></atom-button>
+        <br>
+        <atom-button [text]="'Crear'"></atom-button>
+        <br>
+        <atom-button [text]="'1'" [isButtomCircle]="true"></atom-button>
+    </div>
+    <div style="display: flex; flex-direction: column;">
+        <atom-button [text]="'Soy estudiante'"></atom-button>
+        <br>
+        <atom-button [text]="'Soy tutor'"></atom-button>
+        <br>
+    </div>
+    <div style="display: flex; flex-direction: row; gap: 5px;">
+        <atom-icon [iconName]="'home'"></atom-icon>
+        <atom-icon [iconName]="'menu'"></atom-icon>
+        <atom-icon [iconName]="'add'"></atom-icon>
+        <atom-icon [iconName]="'more_vert'"></atom-icon>
+    </div>
+</div>
+<br>
+<br>
+<molecule-navbar></molecule-navbar>
+<br>
+<molecule-list-item [item1]="'Tecnologías'" [item2]="'Capacidades'" [item3]="'Bootcamps'"></molecule-list-item>
+<br>
+<molecule-option-aside [icon]="'home'" [text]="'Inicio'"></molecule-option-aside>
+<molecule-option-aside [icon]="'menu'" [text]="'Biblioteca'"></molecule-option-aside>
+<br>
+<div style="display: flex; flex-direction: row; gap: 100px;">
+    <molecule-info-back [text]="'Angular'" [description]="'Texto descriptivo'"></molecule-info-back>
+    <molecule-filter [sizePagination1]="'5 por página'" [sizePagination2]="'10 por página'" [sizePagination3]="'15 por página'"></molecule-filter>
+</div>
+<organism-modal-form></organism-modal-form>

@@ -1,0 +1,7 @@
+<span class="material-symbols-outlined icon" 
+    [ngClass]="{ 'icon--primary-rotate': iconName === 'menu',
+        'icon--primary-basic': iconName === 'home' || iconName === 'keyboard_arrow_down' || iconName === 'stat_2'  || iconName === 'arrow_forward_ios',
+        'icon--secondary': isIconButtom || iconName === 'add' || iconName === 'more_vert'
+    }">
+    {{iconName}}
+</span>

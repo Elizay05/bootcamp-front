@@ -1,0 +1,20 @@
+.home{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    &__aside{
+        width: 25%;
+        height: 100%;
+        position: fixed; // Mantener el aside fijo (opcional dependiendo del diseño).
+        top: 0; // Alinearlo correctamente en la parte superior.
+        left: 0; // Alinear a la izquierda.
+    }
+    &__content{
+        width: 75%; // Mantener el 75% del ancho.
+        height: 100%; // Asegurarse de que el content ocupe toda la altura visible.
+        margin-left: 25%; // Empujar el content a la derecha para evitar solapamiento.
+        overflow: auto; // Permitir desplazamiento si el contenido es más largo que el viewport.
+        position: relative; // Posicionamiento relativo para el contenido interno.
+    }
+}

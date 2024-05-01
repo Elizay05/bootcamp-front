@@ -1,0 +1,40 @@
+@import 'src/assets/styles/variables.scss';
+
+.button-icon {
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    line-height: 19.2px;
+    text-align: center;
+    background-color: $primary-color;
+    font-size: $font-size-small;
+    color: $secondary-color;
+    border: none;
+    &--medium{
+        width: 120px;
+        height: 40px;
+        padding: 16px 24px;
+        border-radius: 50px;
+        &:hover{
+            color: $primary-color;
+            background-color: $secondary-color;
+            border: 1px solid $primary-color;
+
+        }
+    }
+    &--small{
+        width: 32px;
+        height: 32px;
+        border-radius: 50px;
+        &:hover{
+            color: $primary-color;
+            background-color: $secondary-color;
+            border: 1px solid $primary-color;
+
+        }
+    }
+}
+

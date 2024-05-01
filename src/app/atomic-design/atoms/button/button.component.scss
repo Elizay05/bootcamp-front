@@ -1,0 +1,87 @@
+@import 'src/assets/styles/variables.scss';
+
+.button{
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    font-size: $font-size-small;
+    line-height: 19.2px;
+    text-align: center;
+    border: 1px solid $primary-color;
+    border-radius: 50px;
+    &--primary{
+        &-large{
+            width: 160px;
+            padding: 0px 24px;
+            background-color: $primary-color;
+            color: $secondary-color;
+            &:hover{
+                color: $primary-color;
+                background-color: $secondary-color;
+            }
+        }
+        &-medium{
+            width: 112px;
+            padding: 12px 23px;
+            background-color: $primary-color;
+            color: $secondary-color;
+            &:hover{
+                color: $primary-color;
+                background-color: $secondary-color;
+            }
+        }
+        &-small{
+            width: 94px;
+            padding: 0px 24px;
+            background-color: $primary-color;
+            color: $secondary-color;
+            &:hover{
+                color: $primary-color;
+                background-color: $secondary-color;
+            }
+        }
+    }
+    &--secondary{
+        width: 170px;
+        &-student{
+            padding: 0px 24px;
+            background-color: $primary-color;
+            color: $secondary-color;
+            &:hover{
+                color: $primary-color;
+                background-color: rgba(253, 241, 233, 1);
+            }
+        }
+        //Cuando haga el Page del login puedo ponerles un width de 100% y que el contenedor les de el mismo tamaño a los 2.
+        &-tutor{
+            padding: 16px 47px; //Me tocó modificar el padding vertical porque estaba quedando más pequeño que el de student
+            background-color: rgba(253, 241, 233, 1);
+            color: $primary-color;
+            &:hover{
+                background-color: $primary-color;
+                color: $secondary-color;
+            }
+        }
+    }
+    &--circle{
+        width: 26px;
+        height: 26px;
+        background-color: transparent;
+        color: rgba(130, 130, 133, 1);
+        border: none;
+        &:hover{
+            background-color: $tertiary-color;
+            box-shadow: 0 8px 16px 0 $primary-color;
+        }
+        &--active{
+            width: 26px;
+            height: 26px;
+            background-color: $primary-color;
+            color: $secondary-color;
+            box-shadow: 0 8px 16px 0 $primary-color;
+        }
+    }
+}

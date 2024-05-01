@@ -1,0 +1,7 @@
+<button class="poppins-semibold button-icon" [ngClass]="{ 
+    'button-icon--medium': text === 'Crear',
+    'button-icon--small': text === ''
+    }">
+    <atom-icon [iconName]="icon" [isIconButtom]="isIconButtom"></atom-icon>
+    {{text}}
+</button>   
