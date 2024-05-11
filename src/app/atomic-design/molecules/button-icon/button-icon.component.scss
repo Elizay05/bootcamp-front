@@ -1,6 +1,6 @@
 @import 'src/assets/styles/variables.scss';
 
-.button-icon {
+.button {
     transition: all 0.3s ease;
     cursor: pointer;
     display: flex;
@@ -13,28 +13,34 @@
     font-size: $font-size-small;
     color: $secondary-color;
     border: none;
-    &--medium{
-        width: 120px;
+    &__primary{
+        width: auto;
         height: 40px;
         padding: 16px 24px;
         border-radius: 50px;
         &:hover{
-            color: $primary-color;
             background-color: $secondary-color;
             border: 1px solid $primary-color;
-
+            color: $primary-color;
         }
     }
-    &--small{
+    &__small{
         width: 32px;
         height: 32px;
         border-radius: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         &:hover{
             color: $primary-color;
             background-color: $secondary-color;
             border: 1px solid $primary-color;
-
+            stroke: $primary-color;
+        }
+        &:disabled{
+            background-color: gray;
+            border: 1px solid gray;
+            pointer-events: none;
         }
     }
 }
-

@@ -1,0 +1,9 @@
+<organism-aside [pathImage]="'./assets/images/logo.png'" [nameAltImage]="'logo'"></organism-aside>
+<header class="header">
+    <molecule-navbar class="header__navbar" [pathImage]="'./assets/images/avatar.png'" [nameAltImage]="'avatar'"></molecule-navbar>
+    <molecule-list-item class="header__routes" *ngIf="showMoleculeListItem" [listItem]="listItem"></molecule-list-item>
+</header>
+<section class="pages">
+    <ng-content></ng-content>
+</section>
+    

@@ -1,37 +1,36 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { icons } from 'src/app/util/icons.enum';
 
 @Component({
   selector: 'molecule-filter',
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.scss']
 })
-export class DrobdownComponent implements OnInit {
-  buttonText: string = '10 por página'; // Inicializado con el valor predeterminado
-  buttonIcon: string = 'stat_2';
-  @Input() sizePagination1: string = '10 por página';
-  @Input() sizePagination2: string = '25 por página';
-  @Input() sizePagination3: string = '50 por página';
+export class FilterComponent implements OnInit {
+  initialDropdownText: string = '10 por página'
+  icon_arrows: string = icons.ARROWS_UP
+  icon_down_arrow: string = icons.DOWN_ARROW
+  optionsPagination = ['10 por página', '25 por página', '50 por página'];
   @Output() sizeChange = new EventEmitter<number>();
   @Output() ascendingChange = new EventEmitter<boolean>();
 
-  constructor() { }
+  constructor(private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
   }
 
   updateButtonText(newText: string): void {
-    this.buttonText = newText;
+    this.initialDropdownText = newText;
     const size = parseInt(newText.split(' ')[0], 10);
-    console.log("Emitting size:", size);
     this.sizeChange.emit(size);
   }
 
   updateButtonIcon(): void {
-    if (this.buttonIcon === 'stat_2') {
-      this.buttonIcon = 'stat_minus_2';
+    if (this.icon_arrows === icons.ARROWS_UP) {
+      this.icon_arrows = icons.ARROWS_DOWN;
       this.ascendingChange.emit(false);
     } else {
-      this.buttonIcon = 'stat_2';
+      this.icon_arrows = icons.ARROWS_UP;
       this.ascendingChange.emit(true);
     }
   }

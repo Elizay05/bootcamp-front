@@ -2,21 +2,21 @@
 
 .icon{
     cursor: pointer;
-    &--primary{
-        font-size: $font-size-small; 
-        &-rotate {
-            color: $primary-color;
-            transform: rotate(90deg);
-        }
-        &-basic{
-            color: $primary-color;
+    &__primary{
+        width: 20px;
+        color: $primary-color;
+        fill: $primary-color;
+        &--closeForm{
+            width: 30px;
+            fill: $primary-color;
         }
     }
-    &--secondary {
-        font-size: 24px;
-        font-weight: 200;
-        &:hover {
-            color: $primary-color;
-        }
+    &__secondary {
+        width: 20px;
+        height: 20px;
+    }
+    &__tertiary{
+        width: 16px;
+        fill: rgb(49, 49, 49);
     }
 }

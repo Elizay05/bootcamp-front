@@ -1,15 +1,127 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { Option } from 'src/app/common/option';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { ValidationService } from 'src/app/services/validation/validation.service';
+import { icons } from 'src/app/util/icons.enum';
+
 
 @Component({
   selector: 'organism-modal-form',
   templateUrl: './modal-form.component.html',
   styleUrls: ['./modal-form.component.scss']
 })
-export class ModalFormComponent implements OnInit {
+export class ModalFormComponent {
+  form: FormGroup = new FormGroup({});
+  showSelect = false;
+  selectedOptions: Option[] = [];
+  isIncorrectSize: string = "";
+  hasToggledInputSelect = false;
+  validationMessages: any;
 
-  constructor() { }
+  icon_close = icons.CLOSE;
+  icon_add = icons.ADD;
+
+  constructor(private fb: FormBuilder, 
+    public dialogRef: MatDialogRef<ModalFormComponent>, 
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private validationService: ValidationService,
+  ) {
+    this.validationMessages = ValidationService.getValidationMessages();
+   }
 
   ngOnInit(): void {
+
+    this.form = this.fb.group({
+      nombre: ['', this.validationService.getStandardValidators({ required: true, min: 3, max: 50 })],
+      descripcion: ['', this.validationService.getStandardValidators({ required: true, min: 5, max: 200 })]
+    });
+
+    this.form.get('nombre')?.valueChanges.subscribe(() => {
+      this.form.get('nombre')?.updateValueAndValidity({ onlySelf: true, emitEvent: false });
+    });
+
+    this.form.get('descripcion')?.valueChanges.subscribe(() => {
+      this.form.get('descripcion')?.updateValueAndValidity({ onlySelf: true, emitEvent: false });
+    })
   }
 
+  getErrorMessage(controlName: string): string {
+    const control = this.form.get(controlName);
+    if (control && (control.touched || control.dirty) && control.errors) {
+      if (control.hasError('required')) {
+        return this.validationMessages.required(controlName);
+      } else if (control.hasError('minlength')) {
+        return this.validationMessages.minlength(controlName, control.getError('minlength').requiredLength);
+      } else if (control.hasError('maxlength')) {
+        return this.validationMessages.maxlength(controlName, control.getError('maxlength').requiredLength);
+      }
+    }
+    return '';
+  }
+
+  submitForm(): void {
+    if (this.isDisabled) {
+      return;
+    }
+    const formData: any = {};
+    formData.name = this.form.get('nombre')?.value;
+    formData.description = this.form.get('descripcion')?.value;
+    if (this.data.isSelect) {
+      formData.technologies = this.selectedOptions.map(option => option.id);
+    }
+    if (this.data.onFormSubmit) {
+      this.data.onFormSubmit(formData);
+    }
+  }
+
+
+  toggleInputSelect(): void {
+    if (!this.hasToggledInputSelect) {
+      this.showSelect = !this.showSelect;
+      this.hasToggledInputSelect = true;
+    }
+  }
+
+  onSelectionChange(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    const selectedId = parseInt(selectElement.value, 10);
+    const selectedOption = this.data.options.find((opt: Option) => opt.id === selectedId);
+
+    if (selectedOption && !this.selectedOptions.some((opt: Option) => opt.id === selectedOption.id)) {
+      this.selectedOptions.push(selectedOption);
+    }
+    this.updateValidationState();
+  }
+
+  removeItem(optionToRemove: Option): void {
+    this.selectedOptions = this.selectedOptions.filter((opt: Option) => opt.id !== optionToRemove.id);
+    this.updateValidationState();
+  }
+
+  updateValidationState() {
+    const result = this.validationService.validateListSize(
+      this.data.minOptionsSize, 
+      this.data.maxOptionsSize, 
+      this.selectedOptions,
+      this.data.selectName
+    );
+    if (!result.valid) {
+      this.isIncorrectSize = result.message || "Error desconocido";
+    } else {
+      this.isIncorrectSize = "valid";
+    }
+}
+
+  get isDisabled(): boolean {
+    if (!this.data.isSelect) {
+      return this.form.invalid;
+    } else {
+      return this.form.invalid || this.isIncorrectSize !== "valid";
+    }
+  }
+
+  close(): void {
+    this.dialogRef.close();
+  }
 }

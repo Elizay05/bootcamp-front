@@ -5,13 +5,10 @@ import { Component, Input, OnInit } from '@angular/core';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent {
   @Input() pathImage: string = '';
   @Input() nameAltImage: string = '';
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

@@ -1,4 +1,4 @@
-<a (click)="navigateTo(route)" class="poppins-regular option" [routerLink]="['/home', route]" routerLinkActive="option--active">
-    <atom-icon [iconName]="icon"></atom-icon>
+<a (click)="navigateTo(route)" class="poppins-regular option" [routerLink]="[route]" routerLinkActive="option--active">
+    <atom-icon [iconName]="icon" [classIcon]="'primary'"></atom-icon>
     <p>{{text}}</p>
 </a>

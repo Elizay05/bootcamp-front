@@ -1,8 +1,15 @@
-<div class="pagination">
-    <atom-button [text]="'1'" [isButtomCircle]="true"></atom-button>
-    <atom-button [text]="'2'" [isButtomCircle]="true"></atom-button>
-    <atom-button [text]="'3'" [isButtomCircle]="true"></atom-button>
-    <p class="threePoints">...</p>
-    <atom-button [text]="'10'" [isButtomCircle]="true"></atom-button>
-    <atom-icon [iconName]="'arrow_forward_ios'" ></atom-icon>
-</div>
+<section class="pagination">
+    <atom-icon [iconName]="icon_left_arrow" [classIcon]="'primary'" (click)="prevPage()" *ngIf="totalPages > 3 && currentPage > 0"></atom-icon>
+    
+    <atom-button *ngFor="let page of pages" [text]="(page + 1).toString()" [isButtomCircle]="true" 
+                (click)="changePage(page)" [active]="page === currentPage">
+    </atom-button>
+    
+    <p class="threePoints" *ngIf="totalPages > 3 && currentPage + 3 < totalPages - 1">...</p>
+    
+    <atom-button *ngIf="totalPages > 3 && currentPage + 3 < totalPages - 1" [text]="totalPages.toString()" 
+                 [isButtomCircle]="true" (click)="changePage(totalPages - 1)" [active]="totalPages - 1 === currentPage">
+    </atom-button>
+    
+    <atom-icon [iconName]="icon_rigth_arrow" [classIcon]="'primary'" (click)="nextPage()" *ngIf="totalPages > 3 && currentPage < totalPages - 1"></atom-icon>
+</section>

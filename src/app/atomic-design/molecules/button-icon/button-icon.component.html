@@ -1,7 +1,7 @@
-<button class="poppins-semibold button-icon" [ngClass]="{ 
-    'button-icon--medium': text === 'Crear',
-    'button-icon--small': text === ''
+<button class="poppins-semibold button" [disabled]="disabled" [ngClass]="{ 
+    'button__primary': classButton === 'primary',
+    'button__small': text === ''
     }">
-    <atom-icon [iconName]="icon" [isIconButtom]="isIconButtom"></atom-icon>
+    <atom-icon [iconName]="icon" [isIconButtom]="isIconButtom" [classIcon]="classIcon"></atom-icon>
     {{text}}
 </button>   

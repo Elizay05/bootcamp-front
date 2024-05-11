@@ -1,7 +1,9 @@
-<span class="material-symbols-outlined icon" 
-    [ngClass]="{ 'icon--primary-rotate': iconName === 'menu',
-        'icon--primary-basic': iconName === 'home' || iconName === 'keyboard_arrow_down' || iconName === 'stat_2'  || iconName === 'arrow_forward_ios',
-        'icon--secondary': isIconButtom || iconName === 'add' || iconName === 'more_vert'
+<div [innerHTML]="svgContent" class="icon"
+     [ngClass]="{
+        'icon__primary': classIcon === 'primary', 
+        'icon__primary--closeForm': classIcon === 'primary__closeForm',
+        'icon__secondary': classIcon === 'secondary',
+        'icon__tertiary': classIcon === 'tertiary'
     }">
-    {{iconName}}
-</span>
+</div>
+

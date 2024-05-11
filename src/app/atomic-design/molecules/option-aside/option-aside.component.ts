@@ -9,11 +9,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class OptionAsideComponent {
   @Input() text: string = ""; 
   @Input() icon: string = "";
-  @Input() route: string = "/home/start";
+  @Input() route: string = "";
 
   constructor(private router: Router) { }
 
   navigateTo(route: string): void {
-    this.router.navigate(['/home', route]);
+    this.router.navigate([route]);
   }
 }

@@ -4,6 +4,7 @@
   display: flex;
   width: auto;
   justify-content: space-between;
+  align-items: center;
   &__dropdown {
     position: relative;
     display: inline-block;
@@ -23,6 +24,7 @@
     &__icon {
         display: flex;
         align-items: center;
+        justify-content: center;
     }
   
     &__content {

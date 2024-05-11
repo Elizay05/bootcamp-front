@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LibraryComponent } from './library.component';
+import { StatusModalComponent } from './status-modal.component';
 
-describe('LibraryComponent', () => {
-  let component: LibraryComponent;
-  let fixture: ComponentFixture<LibraryComponent>;
+describe('StatusModalComponent', () => {
+  let component: StatusModalComponent;
+  let fixture: ComponentFixture<StatusModalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LibraryComponent ]
+      declarations: [ StatusModalComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(LibraryComponent);
+    fixture = TestBed.createComponent(StatusModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

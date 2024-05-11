@@ -1,5 +1,5 @@
 <ul class="poppins-regular list">
-    <li (click)="navigateTo(route1)" [routerLink]="['/home/library', route1]" class="list__item" routerLinkActive="list__item--active">{{ item1 }}</li>
-    <li (click)="navigateTo(route2)" [routerLink]="['/home/library', route2]" class="list__item" routerLinkActive="list__item--active">{{ item2 }}</li>
-    <li (click)="navigateTo(route3)" [routerLink]="['/home/library', route3]" class="list__item" routerLinkActive="list__item--active">{{ item3 }}</li>
+    <li *ngFor="let item of listItem" class="list__item" [routerLink]="[item.route]" [routerLinkActive]="'list__item--active'" (click)="navigateTo(item.route)">
+      {{ item.item }}
+    </li>
 </ul>
