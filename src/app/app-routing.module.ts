@@ -1,50 +1,42 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './pages/home/home.component';
+import { HomeComponent } from './atomic-design/templates/home/home.component';
 import { AppComponent } from './app.component';
-import { StartComponent } from './atomic-design/templates/start/start.component';
+import { StartComponent } from './pages/start/start.component';
 import { MaterialsComponent } from './pages/materials/materials.component';
-import { LibraryComponent } from './atomic-design/templates/library/library.component';
+import { LibraryLogicComponent } from './pages/libraryLogic/libraryLogic.component';
+import { TechnologiesComponent } from './pages/technologies/technologies.component';
+import { CapacitiesComponent } from './pages/capacities/capacities.component';
+import { EmptyComponent } from './pages/empty/empty.component';
 
 const routes: Routes = [
   {
-    path: "home",
-    component: HomeComponent,
+    path: 'home',
+    component: StartComponent
+  },
+  {
+    path: "library",
+    component: EmptyComponent,
     children: [
       {
-        path: 'start',
-        component: StartComponent
+        path: "technologies",
+        component: TechnologiesComponent
       },
       {
-        path: "library",
-        component: LibraryComponent,
-        children: [
-          {
-            path: "technologies",
-            component: LibraryComponent
-          },
-          {
-            path: "capacities",
-            component: LibraryComponent
-          },
-          {
-            path: "bootcamps",
-            component: LibraryComponent
-          },
-          {
-            path: 'versionBootcamp',
-            component: LibraryComponent
-          },
-          {
-            path: '**',
-            redirectTo: 'technologies',
-            pathMatch: 'full'
-          }
-        ]
+        path: "capacities",
+        component: CapacitiesComponent
+      },
+      {
+        path: "bootcamps",
+        component: LibraryLogicComponent
+      },
+      {
+        path: 'versionBootcamp',
+        component: LibraryLogicComponent
       },
       {
         path: '**',
-        redirectTo: 'start',
+        redirectTo: 'technologies',
         pathMatch: 'full'
       }
     ]
@@ -53,7 +45,6 @@ const routes: Routes = [
     path: "materials",
     component: MaterialsComponent
   },
-  
   {
     path: '**',
     redirectTo: 'home',
