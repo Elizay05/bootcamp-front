@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ModalFormComponent } from './modal-form.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('ModalFormComponent', () => {
   let component: ModalFormComponent;
@@ -8,7 +9,8 @@ describe('ModalFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ModalFormComponent ]
+      declarations: [ ModalFormComponent ],
+      imports: [ ReactiveFormsModule ]
     })
     .compileComponents();
 

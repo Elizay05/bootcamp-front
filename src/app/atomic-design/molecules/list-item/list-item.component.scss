@@ -1,55 +1,43 @@
 @import 'src/assets/styles/variables.scss';
 
 
-.list {
+.item__container {
     list-style: none;
     display: flex;
+    align-items: center;
     background-color: $secondary-color;
     color: $primary-color;
     text-align: center;
     font-size: $font-size-small;
-    height: 60px;
     width: 100%;
+    border-bottom: 1px solid $primary-color;
+}
+.item{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 130px;
+    height: 40px;
+    text-align: center;
+    cursor: pointer;
 
-    &__item {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        width: 133px;
-        border-bottom: 0.5px solid $primary-color;
-
-        &--active {
-            font-weight: 700;
-            box-shadow: inset 0 -13px 10px -10px $primary-color;
-            
-            cursor: pointer;
-            &::after {
-                content: '';
-                bottom: -1px;
-                position: absolute;
-                width: 100%;
-                height: 4.5px;
-                background: $primary-color;
-                border-radius: 20px;
-                border-bottom: none;
-            }
-        }
-
-        &:hover {
-            font-weight: 700;
-            box-shadow: inset 0 -13px 10px -10px $primary-color;
-            cursor: pointer;
-            &::after {
-                content: '';
-                bottom: -1px;
-                position: absolute;
-                left: 0;
-                width: 100%;
-                height: 4.5px;
-                border-radius: 20px;
-                background: $primary-color;
-            }
-        }
+    &:hover,
+    &__active {
+        font-weight: bold;
+        transition: 0.3s;
+        font-size: 17px;
+    }
+    &__active::after {
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        content: "";
+        width: 100%;
+        height: 5px;
+        display: block;
+        background-color: $primary-color;
+        border-radius: 5em;
+        box-shadow: 0px -4px 20px 0px $primary-color;
     }
 }

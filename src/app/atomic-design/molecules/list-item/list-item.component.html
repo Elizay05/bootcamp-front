@@ -1,5 +1,7 @@
-<ul class="poppins-regular list">
-    <li *ngFor="let item of listItem" class="list__item" [routerLink]="[item.route]" [routerLinkActive]="'list__item--active'" (click)="navigateTo(item.route)">
-      {{ item.item }}
-    </li>
-</ul>
+<nav>
+  <ul class="poppins-regular item__container">
+      <li *ngFor="let item of items" class="item" [routerLink]="[item.route]" [routerLinkActive]="'item__active'" (click)="navigateTo(item.route)">
+        {{ item.item }}
+      </li>
+  </ul>
+</nav>

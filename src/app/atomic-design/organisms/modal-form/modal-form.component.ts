@@ -1,5 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { Option } from 'src/app/common/option';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ValidationService } from 'src/app/services/validation/validation.service';
@@ -22,15 +21,19 @@ export class ModalFormComponent {
   icon_close = icons.CLOSE;
   icon_add = icons.ADD;
 
+  @Input() formData: any = {};
+  @Output() closeModal: EventEmitter<any> = new EventEmitter<any>();
+
+  @Input() isModalStatusOpen: boolean = false;
+
   constructor(private fb: FormBuilder, 
-    public dialogRef: MatDialogRef<ModalFormComponent>, 
-    @Inject(MAT_DIALOG_DATA) public data: any,
     private validationService: ValidationService,
   ) {
     this.validationMessages = ValidationService.getValidationMessages();
    }
 
   ngOnInit(): void {
+    console.log(this.formData)
 
     this.form = this.fb.group({
       nombre: ['', this.validationService.getStandardValidators({ required: true, min: 3, max: 50 })],
@@ -67,11 +70,11 @@ export class ModalFormComponent {
     const formData: any = {};
     formData.name = this.form.get('nombre')?.value;
     formData.description = this.form.get('descripcion')?.value;
-    if (this.data.isSelect) {
+    if (this.formData.isSelect) {
       formData.technologies = this.selectedOptions.map(option => option.id);
     }
-    if (this.data.onFormSubmit) {
-      this.data.onFormSubmit(formData);
+    if (this.formData.onFormSubmit) {
+      this.formData.onFormSubmit(formData);
     }
   }
 
@@ -86,7 +89,7 @@ export class ModalFormComponent {
   onSelectionChange(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
     const selectedId = parseInt(selectElement.value, 10);
-    const selectedOption = this.data.options.find((opt: Option) => opt.id === selectedId);
+    const selectedOption = this.formData.options.find((opt: Option) => opt.id === selectedId);
 
     if (selectedOption && !this.selectedOptions.some((opt: Option) => opt.id === selectedOption.id)) {
       this.selectedOptions.push(selectedOption);
@@ -101,10 +104,10 @@ export class ModalFormComponent {
 
   updateValidationState() {
     const result = this.validationService.validateListSize(
-      this.data.minOptionsSize, 
-      this.data.maxOptionsSize, 
+      this.formData.minOptionsSize, 
+      this.formData.maxOptionsSize, 
       this.selectedOptions,
-      this.data.selectName
+      this.formData.selectName
     );
     if (!result.valid) {
       this.isIncorrectSize = result.message || "Error desconocido";
@@ -114,7 +117,7 @@ export class ModalFormComponent {
 }
 
   get isDisabled(): boolean {
-    if (!this.data.isSelect) {
+    if (!this.formData.isSelect) {
       return this.form.invalid;
     } else {
       return this.form.invalid || this.isIncorrectSize !== "valid";
@@ -122,6 +125,7 @@ export class ModalFormComponent {
   }
 
   close(): void {
-    this.dialogRef.close();
+    this.closeModal.emit();
   }
+
 }

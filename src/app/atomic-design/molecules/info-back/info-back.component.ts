@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { icons } from 'src/app/util/icons.enum';
 
 @Component({
@@ -9,7 +9,7 @@ import { icons } from 'src/app/util/icons.enum';
 export class InfoBackComponent{
   @Input() text: string = '';
   @Input() description: string = '';
-  icon_three_points: string = icons.THREE_POINTS
+  icon_three_points: string = icons.THREE_POINTS;
 
   constructor() { }
 

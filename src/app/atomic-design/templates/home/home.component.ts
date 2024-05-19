@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 import { PATH_BOOTCAMP, PATH_CAPACITY, PATH_TECHNOLOGY } from 'src/app/util/path-variables';

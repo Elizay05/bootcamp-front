@@ -51,6 +51,18 @@ export class TechnologyService {
     this.paginationState.next({ ...currentState, isAscending });
   }
 
+  refreshData(): void {
+    const currentState = this.paginationState.value;
+    this.httpClient.get<PaginatedResult<any>>(this.apiUrl, {
+      params: new HttpParams()
+        .set('page', currentState.page.toString())
+        .set('size', currentState.size.toString())
+        .set('isAscending', String(currentState.isAscending))
+    }).subscribe(result => {
+      this.dataSubject.next(result);
+    });
+  }
+
   createTechnology(technology: { name: string, description: string }): Observable<Technology> {
     return this.httpClient.post<Technology>(this.apiUrl, technology);
   }

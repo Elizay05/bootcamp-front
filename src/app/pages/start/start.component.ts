@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { icons } from 'src/app/util/icons.enum';
 
 @Component({
@@ -6,12 +6,9 @@ import { icons } from 'src/app/util/icons.enum';
   templateUrl: './start.component.html',
   styleUrls: ['./start.component.scss']
 })
-export class StartComponent implements OnInit {
+export class StartComponent {
   icon_add = icons.ADD
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

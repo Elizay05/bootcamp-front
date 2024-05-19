@@ -1,23 +1,23 @@
 <section class="modal">
     <div class="modal__content">
         <header class="modal__content__header">
-            <h2>{{ data.title }}</h2>
-            <atom-icon mat-button (click)="close()" [iconName]="icon_close" [classIcon]="'primary__closeForm'"></atom-icon>
+            <h2>{{ formData.title }}</h2>
+            <atom-icon (click)="close()" [iconName]="icon_close" [classIcon]="'primary__closeForm'"></atom-icon>
         </header>
         <section class="modal__content__body">
             <form class="modal__content__body__form" [formGroup]="form">
                 <section class="modal__content__body__form__section">
                     <label>Nombre</label>
-                    <input formControlName="nombre" placeholder="{{ data.placeholderName }}" class="modal__content__body__form__section__input">
+                    <input formControlName="nombre" placeholder="{{ formData.placeholderName }}" class="modal__content__body__form__section__input">
                     <p *ngIf="form.get('nombre')?.errors" class="modal__content__body__form__section__error">{{ getErrorMessage('nombre') }}</p>
                 </section>
                 <section class="modal__content__body__form__section">
                     <label>Descripción</label>
-                    <input formControlName="descripcion" placeholder="{{ data.placeholderDescription }}" class="modal__content__body__form__section__input">
+                    <input formControlName="descripcion" placeholder="{{ formData.placeholderDescription }}" class="modal__content__body__form__section__input">
                     <p *ngIf="form.get('descripcion')?.errors" class="modal__content__body__form__section__error">{{ getErrorMessage('descripcion') }}</p>
                 </section>
-                <section *ngIf="data.isSelect" class="modal__content__body__form__section">
-                    <label>{{ data.selectName }}</label>
+                <section *ngIf="formData.isSelect" class="modal__content__body__form__section">
+                    <label>{{ formData.selectName }}</label>
                     <div *ngIf="selectedOptions.length > 0" class="modal__content__body__form__section__list">
                         <div class="modal__content__body__form__section__list__item" *ngFor="let item of selectedOptions">
                             <p>{{ item.name }}</p>
@@ -25,9 +25,9 @@
                         </div>
                     </div>
                     <div class="modal__content__body__form__section__select">
-                        <input *ngIf="!showSelect" placeholder="{{data.placeholderSelect}}" disabled class="poppins-regular modal__content__body__form__section__select__input">
+                        <input *ngIf="!showSelect" placeholder="{{formData.placeholderSelect}}" disabled class="poppins-regular modal__content__body__form__section__select__input">
                         <select *ngIf="showSelect" class="poppins-regular modal__content__body__form__section__select__input" (change)="onSelectionChange($event)">
-                            <option class="poppins-regular" *ngFor="let option of data.options" [value]="option.id">{{ option.name }}</option>
+                            <option class="poppins-regular" *ngFor="let option of formData.options" [value]="option.id">{{ option.name }}</option>
                         </select>
                         <molecule-button-icon class="modal__content__body__form__section__select__button" [icon]="icon_add" [classIcon]="'secondary'" (click)="toggleInputSelect()" [disabled]="hasToggledInputSelect"></molecule-button-icon>
                     </div>   

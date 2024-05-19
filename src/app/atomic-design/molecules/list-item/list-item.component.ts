@@ -1,6 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs';
+import { Component, Input} from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'molecule-list-item',
@@ -8,7 +7,7 @@ import { filter } from 'rxjs';
   styleUrls: ['./list-item.component.scss']
 })
 export class ListItemComponent {
-  @Input() listItem: { route: string, item: string}[] = [];
+  @Input() items: { route: string, item: string}[] = [];
 
 constructor(private router: Router) { }
 

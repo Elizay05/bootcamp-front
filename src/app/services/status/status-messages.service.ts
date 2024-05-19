@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { StatusModalComponent } from '../../atomic-design/molecules/status-modal/status-modal.component';
 import { StatusSvg } from 'src/app/util/status.enum';
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 
@@ -8,20 +6,25 @@ import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
   providedIn: 'root'
 })
 export class StatusMessagesService {
-  constructor(private dialog: MatDialog) { }
-
-  handleSuccess(response: any, message: string): void {
-    this.dialog.open(StatusModalComponent, {
-      data: { status_svg: StatusSvg.SUCCESS, message: message }
-    });
+  dataStatus = {
+    status_svg: StatusSvg.SUCCESS,
+    message: ""
   }
 
-  handleError(error: HttpErrorResponse, nameSelect?: string): void {
+  constructor() { }
+
+  handleSuccess(response: any, message: string): any {
+    this.dataStatus.status_svg = StatusSvg.SUCCESS;
+    this.dataStatus.message = message;
+    return this.dataStatus;
+  }
+
+  handleError(error: HttpErrorResponse, nameSelect?: string): any {
     let message = "Error desconocido";
     let svg = StatusSvg.ERROR;
     switch (error.status) {
       case HttpStatusCode.BadRequest:
-        message = `Ya existe una ${nameSelect} con ese nombre}`;
+        message = `Ya existe una ${nameSelect} con ese nombre`;
         svg = StatusSvg.WARNING;
         break;
       case HttpStatusCode.Unauthorized:
@@ -31,8 +34,8 @@ export class StatusMessagesService {
         message = "No tienes permisos para realizar esta operación";
         break;
     }
-    this.dialog.open(StatusModalComponent, {
-      data: { status_svg: svg, message: message }
-    });
+    this.dataStatus.message = message;
+    this.dataStatus.status_svg = svg;
+    return this.dataStatus;
   }
 }

@@ -1,27 +1,40 @@
 <template-home>
-    <header class="filter">
-        <molecule-filter class="filter__dropdown" (sizeChange)="onSizeChange($event)" (ascendingChange)="onAscendingChange($event)">
-        </molecule-filter>
-    </header>
+    <ng-container *ngIf="(technologies.length > 0) && (totalPages > 0)">
+        <header class="filter">
+            <molecule-filter class="filter__dropdown" (sizeChange)="onSizeChange($event)" (ascendingChange)="onAscendingChange($event)">
+            </molecule-filter>
+        </header>
+    </ng-container>
     
-    <!-- Comentado temporalmente, para futuro uso
-    <section>
-        <h1>Crea una tecnología</h1>
-        <molecule-button-icon class="button" [icon]="icon_add" [text]="'Crear'" [classIcon]="'secondary'"></molecule-button-icon>
-    </section>
-    -->
+    <ng-container *ngIf="(technologies.length === 0) && (totalPages === 0)">
+        <p class="text title">Crea una tecnología</p>
+        <div class="container-button" >
+            <molecule-button-icon class="button container-button__add" [icon]="icon_add" [text]="'Crear'" [classButton]="'primary'" [classIcon]="'secondary'" (click)="openCreateModal()"></molecule-button-icon>
+        </div>
+    </ng-container>
 
-    <section class="information">
-        <article *ngFor="let tech of (data$ | async)?.content" class="information__back">
-            <molecule-info-back [text]="tech.name" [description]="tech.description"></molecule-info-back>
-        </article>
-    </section>
+    <ng-container *ngIf="(technologies.length > 0) && (totalPages > 0)">
+        <section class="information">
+            <article *ngFor="let tech of (data$ | async)?.content" class="information__back">
+                <molecule-info-back [text]="tech.name" [description]="tech.description"></molecule-info-back>
+            </article>
+        </section>
 
-    <section class="add-button">
-        <molecule-button-icon [icon]="icon_add" [text]="'Crear'" [classButton]="'primary'" [classIcon]="'secondary'" (click)="openCreateModal()"></molecule-button-icon>
-    </section>
+        <section class="add-button">
+            <molecule-button-icon [icon]="icon_add" [text]="'Crear'" [classButton]="'primary'" [classIcon]="'secondary'" (click)="openCreateModal()"></molecule-button-icon>
+        </section>
 
-    <footer class="pagination" *ngIf="totalPages > 1">
-        <molecule-pagination [currentPage]="currentPage" [totalPages]="totalPages" (pageChange)="onPageChange($event)"></molecule-pagination>
-    </footer>
+        <footer class="pagination" *ngIf="totalPages > 1">
+            <molecule-pagination [currentPage]="currentPage" [totalPages]="totalPages" (pageChange)="onPageChange($event)"></molecule-pagination>
+        </footer>
+    </ng-container>
+
+    <ng-container *ngIf="isModalFormOpen">
+        <organism-modal-form (formSubmit)="onFormSubmit($event)" (closeModal)="isModalFormOpen = false" [formData]="formData" [isModalStatusOpen] ="isModalStatusOpen"></organism-modal-form>
+    </ng-container>
+
+    <ng-container *ngIf="isModalStatusOpen">
+        <molecule-status-modal (closeModal)="onCloseStatusModal()" [status]="this.status"></molecule-status-modal>
+    </ng-container>
+
 </template-home>

@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { Technology } from './technology';
 
+
 describe('Technology', () => {
   let service: Technology;
 

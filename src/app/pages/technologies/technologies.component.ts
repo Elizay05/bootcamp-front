@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Technology } from 'src/app/common/technology';
 import { TechnologyService } from 'src/app/services/technology/technology.service';
-import { MatDialog } from '@angular/material/dialog';
-import { ModalFormComponent } from 'src/app/atomic-design/organisms/modal-form/modal-form.component'; 
 import { StatusMessagesService } from 'src/app/services/status/status-messages.service';
 import { icons } from 'src/app/util/icons.enum';
 
@@ -26,10 +24,21 @@ export class TechnologiesComponent implements OnInit {
   isAscending: boolean = true;
 
   icon_add: string = icons.ADD
+
+  isModalFormOpen: boolean = false;
+  isModalStatusOpen: boolean = false;
+
+  formData = {
+    title: 'Crear Tecnologia',
+    placeholderName: "Ingresa el nombre de la tecnologia", 
+    placeholderDescription: "Ingresa la descripción de la tecnologia",  
+    onFormSubmit: this.onFormSubmit.bind(this),
+  }
+
+  status = {message: '', status_svg:''}
   
   constructor(private router: Router, 
     private technologyService: TechnologyService, 
-    public dialog: MatDialog, 
     private statusMessages: StatusMessagesService) {
   }
 
@@ -57,28 +66,28 @@ export class TechnologiesComponent implements OnInit {
 
 
   openCreateModal(): void {
-    this.dialog.open(ModalFormComponent, {
-      data: 
-      { title: 'Crear tecnología', 
-        placeholderName: "Ingresa el nombre de la tecnología", 
-        placeholderDescription: "Ingresa la descripción de la tecnología",  
-        onFormSubmit: this.onFormSubmit.bind(this),
-      }  
-    });
+    this.isModalFormOpen = true;
   }
 
   onFormSubmit(formData: any): void {
+    console.log(formData)
     this.technologyService.createTechnology(formData).subscribe({
       next: (newTechnology) => {
         this.technologies.push(newTechnology);
-        this.dialog.closeAll();
-        this.statusMessages.handleSuccess(newTechnology, "¡Tecnología creada!");
-        this.ngOnInit();
+        this.isModalFormOpen = false;
+        this.isModalStatusOpen = true;
+        this.status = this.statusMessages.handleSuccess(newTechnology, "¡Tecnología creada!");
       },
       error: (error) => {
-        this.dialog.closeAll();
-        this.statusMessages.handleError(error);
+        this.isModalFormOpen = false;
+        this.isModalStatusOpen = true;
+        this.status = this.statusMessages.handleError(error, "tecnologia");
       }
     });
-  }  
+  }
+
+  onCloseStatusModal(): void {
+    this.isModalStatusOpen = false;
+    this.technologyService.refreshData();
+  }
 }

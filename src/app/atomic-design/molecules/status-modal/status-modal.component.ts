@@ -1,5 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { icons } from 'src/app/util/icons.enum';
 
 @Component({
@@ -10,10 +9,14 @@ import { icons } from 'src/app/util/icons.enum';
 export class StatusModalComponent {
   icon_close = icons.CLOSE;
 
-  constructor(public dialogRef: MatDialogRef<StatusModalComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+  @Input() status = {message: '', status_svg: ''};
+  @Output() closeModal: EventEmitter<any> = new EventEmitter<any>();
+
+
+  constructor() { }
 
   close(): void {
-    this.dialogRef.close();
+    this.closeModal.emit();
   }
 
 }

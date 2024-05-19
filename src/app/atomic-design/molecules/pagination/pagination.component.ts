@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { icons } from 'src/app/util/icons.enum';
 
 @Component({
@@ -6,40 +6,46 @@ import { icons } from 'src/app/util/icons.enum';
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.scss']
 })
-export class PaginationComponent{
+export class PaginationComponent {
   @Input() currentPage: number = 0;
   @Input() totalPages: number = 0;
-  @Output() pageChange = new EventEmitter<number>();  
+  @Output() pageChange = new EventEmitter<number>();
 
-  icon_rigth_arrow = icons.RIGTH_ARROW
-  icon_left_arrow = icons.LEFT_ARROW
+  icon_right_arrow = icons.RIGTH_ARROW;
+  icon_left_arrow = icons.LEFT_ARROW;
 
   constructor() { }
 
-  get pages(): Array<number> {
-    let start, end;
-    if (this.totalPages <= 3) {
-        start = 0;
-        end = this.totalPages;
-    } else {
-        start = Math.max(0, this.currentPage - 1);
-        end = Math.min(start + 3, this.totalPages);
-        if (end === this.totalPages && end - start < 3) {
-            start = Math.max(0, this.totalPages - 3);
-        }
-    }
+  get pages(): number[] {
+    let pages: number[] = [];
 
-    const pages = [];
-    for (let i = start; i < end; i++) {
-        pages.push(i);
+    if (this.totalPages <= 3) {
+      pages = Array.from({ length: this.totalPages }, (_, i) => i);
+    } else {
+      if (this.currentPage <= 1) {
+        // Primeras páginas
+        pages = [0, 1, 2];
+      } else if (this.currentPage >= this.totalPages - 2) {
+        // Últimas páginas
+        pages = [this.totalPages - 3, this.totalPages - 2, this.totalPages - 1];
+      } else {
+        // Páginas intermedias
+        if (this.currentPage === this.totalPages - 1) {
+          // Última página
+          pages = [this.totalPages - 3, this.totalPages - 2, this.totalPages - 1];
+        } else {
+          // No es la última página
+          pages = [this.currentPage - 1, this.currentPage, this.currentPage + 1];
+        }
+      }
     }
 
     return pages;
-}
+  }
 
   changePage(page: number): void {
-    this.currentPage = page;
-    this.pageChange.emit(page);
+      this.currentPage = page;
+      this.pageChange.emit(page);
   }
 
   nextPage(): void {
@@ -53,5 +59,4 @@ export class PaginationComponent{
       this.changePage(this.currentPage - 1);
     }
   }
-
 }

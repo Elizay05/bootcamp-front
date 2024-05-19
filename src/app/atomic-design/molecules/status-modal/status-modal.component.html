@@ -2,11 +2,11 @@
     <article class="status__modal">
         <section class="status__modal__content">
             <header class="status__modal__content__header">
-                <img [src]="data.status_svg" alt="success" class="status__modal__content__header__sgv-responsive">
-                <atom-icon mat-button (click)="close()" [iconName]="icon_close" [classIcon]="'primary__closeForm'"></atom-icon>
+                <img [src]="status.status_svg" alt="success" class="status__modal__content__header__sgv-responsive">
+                <atom-icon (click)="close()" [iconName]="icon_close" [classIcon]="'primary__closeForm'"></atom-icon>
             </header>
             <body class="status__modal__content__body">
-                <h2 class="poppins-regular">{{ data.message }}</h2>
+                <h2 class="poppins-regular">{{ status.message }}</h2>
             </body>
             <footer class="status__modal__content__footer">
                 <atom-button [primary]="true" [text]="'Aceptar'" (click)="close()"></atom-button>
