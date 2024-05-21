@@ -1,4 +1,6 @@
 export enum variables {
     MIN_TECHNOLOGIES_SIZE = 3,
     MAX_TECHNOLOGIES_SIZE = 20,
+    MIN_CAPACITY_SIZE = 1,
+    MAX_CAPACITY_SIZE = 4
 }

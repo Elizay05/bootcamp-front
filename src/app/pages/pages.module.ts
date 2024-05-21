@@ -11,6 +11,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CapacitiesComponent } from './capacities/capacities.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { CapacityDetailComponent } from './capacity-detail/capacity-detail.component';
+import { BootcampsComponent } from './bootcamps/bootcamps.component';
+//import { BootcampDetailComponent } from './bootcamp-detail/bootcamp-detail.component';
 
 
 @NgModule({
@@ -19,7 +21,9 @@ import { CapacityDetailComponent } from './capacity-detail/capacity-detail.compo
     StartComponent,
     CapacitiesComponent,
     TechnologiesComponent,
-    CapacityDetailComponent
+    CapacityDetailComponent,
+    BootcampsComponent,
+    //BootcampDetailComponent
   ],
   imports: [
     CommonModule, 
@@ -30,6 +34,13 @@ import { CapacityDetailComponent } from './capacity-detail/capacity-detail.compo
     OrganismsModule,
     BrowserAnimationsModule
   ],
-  exports: [LibraryComponent, StartComponent, CapacitiesComponent, TechnologiesComponent, CapacityDetailComponent]
+  exports: [
+    LibraryComponent, 
+    StartComponent, 
+    CapacitiesComponent, 
+    TechnologiesComponent, 
+    CapacityDetailComponent, 
+    BootcampsComponent
+  ]
 })
 export class PagesModule { }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Option } from 'src/app/interfaces/option.interface';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ValidationService } from 'src/app/services/validation/validation.service';
@@ -70,12 +70,16 @@ export class ModalFormComponent {
     const formData: any = {};
     formData.name = this.form.get('nombre')?.value;
     formData.description = this.form.get('descripcion')?.value;
-    if (this.formData.isSelect) {
+    if (this.formData.isSelectCapacity) {
       formData.technologies = this.selectedOptions.map(option => option.id);
+    }
+    if (this.formData.isSelectBootcamp){
+      formData.capacities = this.selectedOptions.map(option => option.id);
     }
     if (this.formData.onFormSubmit) {
       this.formData.onFormSubmit(formData);
     }
+    console.log(formData);
   }
 
 
@@ -110,14 +114,14 @@ export class ModalFormComponent {
       this.formData.selectName
     );
     if (!result.valid) {
-      this.isIncorrectSize = result.message || "Error desconocido";
+      this.isIncorrectSize = result.message ?? "Error desconocido";
     } else {
       this.isIncorrectSize = "valid";
     }
-}
+  }
 
   get isDisabled(): boolean {
-    if (!this.formData.isSelect) {
+    if (!this.formData.isSelectCapacity && !this.formData.isSelectBootcamp) {
       return this.form.invalid;
     } else {
       return this.form.invalid || this.isIncorrectSize !== "valid";

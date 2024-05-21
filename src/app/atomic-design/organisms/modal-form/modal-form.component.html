@@ -16,7 +16,7 @@
                     <input formControlName="descripcion" placeholder="{{ formData.placeholderDescription }}" class="modal__content__body__form__sectionGeneral__input">
                     <p *ngIf="form.get('descripcion')?.errors" class="modal__content__body__form__sectionGeneral__error">{{ getErrorMessage('descripcion') }}</p>
                 </section>
-                <section *ngIf="formData.isSelect" class="modal__content__body__form__section">
+                <section *ngIf="formData.isSelectCapacity || formData.isSelectBootcamp" class="modal__content__body__form__section">
                     <p>{{ formData.selectName }}</p>
                     <div *ngIf="selectedOptions.length > 0" class="modal__content__body__form__section__list">
                         <div class="modal__content__body__form__section__list__item" *ngFor="let item of selectedOptions">

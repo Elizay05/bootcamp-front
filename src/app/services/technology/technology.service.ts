@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Technology } from 'src/app/interfaces/technology.interface';
 import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs';
-import { PaginatedResult } from 'src/app/interfaces/paginated-result.interface';
 import { environment } from 'src/environments/environment';
+import { Technology } from 'src/app/interfaces/technology.interface';
+import { PaginatedResult } from 'src/app/interfaces/paginated-result.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +35,10 @@ export class TechnologyService {
       })
     ).subscribe();
    }
+
+   getPaginationState(): Observable<{ page: number, size: number, isAscending: boolean}> {
+    return this.paginationState.asObservable();
+  }
 
    updatePage(page: number): void {
     const currentState = this.paginationState.value;

@@ -29,9 +29,13 @@ export class CapacityService {
 
   constructor(private httpClient: HttpClient) {
     this.loadCapacities().subscribe();
-   }
+  }
 
-   loadCapacities(): Observable<PaginatedResult<Capacity>> {
+  getPaginationState(): Observable<{ page: number, size: number, isAscending: boolean, orderBy: boolean }> {
+    return this.paginationState.asObservable();
+  }
+
+  loadCapacities(): Observable<PaginatedResult<Capacity>> {
     return this.paginationState.pipe(
       switchMap(state =>
         this.httpClient.get<PaginatedResult<Capacity>>(this.apiUrl, {
@@ -49,7 +53,7 @@ export class CapacityService {
     );
   }
 
-   updatePage(page: number): void {
+  updatePage(page: number): void {
     const currentState = this.paginationState.value;
     this.paginationState.next({ ...currentState, page });
   }

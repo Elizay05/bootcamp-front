@@ -1,7 +1,11 @@
 <template-home>
     <ng-container *ngIf="(technologies.length > 0) && (totalPages > 0)">
         <header class="filter">
-            <molecule-filter class="filter__dropdown" (sizeChange)="onSizeChange($event)" (ascendingChange)="onAscendingChange($event)">
+            <molecule-filter class="filter__dropdown" 
+            [initialPageSize]="initialPageSize"
+            [initialAscending]="initialAscending"
+            (sizeChange)="onSizeChange($event)" 
+            (ascendingChange)="onAscendingChange($event)">
             </molecule-filter>
         </header>
     </ng-container>

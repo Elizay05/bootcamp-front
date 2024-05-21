@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, Output, SimpleChange, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { icons } from 'src/app/util/icons.enum';
 
 @Component({
@@ -10,7 +10,6 @@ export class FilterComponent {
   @Input() initialPageSize: number = 10;
   @Input() initialOrderBy: boolean = true;
   @Input() initialAscending: boolean = true;
-
 
   initialDropdownSize: string = ''
   optionsPagination = ['10 por página', '25 por página', '50 por página'];
@@ -28,13 +27,13 @@ export class FilterComponent {
   constructor() { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes["initialPageSize"]) {
+    if (changes['initialPageSize']) {
       this.updateInitialDropdownSize(this.initialPageSize + ' por página');
     }
-    if (changes["initialOrderBy"]) {
+    if (changes['initialOrderBy']) {
       this.initialDropdownOrderBy = this.getOrderKeyByValue(this.initialOrderBy);
     }
-    if (changes["initialAscending"]) {
+    if (changes['initialAscending']) {
       this.icon_arrows = this.initialAscending ? icons.ARROWS_UP : icons.ARROWS_DOWN;
     }
   }

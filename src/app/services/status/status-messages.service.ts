@@ -24,7 +24,8 @@ export class StatusMessagesService {
     let svg = StatusSvg.ERROR;
     switch (error.status) {
       case HttpStatusCode.BadRequest:
-        message = `Ya existe una ${nameSelect} con ese nombre`;
+        console.log(error);
+        message = `Ya existe ${nameSelect} con ese nombre`;
         svg = StatusSvg.WARNING;
         break;
       case HttpStatusCode.Unauthorized:
