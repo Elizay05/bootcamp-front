@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
-import { Option } from 'src/app/common/option';
+import { Option } from 'src/app/interfaces/option.interface';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ValidationService } from 'src/app/services/validation/validation.service';
 import { icons } from 'src/app/util/icons.enum';

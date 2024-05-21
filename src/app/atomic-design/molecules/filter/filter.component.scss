@@ -5,6 +5,7 @@
   width: auto;
   justify-content: space-between;
   align-items: center;
+  margin-top: 10%;
   &__dropdown {
     position: relative;
     display: inline-block;
@@ -51,9 +52,39 @@
             }
         }
     }
+
+    &__contentOrderBy {
+      cursor: pointer;
+      display: none;
+      position: absolute;
+      right: 0;
+      background-color: $tertiary-color;
+      border-radius: 16px;
+      border: 1px solid $primary-color;
+      width: 110px;
+      box-shadow: 0 8px 16px 0 $primary-color;
+      z-index: 1;
+      font-size: 14px;
+      &__param {
+          color: $primary-color;
+          padding: 12px 16px;
+          text-decoration: none;
+          display: block;
+          cursor: pointer;
+          border-radius: 16px;
+          &:hover {
+            color: $secondary-color;
+            background-color: $primary-color;
+          }
+      }
+    }
   }
   
   .filter__dropdown:hover .filter__dropdown__content {
+    display: block;
+  }
+
+  .filter__dropdown:hover .filter__dropdown__contentOrderBy {
     display: block;
   }
   &__button{

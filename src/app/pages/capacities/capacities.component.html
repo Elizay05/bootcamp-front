@@ -1,0 +1,15 @@
+<template-home>
+    <ng-container *ngIf="(capacities.length === 0)">
+        <p class="text title">Crea una capacidad</p>
+        <molecule-button-icon class="button add-button" [icon]="icon_add" [text]="'Crear'" [classButton]="'primary'" [classIcon]="'secondary'" (click)='openCreateModal()'></molecule-button-icon>
+    </ng-container>
+
+    <ng-container *ngIf="isModalFormOpen">
+        <organism-modal-form (formSubmit)="onFormSubmit($event)" (closeModal)="isModalFormOpen = false" [formData]="formData" [isModalStatusOpen] ="isModalStatusOpen"></organism-modal-form>
+    </ng-container>
+
+    <ng-container *ngIf="isModalStatusOpen">
+        <molecule-status-modal (closeModal)="onCloseStatusModal()" [status]="this.status"></molecule-status-modal>
+    </ng-container>
+
+</template-home>

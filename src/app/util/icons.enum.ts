@@ -8,5 +8,5 @@ export enum icons {
     ADD = "../assets/images/icons/add.svg",
     CLOSE = "../assets/images/icons/close.svg",
     RIGTH_ARROW = "../assets/images/icons/right-arrow.svg",
-    LEFT_ARROW = "../assets/images/icons/left-arrow.svg"
+    LEFT_ARROW = "../assets/images/icons/left-arrow.svg",
 }

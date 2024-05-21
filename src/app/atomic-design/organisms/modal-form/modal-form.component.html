@@ -6,18 +6,18 @@
         </header>
         <section class="modal__content__body">
             <form class="modal__content__body__form" [formGroup]="form">
-                <section class="modal__content__body__form__section">
-                    <label>Nombre</label>
-                    <input formControlName="nombre" placeholder="{{ formData.placeholderName }}" class="modal__content__body__form__section__input">
-                    <p *ngIf="form.get('nombre')?.errors" class="modal__content__body__form__section__error">{{ getErrorMessage('nombre') }}</p>
+                <section class="modal__content__body__form__sectionGeneral">
+                    <p>Nombre</p>
+                    <input formControlName="nombre" placeholder="{{ formData.placeholderName }}" class="modal__content__body__form__sectionGeneral__input">
+                    <p *ngIf="form.get('nombre')?.errors" class="modal__content__body__form__sectionGeneral__error">{{ getErrorMessage('nombre') }}</p>
                 </section>
-                <section class="modal__content__body__form__section">
-                    <label>Descripción</label>
-                    <input formControlName="descripcion" placeholder="{{ formData.placeholderDescription }}" class="modal__content__body__form__section__input">
-                    <p *ngIf="form.get('descripcion')?.errors" class="modal__content__body__form__section__error">{{ getErrorMessage('descripcion') }}</p>
+                <section class="modal__content__body__form__sectionGeneral">
+                    <p>Descripción</p>
+                    <input formControlName="descripcion" placeholder="{{ formData.placeholderDescription }}" class="modal__content__body__form__sectionGeneral__input">
+                    <p *ngIf="form.get('descripcion')?.errors" class="modal__content__body__form__sectionGeneral__error">{{ getErrorMessage('descripcion') }}</p>
                 </section>
                 <section *ngIf="formData.isSelect" class="modal__content__body__form__section">
-                    <label>{{ formData.selectName }}</label>
+                    <p>{{ formData.selectName }}</p>
                     <div *ngIf="selectedOptions.length > 0" class="modal__content__body__form__section__list">
                         <div class="modal__content__body__form__section__list__item" *ngFor="let item of selectedOptions">
                             <p>{{ item.name }}</p>

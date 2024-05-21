@@ -21,24 +21,15 @@ export class PaginationComponent {
 
     if (this.totalPages <= 3) {
       pages = Array.from({ length: this.totalPages }, (_, i) => i);
-    } else {
-      if (this.currentPage <= 1) {
+    } else if (this.currentPage <= 1) {
         // Primeras páginas
         pages = [0, 1, 2];
       } else if (this.currentPage >= this.totalPages - 2) {
         // Últimas páginas
         pages = [this.totalPages - 3, this.totalPages - 2, this.totalPages - 1];
       } else {
-        // Páginas intermedias
-        if (this.currentPage === this.totalPages - 1) {
-          // Última página
-          pages = [this.totalPages - 3, this.totalPages - 2, this.totalPages - 1];
-        } else {
-          // No es la última página
           pages = [this.currentPage - 1, this.currentPage, this.currentPage + 1];
         }
-      }
-    }
 
     return pages;
   }

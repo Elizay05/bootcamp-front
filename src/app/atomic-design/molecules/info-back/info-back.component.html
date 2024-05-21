@@ -1,9 +1,9 @@
 <section class="section">
-    <div class="section__information">
+    <div class="section__information" (click)="onButtonClick()" [ngStyle]="{'cursor': itemsCount > 0 ? 'pointer' : 'default'}">
         <p class="section__information__title">{{text}}</p>
         <p class="section__information__description">{{description}}</p>
     </div>
-    <div>
-        <molecule-button-icon [icon]="icon_three_points" [classIcon]="'secondary'"></molecule-button-icon>
+    <div class="section__button">
+        <molecule-button-icon [icon]="icon" [classIcon]="'secondary'"></molecule-button-icon>
     </div>
 </section>
