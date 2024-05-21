@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Bootcamp } from 'src/app/interfaces/bootcamp.interface';
 import { Capacity } from 'src/app/interfaces/capacity.interface';
 import { BootcampService } from 'src/app/services/bootcamp/bootcamp.service';
@@ -9,35 +9,15 @@ import { PATH_BOOTCAMP } from 'src/app/util/path-variables';
 import { variables } from 'src/app/util/variables.enum';
 
 @Component({
-  selector: 'app-bootcamps',
-  templateUrl: './bootcamps.component.html',
-  styleUrls: ['./bootcamps.component.scss']
+  selector: 'app-bootcamp-detail',
+  templateUrl: './bootcamp-detail.component.html',
+  styleUrls: ['./bootcamp-detail.component.scss']
 })
-export class BootcampsComponent implements OnInit {
-  data$ = this.bootcampService.data$;
+export class BootcampDetailComponent implements OnInit {
+  bootcamp: Bootcamp | undefined;
 
-  bootcamps: Bootcamp[] = [];
   capacities: Capacity[] = [];
-  path = PATH_BOOTCAMP;
-  totalPages: number = 0;
-  currentPage: number = 0;
-
-
-  selectedSize: number = 10;
-
-  optionsOrderBy = {
-    'nombre' : true,
-    'capacidades' : false
-  };
-
-  isAscending: boolean = true;
-  initialPageSize: number = 10;
-  initialOrderBy: boolean = true;
-  initialAscending: boolean = true;
-
   icon_add: string = icons.ADD
-  icon_arrow: string = icons.RIGTH_ARROW
-
   isModalFormOpen: boolean = false;
   isModalStatusOpen: boolean = false;
 
@@ -56,18 +36,27 @@ export class BootcampsComponent implements OnInit {
 
   status = {message: '', status_svg:''}
   
-  constructor(private router: Router, 
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
     private bootcampService: BootcampService,
-    private statusMessages: StatusMessagesService) {
-  }
+    private statusMessages: StatusMessagesService
+  ) { }
 
   ngOnInit(): void {
-    this.bootcampService.data$.subscribe(result => {
-      if (result) {
-        this.bootcamps = result.content;
-        this.formData.options = this.capacities;
-        this.totalPages = result.totalPages || 0;
-        this.currentPage = result.pageNumber || 0;
+    this.route.paramMap.subscribe(params => {
+      const bootcampId = Number(params.get('id'));
+      if (bootcampId) {
+        this.bootcampService.loadBootcamps().subscribe(() => {
+          this.bootcampService.getBootcampById(bootcampId).subscribe({
+            next: bootcamp => {
+              this.bootcamp = bootcamp;
+            },
+            error: error => {
+              console.error(error);
+            }
+          });
+        });
       }
     });
 
@@ -75,29 +64,6 @@ export class BootcampsComponent implements OnInit {
       this.capacities = capacities;
       this.formData.options = this.capacities;
     });
-
-    this.bootcampService.getPaginationState().subscribe(state => {
-      this.initialPageSize = state.size;
-      this.initialOrderBy = state.orderBy;
-      this.initialAscending = state.isAscending;
-    });
-    
-  }
-
-  onPageChange(newPage: number): void {
-    this.bootcampService.updatePage(newPage);
-  }
-
-  onSizeChange(newSize: number): void {
-    this.bootcampService.updateSize(newSize);
-  }
-
-  onAscendingChange(isAscending: boolean): void {
-    this.bootcampService.updateOrder(isAscending);
-  }
-
-  onOrderByChange(orderBy: boolean): void {
-    this.bootcampService.updateOrderBy(orderBy);
   }
 
   openCreateModal(): void {
@@ -107,7 +73,6 @@ export class BootcampsComponent implements OnInit {
   onFormSubmit(formData: any): void {
     this.bootcampService.createBootcamp(formData).subscribe({
       next: (newBootcamp) => {
-        this.bootcamps.push(newBootcamp);
         this.isModalFormOpen = false;
         this.isModalStatusOpen = true;
         this.status = this.statusMessages.handleSuccess(newBootcamp, "¡Bootcamp creado!");
@@ -121,11 +86,9 @@ export class BootcampsComponent implements OnInit {
   }
 
   onCloseStatusModal(): void {
+    this.router.navigate([PATH_BOOTCAMP]);
     this.isModalStatusOpen = false;
     this.bootcampService.refreshData();
   }
-
-  onNavigateToDetail(bootcampId: number): void {
-    this.router.navigate([PATH_BOOTCAMP, bootcampId]);
-  }
 }
+

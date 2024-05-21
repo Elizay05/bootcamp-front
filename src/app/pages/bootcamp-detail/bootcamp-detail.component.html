@@ -1,0 +1,25 @@
+<template-home>
+    <section *ngIf="bootcamp" class="section">
+        <h1 class="poppins-semibold section__title">{{ bootcamp.name }}</h1>
+        <p class="poppins-regular section__description">{{ bootcamp.description }}</p>
+        <h3 class="poppins-semibold section__subtitle">Capacidades:</h3>
+        <ul class="poppins-regular section__list">
+            <li class="poppins-semibold section__list__capacity" *ngFor="let cap of bootcamp.capacities">{{ cap.name }}
+                <ul class="poppins-regular section__listTech">
+                    <p class="section__listTech__tech" *ngFor="let tech of cap.technologies">{{ tech.name }}</p>
+                </ul>
+            </li>
+        </ul>
+    </section>
+
+    <molecule-button-icon class="button add-button" [icon]="icon_add" [text]="'Crear'" [classButton]="'primary'" [classIcon]="'secondary'" (click)='openCreateModal()'></molecule-button-icon>
+
+    <ng-container *ngIf="isModalFormOpen">
+        <organism-modal-form (formSubmit)="onFormSubmit($event)" (closeModal)="isModalFormOpen = false" [formData]="formData" [isModalStatusOpen] ="isModalStatusOpen"></organism-modal-form>
+    </ng-container>
+
+    <ng-container *ngIf="isModalStatusOpen">
+        <molecule-status-modal (closeModal)="onCloseStatusModal()" [status]="this.status"></molecule-status-modal>
+    </ng-container>
+
+</template-home>

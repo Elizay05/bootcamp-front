@@ -12,7 +12,7 @@ import { CapacitiesComponent } from './capacities/capacities.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { CapacityDetailComponent } from './capacity-detail/capacity-detail.component';
 import { BootcampsComponent } from './bootcamps/bootcamps.component';
-//import { BootcampDetailComponent } from './bootcamp-detail/bootcamp-detail.component';
+import { BootcampDetailComponent } from './bootcamp-detail/bootcamp-detail.component';
 
 
 @NgModule({
@@ -23,7 +23,7 @@ import { BootcampsComponent } from './bootcamps/bootcamps.component';
     TechnologiesComponent,
     CapacityDetailComponent,
     BootcampsComponent,
-    //BootcampDetailComponent
+    BootcampDetailComponent
   ],
   imports: [
     CommonModule, 
