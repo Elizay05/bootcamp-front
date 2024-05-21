@@ -1,7 +1,37 @@
 <template-home>
-    <ng-container *ngIf="(capacities.length === 0)">
+    <ng-container *ngIf="(capacities.length > 0) && (totalPages > 0)">
+        <header class="filter">
+            <molecule-filter class="filter__dropdown" 
+            [optionsOrderBy]="optionsOrderBy" 
+            [initialPageSize]="initialPageSize"
+            [initialOrderBy]="initialOrderBy"
+            [initialAscending]="initialAscending"
+            (sizeChange)="onSizeChange($event)" 
+            (orderByChange)="onOrderByChange($event)"  
+            (ascendingChange)="onAscendingChange($event)">
+            </molecule-filter>
+        </header>
+    </ng-container>
+    
+    <ng-container *ngIf="(capacities.length === 0) && (totalPages === 0)">
         <p class="text title">Crea una capacidad</p>
         <molecule-button-icon class="button add-button" [icon]="icon_add" [text]="'Crear'" [classButton]="'primary'" [classIcon]="'secondary'" (click)='openCreateModal()'></molecule-button-icon>
+    </ng-container>
+
+    <ng-container *ngIf="(capacities.length > 0) && (totalPages > 0)">
+        <section class="information">
+            <article *ngFor="let cap of (data$ | async)?.content" class="information__back">
+                <molecule-info-back [text]="cap.name" [description]="cap.description" [itemsCount]="cap.technologies.length" (navigate)="onNavigateToDetail(cap.id)"></molecule-info-back>
+            </article>
+        </section>
+
+        <section class="add-button">
+            <molecule-button-icon [icon]="icon_add" [text]="'Crear'" [classButton]="'primary'" [classIcon]="'secondary'" (click)='openCreateModal()'></molecule-button-icon>
+        </section>
+
+        <footer class="pagination" *ngIf="totalPages > 1">
+            <molecule-pagination [currentPage]="currentPage" [totalPages]="totalPages" (pageChange)="onPageChange($event)"></molecule-pagination>
+        </footer>
     </ng-container>
 
     <ng-container *ngIf="isModalFormOpen">

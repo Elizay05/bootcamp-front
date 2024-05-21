@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, Output, SimpleChange, SimpleChanges } from '@angular/core';
 import { icons } from 'src/app/util/icons.enum';
 
 @Component({
@@ -7,11 +7,16 @@ import { icons } from 'src/app/util/icons.enum';
   styleUrls: ['./filter.component.scss']
 })
 export class FilterComponent {
-  initialDropdownSize: string = '10 por página'
+  @Input() initialPageSize: number = 10;
+  @Input() initialOrderBy: boolean = true;
+  @Input() initialAscending: boolean = true;
+
+
+  initialDropdownSize: string = ''
   optionsPagination = ['10 por página', '25 por página', '50 por página'];
 
   @Input() optionsOrderBy: { [key: string]: boolean } = {};
-  initialDropdownOrderBy: string = 'nombre';
+  initialDropdownOrderBy: string = '';
 
   icon_arrows: string = icons.ARROWS_UP
   icon_down_arrow: string = icons.DOWN_ARROW
@@ -20,7 +25,19 @@ export class FilterComponent {
   @Output() orderByChange = new EventEmitter<boolean>();
   @Output() ascendingChange = new EventEmitter<boolean>();
 
-  constructor(private cdr: ChangeDetectorRef) { }
+  constructor() { }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes["initialPageSize"]) {
+      this.updateInitialDropdownSize(this.initialPageSize + ' por página');
+    }
+    if (changes["initialOrderBy"]) {
+      this.initialDropdownOrderBy = this.getOrderKeyByValue(this.initialOrderBy);
+    }
+    if (changes["initialAscending"]) {
+      this.icon_arrows = this.initialAscending ? icons.ARROWS_UP : icons.ARROWS_DOWN;
+    }
+  }
 
   updateInitialDropdownSize(newText: string): void {
     this.initialDropdownSize = newText;
@@ -46,5 +63,9 @@ export class FilterComponent {
 
   getOrderOptions(): string[] {
     return Object.keys(this.optionsOrderBy);
+  }
+
+  private getOrderKeyByValue(value: boolean): string {
+    return Object.keys(this.optionsOrderBy).find(key => this.optionsOrderBy[key] === value) || '';
   }
 }

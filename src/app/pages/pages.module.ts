@@ -10,6 +10,7 @@ import { OrganismsModule } from '../atomic-design/organisms/organisms.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CapacitiesComponent } from './capacities/capacities.component';
 import { AppRoutingModule } from '../app-routing.module';
+import { CapacityDetailComponent } from './capacity-detail/capacity-detail.component';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { AppRoutingModule } from '../app-routing.module';
     StartComponent,
     CapacitiesComponent,
     TechnologiesComponent,
+    CapacityDetailComponent
   ],
   imports: [
     CommonModule, 
@@ -28,6 +30,6 @@ import { AppRoutingModule } from '../app-routing.module';
     OrganismsModule,
     BrowserAnimationsModule
   ],
-  exports: [LibraryComponent, StartComponent, CapacitiesComponent, TechnologiesComponent]
+  exports: [LibraryComponent, StartComponent, CapacitiesComponent, TechnologiesComponent, CapacityDetailComponent]
 })
 export class PagesModule { }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Capacity } from 'src/app/interfaces/capacity.interface';
-import { Technology } from 'src/app/interfaces/technology.interface'; 
+import { Technology } from 'src/app/interfaces/technology.interface';
 import { CapacityService } from 'src/app/services/capacity/capacity.service';
 import { StatusMessagesService } from 'src/app/services/status/status-messages.service';
 import { icons } from 'src/app/util/icons.enum';
@@ -9,34 +9,15 @@ import { PATH_CAPACITY } from 'src/app/util/path-variables';
 import { variables } from 'src/app/util/variables.enum';
 
 @Component({
-  selector: 'page-capacities',
-  templateUrl: './capacities.component.html',
-  styleUrls: ['./capacities.component.scss']
+  selector: 'app-capacity-detail',
+  templateUrl: './capacity-detail.component.html',
+  styleUrls: ['./capacity-detail.component.scss']
 })
-export class CapacitiesComponent implements OnInit {
-  data$ = this.capacityService.data$;
+export class CapacityDetailComponent implements OnInit {
+  capacity: Capacity | undefined;
 
-  capacities: Capacity[] = [];
   technologies: Technology[] = [];
-  path = PATH_CAPACITY;
-  totalPages: number = 0;
-  currentPage: number = 0;
-
-
-  selectedSize: number = 10;
-
-  optionsOrderBy = {
-    'nombre' : true,
-    'tecnologías' : false
-  };
-
-  isAscending: boolean = true;
-  initialPageSize: number = 10;
-  initialOrderBy: boolean = true;
-  initialAscending: boolean = true;
-
   icon_add: string = icons.ADD
-
   isModalFormOpen: boolean = false;
   isModalStatusOpen: boolean = false;
 
@@ -55,18 +36,27 @@ export class CapacitiesComponent implements OnInit {
 
   status = {message: '', status_svg:''}
   
-  constructor(private router: Router, 
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
     private capacityService: CapacityService,
-    private statusMessages: StatusMessagesService) {
-  }
+    private statusMessages: StatusMessagesService
+  ) { }
 
   ngOnInit(): void {
-    this.capacityService.data$.subscribe(result => {
-      if (result) {
-        this.capacities = result.content;
-        this.formData.options = this.technologies;
-        this.totalPages = result.totalPages || 0;
-        this.currentPage = result.pageNumber || 0;
+    this.route.paramMap.subscribe(params => {
+      const capacityId = Number(params.get('id'));
+      if (capacityId) {
+        this.capacityService.loadCapacities().subscribe(() => {
+          this.capacityService.getCapacityById(capacityId).subscribe({
+            next: capacity => {
+              this.capacity = capacity;
+            },
+            error: error => {
+              console.error(error);
+            }
+          });
+        });
       }
     });
 
@@ -74,23 +64,6 @@ export class CapacitiesComponent implements OnInit {
       this.technologies = technologies;
       this.formData.options = this.technologies;
     });
-    
-  }
-
-  onPageChange(newPage: number): void {
-    this.capacityService.updatePage(newPage);
-  }
-
-  onSizeChange(newSize: number): void {
-    this.capacityService.updateSize(newSize);
-  }
-
-  onAscendingChange(isAscending: boolean): void {
-    this.capacityService.updateOrder(isAscending);
-  }
-
-  onOrderByChange(orderBy: boolean): void {
-    this.capacityService.updateOrderBy(orderBy);
   }
 
   openCreateModal(): void {
@@ -101,10 +74,10 @@ export class CapacitiesComponent implements OnInit {
     console.log(formData)
     this.capacityService.createCapacity(formData).subscribe({
       next: (newCapacity) => {
-        this.capacities.push(newCapacity);
         this.isModalFormOpen = false;
         this.isModalStatusOpen = true;
         this.status = this.statusMessages.handleSuccess(newCapacity, "¡Capacidad creada!");
+        this.capacityService.refreshData();
       },
       error: (error) => {
         this.isModalFormOpen = false;
@@ -115,11 +88,8 @@ export class CapacitiesComponent implements OnInit {
   }
 
   onCloseStatusModal(): void {
+    this.router.navigate([PATH_CAPACITY]);
     this.isModalStatusOpen = false;
     this.capacityService.refreshData();
-  }
-
-  onNavigateToDetail(capacityId: number): void {
-    this.router.navigate([PATH_CAPACITY, capacityId]);
   }
 }
