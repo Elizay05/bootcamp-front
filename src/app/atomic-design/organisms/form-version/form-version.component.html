@@ -1,0 +1,37 @@
+<section class="modal">
+  <div class="modal__content">
+    <header class="modal__content__header">
+      <h2>Crear nueva versión</h2>
+      <atom-icon (click)="close()" [iconName]="icon_close" [classIcon]="'primary__closeForm'"></atom-icon>
+    </header>
+    <section class="modal__content__body">
+      <form class="modal__content__body__form" [formGroup]="form">
+        <section class="modal__content__body__form__sectionGeneral">
+          <p>Fecha Lanzamiento</p>
+          <input type="date" formControlName="release_date" class="modal__content__body__form__sectionGeneral__input">
+          <p *ngIf="form.get('release_date')?.errors" class="modal__content__body__form__sectionGeneral__error">
+            {{ getErrorMessage('release_date') }}
+          </p>
+        </section>
+        <section class="modal__content__body__form__sectionGeneral">
+          <p>Fecha Final</p>
+          <input type="date" formControlName="final_date" placeholder="{{ formData.placeholderDescription }}" class="modal__content__body__form__sectionGeneral__input">
+          <p *ngIf="form.get('final_date')?.errors" class="modal__content__body__form__sectionGeneral__error">
+            {{ getErrorMessage('final_date') }}
+          </p>
+        </section>
+        <section class="modal__content__body__form__sectionGeneral">
+          <p>Cupo Máximo</p>
+          <input type="number" formControlName="maximum_quota" placeholder="{{ formData.placeholderDescription }}" class="modal__content__body__form__sectionGeneral__input">
+          <p *ngIf="form.get('maximum_quota')?.errors" class="modal__content__body__form__sectionGeneral__error">
+            {{ getErrorMessage('maximum_quota') }}
+          </p>
+        </section>
+      </form>
+    </section>
+    <footer class="modal__content__footer">
+      <atom-button [disabled]="this.isDisabled" [primary]="true" [text]="'Crear'" (click)="submitForm()"></atom-button>
+    </footer>
+  </div>
+</section>
+

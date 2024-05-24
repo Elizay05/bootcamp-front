@@ -21,7 +21,7 @@
     <ng-container *ngIf="(capacities.length > 0) && (totalPages > 0)">
         <section class="information">
             <article *ngFor="let cap of (data$ | async)?.content" class="information__back">
-                <molecule-info-back [text]="cap.name" [description]="cap.description" [itemsCount]="cap.technologies.length" (navigate)="onNavigateToDetail(cap.id)"></molecule-info-back>
+                <molecule-info-back [text]="cap.name" [description]="cap.description" [itemsCount]="cap.technologies.length" (navigateSection)="onNavigateToDetail(cap.id)"></molecule-info-back>
             </article>
         </section>
 
@@ -35,7 +35,7 @@
     </ng-container>
 
     <ng-container *ngIf="isModalFormOpen">
-        <organism-modal-form (formSubmit)="onFormSubmit($event)" (closeModal)="isModalFormOpen = false" [formData]="formData" [isModalStatusOpen] ="isModalStatusOpen"></organism-modal-form>
+        <organism-modal-form (formSubmit)="onFormSubmit($event)" (closeModal)="isModalFormOpen = false" [formData]="formData"></organism-modal-form>
     </ng-container>
 
     <ng-container *ngIf="isModalStatusOpen">

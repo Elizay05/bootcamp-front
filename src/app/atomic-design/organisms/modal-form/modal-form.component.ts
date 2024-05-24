@@ -24,8 +24,6 @@ export class ModalFormComponent {
   @Input() formData: any = {};
   @Output() closeModal: EventEmitter<any> = new EventEmitter<any>();
 
-  @Input() isModalStatusOpen: boolean = false;
-
   constructor(private fb: FormBuilder, 
     private validationService: ValidationService,
   ) {

@@ -13,7 +13,8 @@ export class InfoBackComponent{
   @Input() itemsCount: number = 0;
   @Input() icon: string = icons.THREE_POINTS;
 
-  @Output() navigate = new EventEmitter<void>();
+  @Output() navigateSection = new EventEmitter<void>();
+  @Output() navigateButton = new EventEmitter<void>();
 
 
   paths: string[] = [
@@ -23,7 +24,10 @@ export class InfoBackComponent{
   
   constructor() { }
 
+  onSectionClick() {
+    this.navigateSection.emit();
+  }
   onButtonClick() {
-    this.navigate.emit();
+    this.navigateButton.emit();
   }
 }

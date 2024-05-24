@@ -21,7 +21,13 @@
     <ng-container *ngIf="(bootcamps.length > 0) && (totalPages > 0)">
         <section class="information">
             <article *ngFor="let boot of (data$ | async)?.content" class="information__back">
-                <molecule-info-back [text]="boot.name" [itemsCount]="boot.capacities.length" [icon]="icon_arrow" (navigate)="onNavigateToDetail(boot.id)"></molecule-info-back>
+                <molecule-info-back 
+                [text]="boot.name"
+                [itemsCount]="boot.capacities.length"
+                [icon]="icon_arrow" 
+                (navigateSection)="onNavigateToDetail(boot.id)"
+                (navigateButton)="onNavigateToVersion(boot.id)">
+                </molecule-info-back>
             </article>
         </section>
 
@@ -35,7 +41,7 @@
     </ng-container>
 
     <ng-container *ngIf="isModalFormOpen">
-        <organism-modal-form (formSubmit)="onFormSubmit($event)" (closeModal)="isModalFormOpen = false" [formData]="formData" [isModalStatusOpen] ="isModalStatusOpen"></organism-modal-form>
+        <organism-modal-form (formSubmit)="onFormSubmit($event)" (closeModal)="isModalFormOpen = false" [formData]="formData"></organism-modal-form>
     </ng-container>
 
     <ng-container *ngIf="isModalStatusOpen">

@@ -128,4 +128,8 @@ export class BootcampsComponent implements OnInit {
   onNavigateToDetail(bootcampId: number): void {
     this.router.navigate([PATH_BOOTCAMP, bootcampId]);
   }
+
+  onNavigateToVersion(bootcampId: number): void {
+    this.router.navigate([PATH_BOOTCAMP, bootcampId, 'versions']);
+  }
 }

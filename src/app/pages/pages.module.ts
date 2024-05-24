@@ -13,6 +13,8 @@ import { AppRoutingModule } from '../app-routing.module';
 import { CapacityDetailComponent } from './capacity-detail/capacity-detail.component';
 import { BootcampsComponent } from './bootcamps/bootcamps.component';
 import { BootcampDetailComponent } from './bootcamp-detail/bootcamp-detail.component';
+import { VersionsBootcampComponent } from './versions-bootcamp/versions-bootcamp.component';
+import { AtomsModule } from '../atomic-design/atoms/atoms.module';
 
 
 @NgModule({
@@ -23,7 +25,8 @@ import { BootcampDetailComponent } from './bootcamp-detail/bootcamp-detail.compo
     TechnologiesComponent,
     CapacityDetailComponent,
     BootcampsComponent,
-    BootcampDetailComponent
+    BootcampDetailComponent,
+    VersionsBootcampComponent
   ],
   imports: [
     CommonModule, 
@@ -31,6 +34,7 @@ import { BootcampDetailComponent } from './bootcamp-detail/bootcamp-detail.compo
     AppRoutingModule,
     TemplatesModule, 
     MoleculesModule, 
+    AtomsModule,
     OrganismsModule,
     BrowserAnimationsModule
   ],

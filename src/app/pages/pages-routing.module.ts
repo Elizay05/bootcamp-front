@@ -7,6 +7,7 @@ import { CapacitiesComponent } from './capacities/capacities.component';
 import { CapacityDetailComponent } from './capacity-detail/capacity-detail.component';
 import { BootcampsComponent } from './bootcamps/bootcamps.component';
 import { BootcampDetailComponent } from './bootcamp-detail/bootcamp-detail.component';
+import { VersionsBootcampComponent } from './versions-bootcamp/versions-bootcamp.component';
 
 const routes: Routes = [
   {path: 'home', component: StartComponent},
@@ -17,6 +18,7 @@ const routes: Routes = [
       {path: 'capacities/:id', component: CapacityDetailComponent},
       {path: 'bootcamps', component: BootcampsComponent},
       {path: 'bootcamps/:id', component: BootcampDetailComponent},
+      {path: 'bootcamps/:id/versions', component: VersionsBootcampComponent},
       {path: '**', redirectTo: 'technologies', pathMatch: 'full'}
     ]
   },

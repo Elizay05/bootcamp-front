@@ -7,9 +7,10 @@ import { AtomsModule } from '../atoms/atoms.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MatDialogModule } from '@angular/material/dialog';
+import { FormVersionComponent } from './form-version/form-version.component';
 
 
-const organisms = [AsideComponent, ModalFormComponent];
+const organisms = [AsideComponent, ModalFormComponent, FormVersionComponent];
 
 @NgModule({
   declarations: [...organisms],
