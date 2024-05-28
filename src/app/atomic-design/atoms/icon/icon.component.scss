@@ -3,6 +3,9 @@
 .icon{
     cursor: pointer;
     &__primary{
+        display: flex;
+        justify-content: center;
+        align-items: center;
         width: 20px;
         color: $primary-color;
         fill: $primary-color;

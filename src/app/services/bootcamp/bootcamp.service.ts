@@ -21,11 +21,11 @@ export class BootcampService {
     orderBy: true,
   });
 
-  private dataSubject = new BehaviorSubject<PaginatedResult<any> | null>(null);
-  public data$ = this.dataSubject.asObservable();
+  dataSubject = new BehaviorSubject<PaginatedResult<any> | null>(null);
+  data$ = this.dataSubject.asObservable();
 
-  private bootcamps: Bootcamp[] = [];
-  private bootcampSubject = new Subject<Bootcamp>();
+  bootcamps: Bootcamp[] = [];
+  bootcampSubject = new Subject<Bootcamp>();
 
   constructor(private httpClient: HttpClient) {
     this.loadBootcamps().subscribe();
@@ -90,7 +90,7 @@ export class BootcampService {
     return this.httpClient.post<Bootcamp>(this.apiUrl, bootcamp);
   }
 
-  getBootcampById(id: number): Observable<Bootcamp> {
+  getBootcampById(id: number | null): Observable<Bootcamp> {
     const bootcamp = this.bootcamps.find(boot => boot.id === id);
     if (bootcamp) {
       this.bootcampSubject.next(bootcamp);

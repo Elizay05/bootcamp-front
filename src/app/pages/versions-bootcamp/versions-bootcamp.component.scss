@@ -1,5 +1,21 @@
 @import 'src/assets/styles/variables.scss';
 
+
+.text-center{
+    margin-top: 15%;
+}
+.filter{
+    display: flex;
+    align-items: center;
+    justify-content:flex-end;
+    width: 63%;
+    position: fixed;
+    z-index: 1;
+    &__dropdown{
+        position: fixed;
+        z-index: 1;
+    }
+}
 .header{
     width: 90%;
     display: flex;
@@ -69,7 +85,17 @@
     display: flex;
     justify-content: flex-end;
     margin-top: 8%;
-    margin-bottom: 4%;
+    margin-bottom: 5%;
+    width: 63%;
+    position: fixed;
+    z-index: 1;
+    bottom: 0;
+}
+.pagination{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 4%;
+    margin-bottom: 2%;
     width: 63%;
     position: fixed;
     z-index: 1;

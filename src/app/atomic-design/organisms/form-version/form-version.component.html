@@ -30,7 +30,7 @@
       </form>
     </section>
     <footer class="modal__content__footer">
-      <atom-button [disabled]="this.isDisabled" [primary]="true" [text]="'Crear'" (click)="submitForm()"></atom-button>
+      <atom-button [disabled]="this.form.invalid" [primary]="true" [text]="'Crear'" (click)="submitForm()"></atom-button>
     </footer>
   </div>
 </section>

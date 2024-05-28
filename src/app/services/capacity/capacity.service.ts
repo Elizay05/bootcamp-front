@@ -21,11 +21,11 @@ export class CapacityService {
     orderBy: true,
   });
 
-  private dataSubject = new BehaviorSubject<PaginatedResult<any> | null>(null);
-  public data$ = this.dataSubject.asObservable();
+  dataSubject = new BehaviorSubject<PaginatedResult<any> | null>(null);
+  data$ = this.dataSubject.asObservable();
 
-  private capacities: Capacity[] = [];
-  private capacitySubject = new Subject<Capacity>();
+  capacities: Capacity[] = [];
+  capacitySubject = new Subject<Capacity>();
 
   constructor(private httpClient: HttpClient) {
     this.loadCapacities().subscribe();
@@ -109,5 +109,4 @@ export class CapacityService {
   getTechnologies(): Observable<Technology[]> {
     return this.httpClient.get<Technology[]>(this.apiUrlTechnologies);
   }
-
 }

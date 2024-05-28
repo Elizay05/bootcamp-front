@@ -1,5 +1,6 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IconComponent } from './icon.component';
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { IconComponent } from "./icon.component";
+
 
 describe('IconComponent', () => {
   let component: IconComponent;
@@ -8,10 +9,11 @@ describe('IconComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [IconComponent],
-    }).compileComponents();
+    }).compileComponents(); 
 
     fixture = TestBed.createComponent(IconComponent);
-    component = fixture.componentInstance;
+    component = TestBed.createComponent(IconComponent).componentInstance;
+    fixture.detectChanges();
   }));
 
   it('should create', () => {

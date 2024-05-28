@@ -15,6 +15,7 @@ export class FormVersionComponent implements OnInit {
   icon_close = icons.CLOSE;
   icon_add = icons.ADD;
 
+
   @Input() formData: any = {};
   @Output() closeModal: EventEmitter<any> = new EventEmitter<any>();
 
@@ -38,7 +39,8 @@ export class FormVersionComponent implements OnInit {
   subscribeToValueChanges(): void {
     Object.keys(this.form.controls).forEach(controlName => {
       this.form.get(controlName)?.valueChanges.subscribe(() => {
-        this.form.get(controlName)?.updateValueAndValidity({ onlySelf: true, emitEvent: false });
+        const updateValueAndValidityOptions = { onlySelf: true, emitEvent: false };
+        this.form.get(controlName)?.updateValueAndValidity(updateValueAndValidityOptions);
       });
     });
   }
@@ -66,7 +68,7 @@ export class FormVersionComponent implements OnInit {
   }
 
   submitForm(): void {
-    if (this.isDisabled) {
+    if (this.form.invalid) {
       return;
     }
     const formData: any = {
@@ -77,11 +79,6 @@ export class FormVersionComponent implements OnInit {
     if (this.formData.onFormSubmit) {
       this.formData.onFormSubmit(formData);
     }
-    console.log(formData);
-  }
-
-  get isDisabled(): boolean {
-    return this.form.invalid;
   }
 
   close(): void {

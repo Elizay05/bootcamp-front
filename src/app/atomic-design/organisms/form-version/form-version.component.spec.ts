@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { FormVersionComponent } from './form-version.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('FormVersionComponent', () => {
   let component: FormVersionComponent;
@@ -8,9 +8,9 @@ describe('FormVersionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FormVersionComponent ]
-    })
-    .compileComponents();
+      declarations: [FormVersionComponent],
+      imports: [ReactiveFormsModule],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(FormVersionComponent);
     component = fixture.componentInstance;

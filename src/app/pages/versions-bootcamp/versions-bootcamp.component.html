@@ -1,63 +1,59 @@
 <template-home>
+    <ng-container *ngIf="(totalPages > 0)">
+        <header class="filter">
+            <molecule-filter class="filter__dropdown" 
+            [optionsOrderBy]="optionsOrderBy" 
+            [initialPageSize]="initialPageSize"
+            [initialOrderBy]="initialOrderBy"
+            [initialAscending]="initialAscending"
+            (sizeChange)="onSizeChange($event)" 
+            (orderByChange)="onOrderByChange($event)"  
+            (ascendingChange)="onAscendingChange($event)">
+            </molecule-filter>
+        </header>
+    </ng-container>
+    
     <section *ngIf="bootcamp" class="header">
         <h1 class="poppins-semibold header__title">{{ bootcamp.name }}</h1>
         <atom-button [primary]="true" [text]="'Crear versión'" (click)='openCreateVersionModal()'></atom-button>
     </section>
 
-    <table class="poppins-regular table">
-        <thead class="table__header">
-            <tr>
-                <th>Versión</th>
-                <th>Fecha lanzamiento</th>
-                <th>Cupo máximo</th>
-            </tr>
-        </thead>
-    </table>
-    
-    <div class="table__body-container">
-        <table class="poppins-regular table">
-            <th></th>
-            <tbody class="table__body">
-                <tr>
-                    <td class="table__body__left">2024-1</td>
-                    <td>07-03-24</td>
-                    <td class="table__body__right">300</td>
-                </tr>
-                <tr>
-                    <td class="table__body__left">2024-2</td>
-                    <td>08-05-24</td>
-                    <td class="table__body__right">400</td>
-                </tr>
-                <tr>
-                    <td class="table__body__left">2024-3</td>
-                    <td>09-07-24</td>
-                    <td class="table__body__right">500</td>
-                </tr>
-                <tr>
-                    <td class="table__body__left">2024-4</td>
-                    <td>10-09-24</td>
-                    <td class="table__body__right">600</td>
-                </tr>
-                <tr>
-                    <td class="table__body__left">2024-5</td>
-                    <td>11-11-24</td>
-                    <td class="table__body__right">700</td>
-                </tr>
-                <tr>
-                    <td class="table__body__left">2024-6</td>
-                    <td>12-01-24</td>
-                    <td class="table__body__right">800</td>
-                </tr>
-                <tr>
-                    <td class="table__body__left">2024-7</td>
-                    <td>01-03-25</td>
-                    <td class="table__body__right">900</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <ng-container *ngIf="(totalPages === 0)">
+        <p class="text title text-center">Crea una versión</p>
+    </ng-container>
 
+    <ng-container *ngIf="(totalPages > 0)">
+        <table class="poppins-regular table">
+            <thead class="table__header">
+                <tr>
+                    <th>Fecha lanzamiento</th>
+                    <th>Fecha final</th>
+                    <th>Cupo máximo</th>
+                </tr>
+            </thead>
+        </table>
+        
+        <div class="table__body-container">
+            <table class="poppins-regular table">
+                <th></th>
+                <tbody class="table__body">
+                    <tr *ngFor="let version of (data$ | async)?.content">
+                        <td class="table__body__left">{{version.startDate}}</td>
+                        <td>{{ version.endDate }}</td>
+                        <td class="table__body__right">{{ version.maximumQuota }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </ng-container>
+
+    <section class="add-button">
     <molecule-button-icon class="button add-button" [icon]="icon_add" [text]="'Crear'" [classButton]="'primary'" [classIcon]="'secondary'" (click)='openCreateModal()'></molecule-button-icon>
+    </section>
+
+    <footer class="pagination" *ngIf="totalPages > 1">
+        <molecule-pagination [currentPage]="currentPage" [totalPages]="totalPages" (pageChange)="onPageChange($event)"></molecule-pagination>
+    </footer>
 
     <ng-container *ngIf="isModalFormOpen">
         <organism-modal-form (formSubmit)="onFormSubmit($event)" (closeModal)="isModalFormOpen = false" [formData]="formData"></organism-modal-form>
@@ -71,5 +67,3 @@
         <organism-form-version (formSubmit)="onFormVersionSubmit($event)" [formData]="formDataVersion" (closeModal)="isModalVersionFormOpen = false"></organism-form-version>
     </ng-container>
 </template-home>
-
-0
