@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Technology } from 'src/app/common/technology';
 import { TechnologyService } from 'src/app/services/technology/technology.service';
 import { StatusMessagesService } from 'src/app/services/status/status-messages.service';
 import { icons } from 'src/app/util/icons.enum';
+import { Technology } from 'src/app/interfaces/technology.interface';
 
 
 
@@ -21,7 +21,9 @@ export class TechnologiesComponent implements OnInit {
 
 
   selectedSize: number = 10;
-  isAscending: boolean = true;
+  initialPageSize: number = 10;
+  initialAscending: boolean = true;
+
 
   icon_add: string = icons.ADD
 
@@ -50,6 +52,11 @@ export class TechnologiesComponent implements OnInit {
         this.currentPage = result.pageNumber || 0;
       }
     });
+
+    this.technologyService.getPaginationState().subscribe(state => {
+      this.initialPageSize = state.size;
+      this.initialAscending = state.isAscending;
+    });
   }
 
   onPageChange(newPage: number): void {
@@ -70,7 +77,6 @@ export class TechnologiesComponent implements OnInit {
   }
 
   onFormSubmit(formData: any): void {
-    console.log(formData)
     this.technologyService.createTechnology(formData).subscribe({
       next: (newTechnology) => {
         this.technologies.push(newTechnology);
@@ -81,7 +87,7 @@ export class TechnologiesComponent implements OnInit {
       error: (error) => {
         this.isModalFormOpen = false;
         this.isModalStatusOpen = true;
-        this.status = this.statusMessages.handleError(error, "tecnologia");
+        this.status = this.statusMessages.handleError(error, "una tecnologia");
       }
     });
   }

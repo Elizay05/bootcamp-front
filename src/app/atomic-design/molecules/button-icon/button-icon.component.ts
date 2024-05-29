@@ -1,11 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
   @Component({
     selector: 'molecule-button-icon',
     templateUrl: './button-icon.component.html',
     styleUrls: ['./button-icon.component.scss']
   })
-  export class ButtonIconComponent implements OnInit {
+  export class ButtonIconComponent {
     @Input() classButton: string = "";
     @Input() text: string = "";
     @Input() icon: string = "";
@@ -14,8 +14,4 @@ import { Component, OnInit, Input } from '@angular/core';
     @Input() classIcon: string = "";
 
     constructor() { }
-
-    ngOnInit(): void {
-    }
-
   }

@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
-import { Option } from 'src/app/common/option';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Option } from 'src/app/interfaces/option.interface';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ValidationService } from 'src/app/services/validation/validation.service';
 import { icons } from 'src/app/util/icons.enum';
+import { FormData } from 'src/app/interfaces/form-data.interface';
 
 
 @Component({
@@ -23,8 +24,6 @@ export class ModalFormComponent {
 
   @Input() formData: any = {};
   @Output() closeModal: EventEmitter<any> = new EventEmitter<any>();
-
-  @Input() isModalStatusOpen: boolean = false;
 
   constructor(private fb: FormBuilder, 
     private validationService: ValidationService,
@@ -67,16 +66,21 @@ export class ModalFormComponent {
     if (this.isDisabled) {
       return;
     }
-    const formData: any = {};
-    formData.name = this.form.get('nombre')?.value;
-    formData.description = this.form.get('descripcion')?.value;
-    if (this.formData.isSelect) {
-      formData.technologies = this.selectedOptions.map(option => option.id);
+    const formDataExport: FormData = {
+      name: this.form.get('nombre')?.value,
+      description: this.form.get('descripcion')?.value,
+    };
+    if (this.formData.isSelectCapacity) {
+      formDataExport.technologies = this.selectedOptions.map(option => option.id);
     }
+    if (this.formData.isSelectBootcamp){
+      formDataExport.capacities = this.selectedOptions.map(option => option.id);
+    }
+    console.log('FormData:', this.formData.onFormSubmit);
     if (this.formData.onFormSubmit) {
-      this.formData.onFormSubmit(formData);
+      this.formData.onFormSubmit(formDataExport);
     }
-  }
+  } 
 
 
   toggleInputSelect(): void {
@@ -90,10 +94,13 @@ export class ModalFormComponent {
     const selectElement = event.target as HTMLSelectElement;
     const selectedId = parseInt(selectElement.value, 10);
     const selectedOption = this.formData.options.find((opt: Option) => opt.id === selectedId);
-
-    if (selectedOption && !this.selectedOptions.some((opt: Option) => opt.id === selectedOption.id)) {
-      this.selectedOptions.push(selectedOption);
+  
+    if (selectedOption) {
+      if (!this.selectedOptions.some((opt: Option) => opt.id === selectedOption.id)) {
+        this.selectedOptions.push(selectedOption);
+      }
     }
+  
     this.updateValidationState();
   }
 
@@ -110,14 +117,14 @@ export class ModalFormComponent {
       this.formData.selectName
     );
     if (!result.valid) {
-      this.isIncorrectSize = result.message || "Error desconocido";
+      this.isIncorrectSize = result.message ?? "Error desconocido";
     } else {
       this.isIncorrectSize = "valid";
     }
-}
+  }
 
   get isDisabled(): boolean {
-    if (!this.formData.isSelect) {
+    if (!this.formData.isSelectCapacity && !this.formData.isSelectBootcamp) {
       return this.form.invalid;
     } else {
       return this.form.invalid || this.isIncorrectSize !== "valid";

@@ -1,15 +1,31 @@
 <section class="filter">
+
   <article class="filter__dropdown">
     <button class="poppins-regular filter__dropdown__button" type="button">
-      {{ initialDropdownText }}
+      {{ initialDropdownSize }}
       <atom-icon class="filter__dropdown__icon" [iconName]="icon_down_arrow" [classIcon]="'primary'"></atom-icon>
     </button>
     <div class="poppins-regular filter__dropdown__content">
-      <p *ngFor="let option of optionsPagination"class="filter__dropdown__content__param" (click)="updateButtonText(option)">
+      <p *ngFor="let option of optionsPagination"class="filter__dropdown__content__param" (click)="updateInitialDropdownSize(option)">
         {{ option }}
       </p>
     </div>
   </article>
+
+  <ng-container *ngIf="getOrderOptions().length > 0">
+    <article class="filter__dropdown">
+      <button class="poppins-regular filter__dropdown__button" type="button">
+        Ordenar por {{ initialDropdownOrderBy }}
+        <atom-icon class="filter__dropdown__icon" [iconName]="icon_down_arrow" [classIcon]="'primary'"></atom-icon>
+      </button>
+      <div class="poppins-regular filter__dropdown__contentOrderBy">
+        <p *ngFor="let option of getOrderOptions()" class="filter__dropdown__contentOrderBy__param" (click)="updateInitialDropdownOrderBy(option)">
+          {{ option }}
+        </p>
+      </div>
+    </article>
+  </ng-container>
+
   <article>
     <button class="poppins-regular filter__button" (click)="updateButtonIcon()">
       AZ

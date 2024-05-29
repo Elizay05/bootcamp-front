@@ -31,7 +31,14 @@ export class HomeComponent {
     this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd)
     ).subscribe((event: NavigationEnd) => {
-        this.showMoleculeListItem = event.urlAfterRedirects === PATH_TECHNOLOGY || event.urlAfterRedirects === PATH_CAPACITY || event.urlAfterRedirects === PATH_BOOTCAMP;
+      this.showMoleculeListItem = this.isRelevantRoute(event.urlAfterRedirects);
     });
+  }
+
+
+  private isRelevantRoute(url: string): boolean {
+    return url === PATH_TECHNOLOGY ||
+           url.startsWith(PATH_CAPACITY) ||
+           url.startsWith(PATH_BOOTCAMP);
   }
 }

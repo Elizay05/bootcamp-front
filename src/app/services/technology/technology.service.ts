@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Technology } from 'src/app/common/technology';
 import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs';
-import { PaginatedResult } from 'src/app/common/paginated-result';
 import { environment } from 'src/environments/environment';
+import { Technology } from 'src/app/interfaces/technology.interface';
+import { PaginatedResult } from 'src/app/interfaces/paginated-result.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -17,13 +17,17 @@ export class TechnologyService {
     isAscending: true
   });
 
-  private dataSubject = new BehaviorSubject<PaginatedResult<any> | null>(null);
-  public data$ = this.dataSubject.asObservable();
+  dataSubject = new BehaviorSubject<PaginatedResult<any> | null>(null);
+  data$ = this.dataSubject.asObservable();
 
   constructor(private httpClient: HttpClient) {
-    this.paginationState.pipe(
+    this.loadTechnologies().subscribe();
+  }
+
+  loadTechnologies(): Observable<PaginatedResult<Technology>> {
+    return this.paginationState.pipe(
       switchMap(state =>
-        this.httpClient.get<PaginatedResult<any>>(this.apiUrl, {
+        this.httpClient.get<PaginatedResult<Technology>>(this.apiUrl, {
           params: new HttpParams()
             .set('page', state.page.toString())
             .set('size', state.size.toString())
@@ -33,8 +37,12 @@ export class TechnologyService {
       tap(result => {
         this.dataSubject.next(result);
       })
-    ).subscribe();
-   }
+    );
+  }
+
+  getPaginationState(): Observable<{ page: number, size: number, isAscending: boolean}> {
+    return this.paginationState.asObservable();
+  }
 
    updatePage(page: number): void {
     const currentState = this.paginationState.value;

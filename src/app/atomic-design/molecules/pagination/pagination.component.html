@@ -1,23 +1,18 @@
 <section class="pagination">
     <atom-icon [iconName]="icon_left_arrow" [classIcon]="'primary'" (click)="prevPage()" *ngIf="currentPage > 0"></atom-icon>
   
-    <!-- Botón para la primera página -->
     <atom-button *ngIf="totalPages > 3 && currentPage >= 2" [text]="'1'" [isButtomCircle]="true" 
                  (click)="changePage(0)" [active]="0 === currentPage">
     </atom-button>
   
-    <!-- Tres puntos antes de las páginas intermedias -->
     <p class="threePoints" *ngIf="currentPage > 2 && totalPages > 3">...</p>
     
-    <!-- Páginas intermedias -->
     <atom-button *ngFor="let page of pages" [text]="(page + 1).toString()" [isButtomCircle]="true" 
                  (click)="changePage(page)" [active]="page === currentPage">
     </atom-button>
     
-    <!-- Tres puntos después de las páginas intermedias -->
     <p class="threePoints" *ngIf="currentPage < totalPages - 3 && totalPages > 3">...</p>
     
-    <!-- Botón para la última página -->
     <atom-button *ngIf="totalPages > 3 && currentPage < totalPages - 2" [text]="totalPages.toString()" 
                  [isButtomCircle]="true" (click)="changePage(totalPages - 1)" [active]="totalPages - 1 === currentPage">
     </atom-button>
