@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
-import { PATH_BOOTCAMP, PATH_CAPACITY, PATH_DETAIL_CAPACITY, PATH_TECHNOLOGY } from 'src/app/util/path-variables';
+import { PATH_BOOTCAMP, PATH_CAPACITY, PATH_TECHNOLOGY } from 'src/app/util/path-variables';
 
 @Component({
   selector: 'template-home',

@@ -34,6 +34,21 @@ export class CapacitiesComponent implements OnInit {
   initialPageSize: number = 10;
   initialOrderBy: boolean = true;
   initialAscending: boolean = true;
+  totalPages: number = 0;
+  currentPage: number = 0;
+
+
+  selectedSize: number = 10;
+
+  optionsOrderBy = {
+    'nombre' : true,
+    'tecnologías' : false
+  };
+
+  isAscending: boolean = true;
+  initialPageSize: number = 10;
+  initialOrderBy: boolean = true;
+  initialAscending: boolean = true;
 
   icon_add: string = icons.ADD
 
@@ -44,7 +59,7 @@ export class CapacitiesComponent implements OnInit {
     title: 'Crear Capacidad',
     placeholderName: "Ingresa el nombre de la capacidad", 
     placeholderDescription: "Ingresa la descripción de la capacidad",  
-    isSelect: true,
+    isSelectCapacity: true,
     selectName: 'Tecnologías',
     placeholderSelect:"Seleccione las tecnologías de la capacidad",
     options: this.technologies,  
@@ -98,7 +113,6 @@ export class CapacitiesComponent implements OnInit {
   }
 
   onFormSubmit(formData: any): void {
-    console.log(formData)
     this.capacityService.createCapacity(formData).subscribe({
       next: (newCapacity) => {
         this.capacities.push(newCapacity);
@@ -109,7 +123,7 @@ export class CapacitiesComponent implements OnInit {
       error: (error) => {
         this.isModalFormOpen = false;
         this.isModalStatusOpen = true;
-        this.status = this.statusMessages.handleError(error, "capacidad");
+        this.status = this.statusMessages.handleError(error, "una capacidad");
       }
     });
   }

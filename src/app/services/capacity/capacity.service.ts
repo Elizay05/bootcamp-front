@@ -1,8 +1,7 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject, map, of, switchMap, tap, throwError } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Capacity } from 'src/app/interfaces/capacity.interface';
-import { PaginatedResult } from 'src/app/interfaces/paginated-result.interface';
 import { Technology } from 'src/app/interfaces/technology.interface';
 import { environment } from 'src/environments/environment';
 

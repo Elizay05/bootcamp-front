@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ButtonIconComponent } from './button-icon.component';
+import { MoleculesModule } from '../molecules.module';
+import { AtomsModule } from '../../atoms/atoms.module';
 
 describe('ButtonIconComponent', () => {
   let component: ButtonIconComponent;
@@ -8,7 +10,8 @@ describe('ButtonIconComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ButtonIconComponent ]
+      declarations: [ ButtonIconComponent ],
+      imports: [MoleculesModule, AtomsModule],
     })
     .compileComponents();
 
