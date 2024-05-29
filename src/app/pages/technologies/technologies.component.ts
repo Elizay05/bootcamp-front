@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Technology } from 'src/app/interfaces/technology.interface';
 import { TechnologyService } from 'src/app/services/technology/technology.service';
 import { StatusMessagesService } from 'src/app/services/status/status-messages.service';
 import { icons } from 'src/app/util/icons.enum';

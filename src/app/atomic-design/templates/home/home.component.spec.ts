@@ -4,8 +4,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HomeComponent } from './home.component';
 import { PATH_TECHNOLOGY, PATH_CAPACITY, PATH_BOOTCAMP } from 'src/app/util/path-variables';
 import { Subject } from 'rxjs';
-import { TemplatesModule } from '../templates.module';
-import { OrganismsModule } from '../../organisms/organisms.module';
 import { MoleculesModule } from '../../molecules/molecules.module';
 
 describe('HomeComponent', () => {

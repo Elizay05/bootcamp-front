@@ -40,14 +40,5 @@ export class HomeComponent {
     return url === PATH_TECHNOLOGY ||
            url.startsWith(PATH_CAPACITY) ||
            url === PATH_BOOTCAMP;
-      this.showMoleculeListItem = this.isRelevantRoute(event.urlAfterRedirects);
-    });
-  }
-
-
-  private isRelevantRoute(url: string): boolean {
-    return url === PATH_TECHNOLOGY ||
-           url.startsWith(PATH_CAPACITY) ||
-           url.startsWith(PATH_BOOTCAMP);
   }
 }

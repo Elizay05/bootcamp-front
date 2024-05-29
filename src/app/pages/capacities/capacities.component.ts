@@ -13,11 +13,26 @@ import { variables } from 'src/app/util/variables.enum';
   templateUrl: './capacities.component.html',
   styleUrls: ['./capacities.component.scss']
 })
-export class CapacitiesComponent {
+export class CapacitiesComponent implements OnInit {
 
   capacities: Capacity[] = [];
   technologies: Technology[] = [];
   path = PATH_CAPACITY;
+  totalPages: number = 0;
+  currentPage: number = 0;
+
+
+  selectedSize: number = 10;
+
+  optionsOrderBy = {
+    'nombre' : true,
+    'tecnologías' : false
+  };
+
+  isAscending: boolean = true;
+  initialPageSize: number = 10;
+  initialOrderBy: boolean = true;
+  initialAscending: boolean = true;
 
   icon_add: string = icons.ADD
 
@@ -28,7 +43,7 @@ export class CapacitiesComponent {
     title: 'Crear Capacidad',
     placeholderName: "Ingresa el nombre de la capacidad", 
     placeholderDescription: "Ingresa la descripción de la capacidad",  
-    isSelect: true,
+    isSelectCapacity: true,
     selectName: 'Tecnologías',
     placeholderSelect:"Seleccione las tecnologías de la capacidad",
     options: this.technologies,  
@@ -42,10 +57,14 @@ export class CapacitiesComponent {
   constructor(private router: Router, 
     private capacityService: CapacityService,
     private statusMessages: StatusMessagesService) {
-      this.capacityService.getTechnologies().subscribe((technologies) => {
-        this.technologies = technologies
-        this.formData.options = this.technologies;
-      })
+  }
+
+  ngOnInit(): void {
+
+    this.capacityService.getTechnologies().subscribe(technologies => {
+      this.technologies = technologies;
+      this.formData.options = this.technologies;
+    });    
   }
 
   openCreateModal(): void {
@@ -53,7 +72,6 @@ export class CapacitiesComponent {
   }
 
   onFormSubmit(formData: any): void {
-    console.log(formData)
     this.capacityService.createCapacity(formData).subscribe({
       next: (newCapacity) => {
         this.capacities.push(newCapacity);
@@ -64,7 +82,7 @@ export class CapacitiesComponent {
       error: (error) => {
         this.isModalFormOpen = false;
         this.isModalStatusOpen = true;
-        this.status = this.statusMessages.handleError(error, "capacidad");
+        this.status = this.statusMessages.handleError(error, "una capacidad");
       }
     });
   }
@@ -72,5 +90,4 @@ export class CapacitiesComponent {
   onCloseStatusModal(): void {
     this.isModalStatusOpen = false;
   }
-
 }
