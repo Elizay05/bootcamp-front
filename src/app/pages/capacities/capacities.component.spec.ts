@@ -6,7 +6,7 @@ import { mockTechnology1, mockTechnology2, mockTechnology3, mockPaginatedCapacit
 import { CapacityService } from 'src/app/services/capacity/capacity.service';
 import { StatusMessagesService } from 'src/app/services/status/status-messages.service';
 import { HttpErrorResponse } from '@angular/common/http';
-
+import { PATH_CAPACITY } from 'src/app/util/path-variables';
 
 describe('CapacitiesComponent', () => {
   let component: CapacitiesComponent;
@@ -37,20 +37,48 @@ describe('CapacitiesComponent', () => {
 
     Object.defineProperty(capacityService, 'data$', { value: of(mockPaginatedCapacityResult) });
     capacityService.getTechnologies.and.returnValue(of([mockTechnology1, mockTechnology2, mockTechnology3]));
+    capacityService.getPaginationState.and.returnValue(of({ page: 0, size: 10, orderBy: true, isAscending: true }));
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should initialize technologies', () => {
-    component.ngOnInit();
-    fixture.detectChanges();
-
-    expect(component.technologies).toEqual([mockTechnology1, mockTechnology2, mockTechnology3]);
-    expect(component.formData.options).toEqual([mockTechnology1, mockTechnology2, mockTechnology3]);
+  describe('ngOnInit', () => {
+    it('should initialize capacities and technologies', () => {
+      component.ngOnInit();
+      fixture.detectChanges();
+  
+      expect(component.capacities).toEqual(mockPaginatedCapacityResult.content);
+      expect(component.technologies).toEqual([mockTechnology1, mockTechnology2, mockTechnology3]);
+      expect(component.totalPages).toEqual(mockPaginatedCapacityResult.totalPages);
+      expect(component.currentPage).toEqual(mockPaginatedCapacityResult.pageNumber);
+    });
   });
 
+  it('should update page', () => {
+    const newPage = 2;
+    component.onPageChange(newPage);
+    expect(capacityService.updatePage).toHaveBeenCalledWith(newPage);
+  });
+
+  it('should update size', () => {
+    const newSize = 20;
+    component.onSizeChange(newSize);
+    expect(capacityService.updateSize).toHaveBeenCalledWith(newSize);
+  });
+
+  it('should update order', () => {
+    const newAscending = true;
+    component.onAscendingChange(newAscending);
+    expect(capacityService.updateOrder).toHaveBeenCalledWith(newAscending);
+  });
+
+  it('should update order by', () => {
+    const newOrderBy = false;
+    component.onOrderByChange(newOrderBy);
+    expect(capacityService.updateOrderBy).toHaveBeenCalledWith(newOrderBy);
+  });
 
   it('should open create modal', () => {
     expect(component.isModalFormOpen).toBeFalse();
@@ -59,7 +87,6 @@ describe('CapacitiesComponent', () => {
 
     expect(component.isModalFormOpen).toBeTrue();
   });
-
 
   it('should handle form submission successfully', () => {
     const mockNewCapacity = { id: 5, name: 'New Capacity', description: 'New description', technologies: [mockTechnology1] };
@@ -92,11 +119,18 @@ describe('CapacitiesComponent', () => {
     expect(component.status).toEqual({ message: 'Error creating capacity', status_svg: 'error' });
     expect(statusMessagesService.handleError).toHaveBeenCalledWith(mockError, "una capacidad");
   });
-
+  
 
   it('should close the modal and refresh data on close status modal', () => {
     component.onCloseStatusModal();
 
     expect(component.isModalStatusOpen).toBeFalse();
+    expect(capacityService.refreshData).toHaveBeenCalled();
+  });
+
+  it('should navigate to capacity detail', () => {
+    const capacityId = 1;
+    component.onNavigateToDetail(capacityId);
+    expect(router.navigate).toHaveBeenCalledWith([PATH_CAPACITY, capacityId]);
   });
 });

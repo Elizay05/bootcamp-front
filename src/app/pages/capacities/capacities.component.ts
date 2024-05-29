@@ -34,21 +34,6 @@ export class CapacitiesComponent implements OnInit {
   initialPageSize: number = 10;
   initialOrderBy: boolean = true;
   initialAscending: boolean = true;
-  totalPages: number = 0;
-  currentPage: number = 0;
-
-
-  selectedSize: number = 10;
-
-  optionsOrderBy = {
-    'nombre' : true,
-    'tecnologías' : false
-  };
-
-  isAscending: boolean = true;
-  initialPageSize: number = 10;
-  initialOrderBy: boolean = true;
-  initialAscending: boolean = true;
 
   icon_add: string = icons.ADD
 
@@ -88,6 +73,12 @@ export class CapacitiesComponent implements OnInit {
     this.capacityService.getTechnologies().subscribe(technologies => {
       this.technologies = technologies;
       this.formData.options = this.technologies;
+    });
+
+    this.capacityService.getPaginationState().subscribe(state => {
+      this.initialPageSize = state.size;
+      this.initialOrderBy = state.orderBy;
+      this.initialAscending = state.isAscending;
     });
     
   }
@@ -134,6 +125,7 @@ export class CapacitiesComponent implements OnInit {
   }
 
   onNavigateToDetail(capacityId: number): void {
+    console.log(capacityId);
     this.router.navigate([PATH_CAPACITY, capacityId]);
   }
 }

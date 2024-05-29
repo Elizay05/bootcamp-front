@@ -11,6 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CapacitiesComponent } from './capacities/capacities.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { CapacityDetailComponent } from './capacity-detail/capacity-detail.component';
+import { AtomsModule } from '../atomic-design/atoms/atoms.module';
 
 
 @NgModule({
@@ -19,7 +20,7 @@ import { CapacityDetailComponent } from './capacity-detail/capacity-detail.compo
     StartComponent,
     CapacitiesComponent,
     TechnologiesComponent,
-    CapacityDetailComponent
+    CapacityDetailComponent,
   ],
   imports: [
     CommonModule, 
@@ -27,9 +28,16 @@ import { CapacityDetailComponent } from './capacity-detail/capacity-detail.compo
     AppRoutingModule,
     TemplatesModule, 
     MoleculesModule, 
+    AtomsModule,
     OrganismsModule,
     BrowserAnimationsModule
   ],
-  exports: [LibraryComponent, StartComponent, CapacitiesComponent, TechnologiesComponent, CapacityDetailComponent]
+  exports: [
+    LibraryComponent, 
+    StartComponent, 
+    CapacitiesComponent, 
+    TechnologiesComponent, 
+    CapacityDetailComponent, 
+  ]
 })
 export class PagesModule { }

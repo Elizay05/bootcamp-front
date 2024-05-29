@@ -26,6 +26,18 @@ export class FilterComponent {
 
   constructor() { }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['initialPageSize']) {
+      this.updateInitialDropdownSize(this.initialPageSize + ' por página');
+    }
+    if (changes['initialOrderBy']) {
+      this.initialDropdownOrderBy = this.getOrderKeyByValue(this.initialOrderBy);
+    }
+    if (changes['initialAscending']) {
+      this.icon_arrows = this.initialAscending ? icons.ARROWS_UP : icons.ARROWS_DOWN;
+    }
+  }
+
   updateInitialDropdownSize(newText: string): void {
     this.initialDropdownSize = newText;
     const size = parseInt(newText.split(' ')[0], 10);
@@ -52,7 +64,8 @@ export class FilterComponent {
     return Object.keys(this.optionsOrderBy);
   }
 
-  private getOrderKeyByValue(value: boolean): string {
-    return Object.keys(this.optionsOrderBy).find(key => this.optionsOrderBy[key] === value) || '';
+  getOrderKeyByValue(value: boolean): string {
+    return Object.keys(this.optionsOrderBy).find(key => this.optionsOrderBy[key] === value) ?? '';
   }
+
 }

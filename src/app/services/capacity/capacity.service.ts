@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, map, of, switchMap, tap, throwError } from 'rxjs';
 import { Capacity } from 'src/app/interfaces/capacity.interface';
+import { PaginatedResult } from 'src/app/interfaces/paginated-result.interface';
 import { Technology } from 'src/app/interfaces/technology.interface';
 import { environment } from 'src/environments/environment';
 
@@ -20,17 +21,21 @@ export class CapacityService {
     orderBy: true,
   });
 
-  private dataSubject = new BehaviorSubject<PaginatedResult<any> | null>(null);
-  public data$ = this.dataSubject.asObservable();
+  dataSubject = new BehaviorSubject<PaginatedResult<any> | null>(null);
+  data$ = this.dataSubject.asObservable();
 
-  private capacities: Capacity[] = [];
-  private capacitySubject = new Subject<Capacity>();
+  capacities: Capacity[] = [];
+  capacitySubject = new Subject<Capacity>();
 
   constructor(private httpClient: HttpClient) {
     this.loadCapacities().subscribe();
-   }
+  }
 
-   loadCapacities(): Observable<PaginatedResult<Capacity>> {
+  getPaginationState(): Observable<{ page: number, size: number, isAscending: boolean, orderBy: boolean }> {
+    return this.paginationState.asObservable();
+  }
+
+  loadCapacities(): Observable<PaginatedResult<Capacity>> {
     return this.paginationState.pipe(
       switchMap(state =>
         this.httpClient.get<PaginatedResult<Capacity>>(this.apiUrl, {
@@ -48,7 +53,7 @@ export class CapacityService {
     );
   }
 
-   updatePage(page: number): void {
+  updatePage(page: number): void {
     const currentState = this.paginationState.value;
     this.paginationState.next({ ...currentState, page });
   }
@@ -104,5 +109,4 @@ export class CapacityService {
   getTechnologies(): Observable<Technology[]> {
     return this.httpClient.get<Technology[]>(this.apiUrlTechnologies);
   }
-
 }

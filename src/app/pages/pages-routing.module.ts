@@ -16,7 +16,7 @@ const routes: Routes = [
       {path: 'bootcamps', component: CapacitiesComponent},
       {path: '**', redirectTo: 'technologies', pathMatch: 'full'}
     ]
-  },
+  }, 
   {path: '', redirectTo: 'home', pathMatch: 'full'}
 ];
 
