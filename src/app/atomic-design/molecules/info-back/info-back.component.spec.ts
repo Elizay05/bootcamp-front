@@ -3,6 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { InfoBackComponent } from './info-back.component';
 import { icons } from 'src/app/util/icons.enum';
 import { By } from '@angular/platform-browser';
+import { MoleculesModule } from '../molecules.module';
+import { AtomsModule } from '../../atoms/atoms.module';
 
 describe('InfoBackComponent', () => {
   let component: InfoBackComponent;
@@ -10,7 +12,10 @@ describe('InfoBackComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ InfoBackComponent ]
+      declarations: [ InfoBackComponent ],
+      imports: [
+        MoleculesModule, AtomsModule
+      ]
     })
     .compileComponents();
 

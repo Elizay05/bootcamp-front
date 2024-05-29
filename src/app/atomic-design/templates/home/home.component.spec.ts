@@ -1,23 +1,61 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { Router, NavigationEnd, RouterEvent } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 import { HomeComponent } from './home.component';
+import { PATH_TECHNOLOGY, PATH_CAPACITY, PATH_BOOTCAMP } from 'src/app/util/path-variables';
+import { Subject } from 'rxjs';
+import { TemplatesModule } from '../templates.module';
+import { OrganismsModule } from '../../organisms/organisms.module';
+import { MoleculesModule } from '../../molecules/molecules.module';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
+  let router: Router;
+  let routerEventsSubject: Subject<RouterEvent>;
 
   beforeEach(async () => {
+    routerEventsSubject = new Subject<RouterEvent>();
+
     await TestBed.configureTestingModule({
-      declarations: [ HomeComponent ]
-    })
-    .compileComponents();
+      declarations: [HomeComponent],
+      imports: [RouterTestingModule, MoleculesModule],
+      providers: [
+        {
+          provide: Router,
+          useValue: {
+            url: '/',
+            events: routerEventsSubject.asObservable(),
+            navigate: jasmine.createSpy('navigate'),
+          }
+        }
+      ]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
+    router = TestBed.inject(Router);
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should set showMoleculeListItem to true for relevant routes', () => {
+    routerEventsSubject.next(new NavigationEnd(0, '/', PATH_TECHNOLOGY));
+    expect(component.showMoleculeListItem).toBe(true);
+
+    routerEventsSubject.next(new NavigationEnd(0, '/', PATH_CAPACITY));
+    expect(component.showMoleculeListItem).toBe(true);
+
+    routerEventsSubject.next(new NavigationEnd(0, '/', PATH_BOOTCAMP));
+    expect(component.showMoleculeListItem).toBe(true);
+  });
+
+  it('should set showMoleculeListItem to false for non-relevant routes', () => {
+    routerEventsSubject.next(new NavigationEnd(0, '/', '/non-relevant-route'));
+    expect(component.showMoleculeListItem).toBe(false);
+  });
 });
+

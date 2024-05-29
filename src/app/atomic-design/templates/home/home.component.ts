@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
-import { PATH_BOOTCAMP, PATH_CAPACITY, PATH_DETAIL_CAPACITY, PATH_TECHNOLOGY } from 'src/app/util/path-variables';
+import { PATH_BOOTCAMP, PATH_CAPACITY, PATH_TECHNOLOGY } from 'src/app/util/path-variables';
 
 @Component({
   selector: 'template-home',
@@ -40,5 +40,14 @@ export class HomeComponent {
     return url === PATH_TECHNOLOGY ||
            url.startsWith(PATH_CAPACITY) ||
            url === PATH_BOOTCAMP;
+      this.showMoleculeListItem = this.isRelevantRoute(event.urlAfterRedirects);
+    });
+  }
+
+
+  private isRelevantRoute(url: string): boolean {
+    return url === PATH_TECHNOLOGY ||
+           url.startsWith(PATH_CAPACITY) ||
+           url.startsWith(PATH_BOOTCAMP);
   }
 }
