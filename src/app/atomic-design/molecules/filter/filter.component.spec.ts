@@ -1,18 +1,22 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { SimpleChange, SimpleChanges } from '@angular/core';
 import { FilterComponent } from './filter.component';
 import { icons } from 'src/app/util/icons.enum';
+import { MoleculesModule } from '../molecules.module';
+import { AtomsModule } from '../../atoms/atoms.module';
 
-describe('DrobdownComponent', () => {
+describe('FilterComponent', () => {
   let component: FilterComponent;
   let fixture: ComponentFixture<FilterComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ FilterComponent ]
-    })
-    .compileComponents();
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [FilterComponent],
+      imports: [MoleculesModule, AtomsModule]
+    }).compileComponents();
+  }));
 
+  beforeEach(() => {
     fixture = TestBed.createComponent(FilterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -22,40 +26,59 @@ describe('DrobdownComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should initialize default dropdown text', () => {
-    expect(component.initialDropdownText).toBe('10 por página');
-  });
+  it('should update initialDropdownSize on initialPageSize change', () => {
+    spyOn(component, 'updateInitialDropdownSize').and.callThrough();
+    component.initialPageSize = 50;
+    const change: SimpleChanges = {
+      initialPageSize: new SimpleChange(null, component.initialPageSize, true)
+    };
+    component.ngOnChanges(change);
   
-  it('should initialize default icons', () => {
-    expect(component.icon_arrows).toBe(icons.ARROWS_UP);
-  });
-  
-  it('should initialize default pagination options', () => {
-    expect(component.optionsPagination).toEqual(['10 por página', '25 por página', '50 por página']);
+    expect(component.updateInitialDropdownSize).toHaveBeenCalledWith('50 por página');
+    expect(component.initialDropdownSize).toBe('50 por página');
   });
 
-  it('should update dropdown button text when an option is clicked', () => {
-    const newText = '25 por página';
-    component.updateButtonText(newText);
-    expect(component.initialDropdownText).toBe(newText);
+  it('should update initialDropdownOrderBy on initialOrderBy change', () => {
+    component.optionsOrderBy = { 'fecha inicio': true, 'cupo máximo': false };
+    spyOn(component, 'getOrderKeyByValue').and.callThrough();
+
+    component.initialOrderBy = false;
+    const changes = {
+      initialOrderBy: new SimpleChange(null, component.initialOrderBy, true)
+    }
+    component.ngOnChanges(changes);
+
+    expect(component.getOrderKeyByValue).toHaveBeenCalledWith(false);
+    expect(component.initialDropdownOrderBy).toBe('cupo máximo');
   });
-  
-  it('should emit size change event when an option is clicked', () => {
-    spyOn(component.sizeChange, 'emit');
-    const newText = '25 por página';
-    component.updateButtonText(newText);
-    expect(component.sizeChange.emit).toHaveBeenCalledWith(25);
+
+  it('should update initialDropdownOrderBy on updateInitialDropdownOrderBy', () => {
+    component.optionsOrderBy = { 'fecha inicio': true, 'cupo máximo': false };
+    const newText = 'cupo máximo';
+    
+    component.updateInitialDropdownOrderBy(newText);
+    
+    expect(component.initialDropdownOrderBy).toBe(newText);
+    
+    component.orderByChange.subscribe((value) => {
+      expect(value).toBe(false);
+    });
   });
-  
-  it('should update button icon when clicked', () => {
-    const initialIcon = component.icon_arrows;
-    component.updateButtonIcon();
-    expect(component.icon_arrows).not.toBe(initialIcon);
-  });
-  
-  it('should emit ascending change event when clicked', () => {
+
+  it('should update icon_arrows and emit ascendingChange event', () => {
     spyOn(component.ascendingChange, 'emit');
+  
+    component.icon_arrows = icons.ARROWS_UP;
     component.updateButtonIcon();
-    expect(component.ascendingChange.emit).toHaveBeenCalled();
+  
+    expect(component.icon_arrows).toBe(icons.ARROWS_DOWN);
+  
+    expect(component.ascendingChange.emit).toHaveBeenCalledWith(false);
+  
+    component.updateButtonIcon();
+  
+    expect(component.icon_arrows).toBe(icons.ARROWS_UP);
+  
+    expect(component.ascendingChange.emit).toHaveBeenCalledWith(true);
   });
 });

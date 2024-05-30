@@ -7,7 +7,7 @@ export class TokenInterceptor implements HttpInterceptor {
     constructor () { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        const accessToken = 'eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU5JU1RSQVRPUiIsInN1YiI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTcxNjMxMzI0NiwiZXhwIjoxNzE2MzE0Njg2fQ.z-FFhm4s248Wc99by5iQEdF0IdNrs1a09i-XRN_Y0Bw';
+        const accessToken = 'eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU5JU1RSQVRPUiIsInN1YiI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTcxNjIzNTY0NCwiZXhwIjoxNzE2MjM3MDg0fQ.tDwfROOLfwWZ4gOs7ibMoBP16F6JxKtn-KcDkuJELhQ';
         if (accessToken) {
             const modifiedRequest = request.clone({
                 setHeaders: {

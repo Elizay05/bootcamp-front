@@ -17,13 +17,17 @@ export class TechnologyService {
     isAscending: true
   });
 
-  private dataSubject = new BehaviorSubject<PaginatedResult<any> | null>(null);
-  public data$ = this.dataSubject.asObservable();
+  dataSubject = new BehaviorSubject<PaginatedResult<any> | null>(null);
+  data$ = this.dataSubject.asObservable();
 
   constructor(private httpClient: HttpClient) {
-    this.paginationState.pipe(
+    this.loadTechnologies().subscribe();
+  }
+
+  loadTechnologies(): Observable<PaginatedResult<Technology>> {
+    return this.paginationState.pipe(
       switchMap(state =>
-        this.httpClient.get<PaginatedResult<any>>(this.apiUrl, {
+        this.httpClient.get<PaginatedResult<Technology>>(this.apiUrl, {
           params: new HttpParams()
             .set('page', state.page.toString())
             .set('size', state.size.toString())
@@ -33,8 +37,12 @@ export class TechnologyService {
       tap(result => {
         this.dataSubject.next(result);
       })
-    ).subscribe();
-   }
+    );
+  }
+
+  getPaginationState(): Observable<{ page: number, size: number, isAscending: boolean}> {
+    return this.paginationState.asObservable();
+  }
 
    getPaginationState(): Observable<{ page: number, size: number, isAscending: boolean}> {
     return this.paginationState.asObservable();
