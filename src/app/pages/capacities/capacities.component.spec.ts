@@ -44,16 +44,14 @@ describe('CapacitiesComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('ngOnInit', () => {
-    it('should initialize capacities and technologies', () => {
-      component.ngOnInit();
-      fixture.detectChanges();
-  
-      expect(component.capacities).toEqual(mockPaginatedCapacityResult.content);
-      expect(component.technologies).toEqual([mockTechnology1, mockTechnology2, mockTechnology3]);
-      expect(component.totalPages).toEqual(mockPaginatedCapacityResult.totalPages);
-      expect(component.currentPage).toEqual(mockPaginatedCapacityResult.pageNumber);
-    });
+  it('should initialize capacities and technologies', () => {
+    component.ngOnInit();
+    fixture.detectChanges();
+
+    expect(component.capacities).toEqual(mockPaginatedCapacityResult.content);
+    expect(component.technologies).toEqual([mockTechnology1, mockTechnology2, mockTechnology3]);
+    expect(component.totalPages).toEqual(mockPaginatedCapacityResult.totalPages);
+    expect(component.currentPage).toEqual(mockPaginatedCapacityResult.pageNumber);
   });
 
   it('should update page', () => {

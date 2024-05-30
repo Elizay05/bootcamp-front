@@ -44,108 +44,90 @@ describe('BootcampsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('ngOnInit', () => {
-    it('should initialize bootcamps and capacities', () => {
-      component.ngOnInit();
-      fixture.detectChanges();
-  
-      expect(component.bootcamps).toEqual(mockPaginatedBootcampResult.content);
-      expect(component.capacities).toEqual([mockCapacity1, mockCapacity2, mockCapacity3]);
-      expect(component.totalPages).toEqual(mockPaginatedBootcampResult.totalPages);
-      expect(component.currentPage).toEqual(mockPaginatedBootcampResult.pageNumber);
-    });
-  })
+  it('should initialize bootcamps and capacities', () => {
+    component.ngOnInit();
+    fixture.detectChanges();
 
-  describe('onPageChange', () => {
-    it('should update page', () => {
-      const newPage = 2;
-      component.onPageChange(newPage);
-      expect(bootcampService.updatePage).toHaveBeenCalledWith(newPage);
-    });
-  })
-
-  describe('onSizeChange', () => {
-    it('should update size', () => {
-      const newSize = 20;
-      component.onSizeChange(newSize);
-      expect(bootcampService.updateSize).toHaveBeenCalledWith(newSize);
-    });
-  })
-
-  describe('onAscendingChange', () => {
-    it('should update order', () => {
-      const newAscending = true;
-      component.onAscendingChange(newAscending);
-      expect(bootcampService.updateOrder).toHaveBeenCalledWith(newAscending);
-    });
-  })
-
-  describe('onOrderByChange', () => {
-    it('should update order by', () => {
-      const newOrderBy = false;
-      component.onOrderByChange(newOrderBy);
-      expect(bootcampService.updateOrderBy).toHaveBeenCalledWith(newOrderBy);
-    });
-  })
-
-  describe('openCreateModal', () => {
-    it('should open create modal', () => {
-      expect(component.isModalFormOpen).toBeFalse();
-  
-      component.openCreateModal();
-  
-      expect(component.isModalFormOpen).toBeTrue();
-    });
+    expect(component.bootcamps).toEqual(mockPaginatedBootcampResult.content);
+    expect(component.capacities).toEqual([mockCapacity1, mockCapacity2, mockCapacity3]);
+    expect(component.totalPages).toEqual(mockPaginatedBootcampResult.totalPages);
+    expect(component.currentPage).toEqual(mockPaginatedBootcampResult.pageNumber);
   });
 
-  describe('onFormSubmit', () => {
-    it('should handle form submission successfully', () => {
-      const mockNewBootcamp = { id: 5, name: 'New Bootcamp', description: 'New description', capacities: [mockCapacity1] };
-      const mockFormData = { name: 'New Bootcamp', description: 'New description', capacities: [mockCapacity1] };
-  
-      bootcampService.createBootcamp.and.returnValue(of(mockNewBootcamp));
-      statusMessagesService.handleSuccess.and.returnValue({ message: '¡Bootcamp creado!', status_svg: 'success' });
-  
-      component.onFormSubmit(mockFormData);
-  
-      expect(bootcampService.createBootcamp).toHaveBeenCalledWith(mockFormData);
-      expect(component.isModalFormOpen).toBeFalse();
-      expect(component.isModalStatusOpen).toBeTrue();
-      expect(component.status).toEqual({ message: '¡Bootcamp creado!', status_svg: 'success' });
-      expect(statusMessagesService.handleSuccess).toHaveBeenCalledWith(mockNewBootcamp, "¡Bootcamp creado!");
-    });
-  
-    it('should handle form submission error', () => {
-      const mockError = new HttpErrorResponse({ error: 'Error creating bootcamp', status: 500 });
-      const mockFormData = { name: 'New Bootcamp', description: 'New description', capacities: [mockCapacity1] };
-  
-      bootcampService.createBootcamp.and.returnValue(throwError(mockError));
-      statusMessagesService.handleError.and.returnValue({ message: 'Error creating bootcamp', status_svg: 'error' });
-  
-      component.onFormSubmit(mockFormData);
-  
-      expect(bootcampService.createBootcamp).toHaveBeenCalledWith(mockFormData);
-      expect(component.isModalFormOpen).toBeFalse();
-      expect(component.isModalStatusOpen).toBeTrue();
-      expect(component.status).toEqual({ message: 'Error creating bootcamp', status_svg: 'error' });
-      expect(statusMessagesService.handleError).toHaveBeenCalledWith(mockError, "un bootcamp");
-    });
+  it('should update page', () => {
+    const newPage = 2;
+    component.onPageChange(newPage);
+    expect(bootcampService.updatePage).toHaveBeenCalledWith(newPage);
   });
 
-  describe('onCloseStatusModal', () => {
-    it('should navigate, close the modal, and refresh data on close status modal', () => {
-      component.onCloseStatusModal();
-  
-      expect(component.isModalStatusOpen).toBeFalse();
-      expect(bootcampService.refreshData).toHaveBeenCalled();
-    });
+  it('should update size', () => {
+    const newSize = 20;
+    component.onSizeChange(newSize);
+    expect(bootcampService.updateSize).toHaveBeenCalledWith(newSize);
   });
 
-  describe('onNavigateToDetail', () => {
-    it('should navigate to bootcamp detail', () => {
-      const bootcampId = 1;
-      component.onNavigateToDetail(bootcampId);
-      expect(router.navigate).toHaveBeenCalledWith([PATH_BOOTCAMP, bootcampId]);
-    });
+  it('should update order', () => {
+    const newAscending = true;
+    component.onAscendingChange(newAscending);
+    expect(bootcampService.updateOrder).toHaveBeenCalledWith(newAscending);
+  });
+
+  it('should update order by', () => {
+    const newOrderBy = false;
+    component.onOrderByChange(newOrderBy);
+    expect(bootcampService.updateOrderBy).toHaveBeenCalledWith(newOrderBy);
+  });
+
+  it('should open create modal', () => {
+    expect(component.isModalFormOpen).toBeFalse();
+
+    component.openCreateModal();
+
+    expect(component.isModalFormOpen).toBeTrue();
+  });
+
+  it('should handle form submission successfully', () => {
+    const mockNewBootcamp = { id: 5, name: 'New Bootcamp', description: 'New description', capacities: [mockCapacity1] };
+    const mockFormData = { name: 'New Bootcamp', description: 'New description', capacities: [mockCapacity1] };
+
+    bootcampService.createBootcamp.and.returnValue(of(mockNewBootcamp));
+    statusMessagesService.handleSuccess.and.returnValue({ message: '¡Bootcamp creado!', status_svg: 'success' });
+
+    component.onFormSubmit(mockFormData);
+
+    expect(bootcampService.createBootcamp).toHaveBeenCalledWith(mockFormData);
+    expect(component.isModalFormOpen).toBeFalse();
+    expect(component.isModalStatusOpen).toBeTrue();
+    expect(component.status).toEqual({ message: '¡Bootcamp creado!', status_svg: 'success' });
+    expect(statusMessagesService.handleSuccess).toHaveBeenCalledWith(mockNewBootcamp, "¡Bootcamp creado!");
+  });
+
+  it('should handle form submission error', () => {
+    const mockError = new HttpErrorResponse({ error: 'Error creating bootcamp', status: 500 });
+    const mockFormData = { name: 'New Bootcamp', description: 'New description', capacities: [mockCapacity1] };
+
+    bootcampService.createBootcamp.and.returnValue(throwError(mockError));
+    statusMessagesService.handleError.and.returnValue({ message: 'Error creating bootcamp', status_svg: 'error' });
+
+    component.onFormSubmit(mockFormData);
+
+    expect(bootcampService.createBootcamp).toHaveBeenCalledWith(mockFormData);
+    expect(component.isModalFormOpen).toBeFalse();
+    expect(component.isModalStatusOpen).toBeTrue();
+    expect(component.status).toEqual({ message: 'Error creating bootcamp', status_svg: 'error' });
+    expect(statusMessagesService.handleError).toHaveBeenCalledWith(mockError, "un bootcamp");
+  });
+
+  it('should navigate, close the modal, and refresh data on close status modal', () => {
+    component.onCloseStatusModal();
+
+    expect(component.isModalStatusOpen).toBeFalse();
+    expect(bootcampService.refreshData).toHaveBeenCalled();
+  });
+
+  it('should navigate to bootcamp detail', () => {
+    const bootcampId = 1;
+    component.onNavigateToDetail(bootcampId);
+    expect(router.navigate).toHaveBeenCalledWith([PATH_BOOTCAMP, bootcampId]);
   });
 });

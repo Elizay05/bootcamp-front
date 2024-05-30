@@ -58,9 +58,6 @@ export class VersionsBootcampComponent implements OnInit {
           this.bootcampService.getBootcampById(bootcampId).subscribe({
             next: bootcamp => {
               this.bootcamp = bootcamp;
-            },
-            error: error => {
-              console.error(error);
             }
           });
         });

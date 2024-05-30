@@ -2,6 +2,7 @@ import { PaginatedResult } from 'src/app/interfaces/paginated-result.interface';
 import { Technology } from '../interfaces/technology.interface';
 import { Capacity } from '../interfaces/capacity.interface';
 import { Bootcamp } from '../interfaces/bootcamp.interface';
+import { VersionBootcamp } from '../interfaces/version-bootcamp.interface';
 
 export const mockTechnology1: Technology = {
   id: 1,
@@ -63,6 +64,34 @@ export const mockCapacity1: Capacity = {
       capacities: []
   };
 
+  export const mockVersionBootcamp1: VersionBootcamp = {
+    bootcampId: 1,
+    startDate: '2022-01-01',
+    endDate: '2022-12-31',
+    maximumQuota: 10
+};
+
+export const mockVersionBootcamp2: VersionBootcamp = {
+    bootcampId: 2,
+    startDate: '2022-01-01',
+    endDate: '2022-12-31',
+    maximumQuota: 10
+};
+
+export const mockVersionBootcamp3: VersionBootcamp = {
+    bootcampId: 3,
+    startDate: '2022-01-01',
+    endDate: '2022-12-31',
+    maximumQuota: 10
+};
+
+export const mockVersionBootcamp4: VersionBootcamp = {
+    bootcampId: 2,
+    startDate: '2024-01-01',
+    endDate: '2024-01-31',
+    maximumQuota: 10
+};
+
 export const mockPaginatedTechnologyResult: PaginatedResult<Technology> = {
     content: [mockTechnology1, mockTechnology2, mockTechnology3],
     pageNumber: 0,
@@ -81,6 +110,14 @@ export const mockPaginatedCapacityResult: PaginatedResult<Capacity> = {
 
 export const mockPaginatedBootcampResult: PaginatedResult<Bootcamp> = {
     content: [mockBootcamp1, mockBootcamp2, mockBootcamp3],
+    pageNumber: 0,
+    pageSize: 10,
+    totalElements: 1,
+    totalPages: 1
+  };
+
+  export const mockPaginatedVersionBootcampResult: PaginatedResult<VersionBootcamp> = {
+    content: [mockVersionBootcamp1, mockVersionBootcamp2, mockVersionBootcamp3, mockVersionBootcamp4],
     pageNumber: 0,
     pageSize: 10,
     totalElements: 1,
