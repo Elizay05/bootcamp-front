@@ -109,4 +109,5 @@ export class CapacityService {
   getTechnologies(): Observable<Technology[]> {
     return this.httpClient.get<Technology[]>(this.apiUrlTechnologies);
   }
+
 }

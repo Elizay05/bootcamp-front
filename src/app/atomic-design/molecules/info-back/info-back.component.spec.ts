@@ -19,4 +19,16 @@ describe('InfoBackComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should emit navigateSection onSectionClick', () => {
+    spyOn(component.navigateSection, 'emit');
+    component.onSectionClick();
+    expect(component.navigateSection.emit).toHaveBeenCalled();
+  });
+
+  it('should emit navigateButton onButtonClick', () => {
+    spyOn(component.navigateButton, 'emit');
+    component.onButtonClick();
+    expect(component.navigateButton.emit).toHaveBeenCalled();
+  })
 });

@@ -125,6 +125,7 @@ export class CapacitiesComponent implements OnInit {
   }
 
   onNavigateToDetail(capacityId: number): void {
+    console.log(capacityId);
     this.router.navigate([PATH_CAPACITY, capacityId]);
   }
 }

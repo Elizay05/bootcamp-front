@@ -1,5 +1,4 @@
 <template-home>
-
     <section *ngIf="capacity" class="section">
         <h1 class="poppins-semibold section__title">{{ capacity.name }}</h1>
         <p class="poppins-regular section__description">{{ capacity.description }}</p>
@@ -8,16 +7,4 @@
           <li class="section__list__item" *ngFor="let tech of capacity.technologies">{{ tech.name }}</li>
         </ul>
     </section>
-
-    <molecule-button-icon class="button add-button" [icon]="icon_add" [text]="'Crear'" [classButton]="'primary'" [classIcon]="'secondary'" (click)='openCreateModal()'></molecule-button-icon>
-
-    <ng-container *ngIf="isModalFormOpen">
-        <organism-modal-form (formSubmit)="onFormSubmit($event)" (closeModal)="isModalFormOpen = false" [formData]="formData"></organism-modal-form>
-    </ng-container>
-
-    <ng-container *ngIf="isModalStatusOpen">
-        <molecule-status-modal (closeModal)="onCloseStatusModal()" [status]="this.status"></molecule-status-modal>
-    </ng-container>
-
 </template-home>
-

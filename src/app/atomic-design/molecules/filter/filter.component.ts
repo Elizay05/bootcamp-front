@@ -64,8 +64,7 @@ export class FilterComponent {
     return Object.keys(this.optionsOrderBy);
   }
 
-  public getOrderKeyByValue(value: boolean): string {
+  getOrderKeyByValue(value: boolean): string {
     return Object.keys(this.optionsOrderBy).find(key => this.optionsOrderBy[key] === value) ?? '';
   }
-
 }
