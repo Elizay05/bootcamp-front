@@ -12,7 +12,8 @@ export class ValidationService {
     return {
       required: (fieldName: string) => `ⓘ El campo ${fieldName} es obligatorio.`,
       minlength: (fieldName: string, requiredLength: number) => `ⓘ El campo ${fieldName} debe tener al menos ${requiredLength} caracteres.`,
-      maxlength: (fieldName: string, requiredLength: number) => `ⓘ El campo ${fieldName} no debe exceder los ${requiredLength} caracteres.`
+      maxlength: (fieldName: string, requiredLength: number) => `ⓘ El campo ${fieldName} no debe exceder los ${requiredLength} caracteres.`,
+      pattern: (fieldName: string) => `ⓘ El campo ${fieldName} no es valido.`,
     };
   }
 
@@ -42,7 +43,7 @@ export class ValidationService {
     return { valid: !message, message };
   }
 
-  getStandardValidators(config: { required?: boolean, min?: number, max?: number }): ValidatorFn[] {
+  getStandardValidators(config: { required?: boolean, min?: number, max?: number, pattern?: string }): ValidatorFn[] {
     const validators: ValidatorFn[] = [];
     if (config.required) {
       validators.push(ValidationService.required());
@@ -52,6 +53,9 @@ export class ValidationService {
     }
     if (config.max !== undefined) {
       validators.push(ValidationService.maxLength(config.max));
+    }
+    if (config.pattern) {
+      validators.push(Validators.pattern(config.pattern));
     }
     return validators;
   }

@@ -19,7 +19,7 @@ const routes: Routes = [
       {path: 'bootcamps/:id', component: BootcampDetailComponent},
       {path: '**', redirectTo: 'technologies', pathMatch: 'full'}
     ]
-  },
+  }, 
   {path: '', redirectTo: 'home', pathMatch: 'full'}
 ];
 
