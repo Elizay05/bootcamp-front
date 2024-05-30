@@ -1,3 +1,7 @@
+@import 'src/assets/styles/variables.scss';
+@import 'src/styles.scss';
+
+
 .filter{
     display: flex;
     align-items: center;
@@ -34,10 +38,10 @@
     position: relative;
     width: 100%;
     max-height: 400px;
-    overflow-y: auto;
+    overflow-y:scroll;
     margin-top: 4%;
     &__back{
-        width: 92%;
+        width: 90%;
     }
     &__molecule{
         width: 100%;

@@ -17,7 +17,6 @@ import { variables } from 'src/app/util/variables.enum';
 export class VersionsBootcampComponent implements OnInit {
   data$ = this.versionBootcampService.data$;
 
-
   bootcamp: Bootcamp | undefined;
   
   totalPages: number = 0;
