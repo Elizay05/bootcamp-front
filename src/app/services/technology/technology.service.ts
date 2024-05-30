@@ -44,10 +44,6 @@ export class TechnologyService {
     return this.paginationState.asObservable();
   }
 
-   getPaginationState(): Observable<{ page: number, size: number, isAscending: boolean}> {
-    return this.paginationState.asObservable();
-  }
-
    updatePage(page: number): void {
     const currentState = this.paginationState.value;
     this.paginationState.next({ ...currentState, page });

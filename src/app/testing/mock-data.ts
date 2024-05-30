@@ -1,6 +1,7 @@
 import { PaginatedResult } from 'src/app/interfaces/paginated-result.interface';
 import { Technology } from '../interfaces/technology.interface';
 import { Capacity } from '../interfaces/capacity.interface';
+import { Bootcamp } from '../interfaces/bootcamp.interface';
 
 export const mockTechnology1: Technology = {
   id: 1,
@@ -41,6 +42,27 @@ export const mockCapacity1: Capacity = {
       technologies: []
   };
 
+  export const mockBootcamp1: Bootcamp = {
+    id: 1,
+    name: 'Bootcamp 1',
+    description: 'Description for Bootcamp 1',
+    capacities: []
+  };
+  
+  export const mockBootcamp2: Bootcamp = {
+      id: 2,
+      name: 'Bootcamp 2',
+      description: 'Description for Bootcamp 2',
+      capacities: []
+  };
+  
+  export const mockBootcamp3: Bootcamp = {
+      id: 3,
+      name: 'Bootcamp 3',
+      description: 'Description for Bootcamp 3',
+      capacities: []
+  };
+
 export const mockPaginatedTechnologyResult: PaginatedResult<Technology> = {
     content: [mockTechnology1, mockTechnology2, mockTechnology3],
     pageNumber: 0,
@@ -56,3 +78,11 @@ export const mockPaginatedCapacityResult: PaginatedResult<Capacity> = {
     totalElements: 1,
     totalPages: 1
 };
+
+export const mockPaginatedBootcampResult: PaginatedResult<Bootcamp> = {
+    content: [mockBootcamp1, mockBootcamp2, mockBootcamp3],
+    pageNumber: 0,
+    pageSize: 10,
+    totalElements: 1,
+    totalPages: 1
+  };

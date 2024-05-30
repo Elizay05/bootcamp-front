@@ -13,13 +13,13 @@ import { variables } from 'src/app/util/variables.enum';
   templateUrl: './bootcamps.component.html',
   styleUrls: ['./bootcamps.component.scss']
 })
-export class BootcampsComponent {
+export class BootcampsComponent implements OnInit {
 
   bootcamps: Bootcamp[] = [];
   capacities: Capacity[] = [];
-  path = PATH_BOOTCAMP;
 
   icon_add: string = icons.ADD
+  icon_arrow: string = icons.RIGTH_ARROW
 
   isModalFormOpen: boolean = false;
   isModalStatusOpen: boolean = false;
@@ -42,10 +42,15 @@ export class BootcampsComponent {
   constructor(private router: Router, 
     private bootcampService: BootcampService,
     private statusMessages: StatusMessagesService) {
-      this.bootcampService.getCapacities().subscribe(capacities => {
-        this.capacities = capacities;
-        this.formData.options = this.capacities;
-      })
+  }
+
+  ngOnInit(): void {
+    
+    this.bootcampService.getCapacities().subscribe(capacities => {
+      this.capacities = capacities;
+      this.formData.options = this.capacities;
+    });
+
   }
 
   openCreateModal(): void {
