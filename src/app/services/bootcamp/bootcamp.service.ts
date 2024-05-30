@@ -21,11 +21,11 @@ export class BootcampService {
     orderBy: true,
   });
 
-  private dataSubject = new BehaviorSubject<PaginatedResult<any> | null>(null);
-  public data$ = this.dataSubject.asObservable();
+  dataSubject = new BehaviorSubject<PaginatedResult<any> | null>(null);
+  data$ = this.dataSubject.asObservable();
 
-  private bootcamps: Bootcamp[] = [];
-  private bootcampSubject = new Subject<Bootcamp>();
+  bootcamps: Bootcamp[] = [];
+  bootcampSubject = new Subject<Bootcamp>();
 
   constructor(private httpClient: HttpClient) {
     this.loadBootcamps().subscribe();

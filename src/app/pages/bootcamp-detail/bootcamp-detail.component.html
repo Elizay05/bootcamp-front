@@ -15,7 +15,7 @@
     <molecule-button-icon class="button add-button" [icon]="icon_add" [text]="'Crear'" [classButton]="'primary'" [classIcon]="'secondary'" (click)='openCreateModal()'></molecule-button-icon>
 
     <ng-container *ngIf="isModalFormOpen">
-        <organism-modal-form (formSubmit)="onFormSubmit($event)" (closeModal)="isModalFormOpen = false" [formData]="formData" [isModalStatusOpen] ="isModalStatusOpen"></organism-modal-form>
+        <organism-modal-form (formSubmit)="onFormSubmit($event)" (closeModal)="isModalFormOpen = false" [formData]="formData"></organism-modal-form>
     </ng-container>
 
     <ng-container *ngIf="isModalStatusOpen">
