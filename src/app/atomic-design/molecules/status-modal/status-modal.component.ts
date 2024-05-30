@@ -18,5 +18,4 @@ export class StatusModalComponent {
   close(): void {
     this.closeModal.emit();
   }
-
 }

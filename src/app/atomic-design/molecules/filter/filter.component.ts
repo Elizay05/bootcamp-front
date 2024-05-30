@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { icons } from 'src/app/util/icons.enum';
 
 @Component({
@@ -64,7 +64,8 @@ export class FilterComponent {
     return Object.keys(this.optionsOrderBy);
   }
 
-  private getOrderKeyByValue(value: boolean): string {
-    return Object.keys(this.optionsOrderBy).find(key => this.optionsOrderBy[key] === value) || '';
+  getOrderKeyByValue(value: boolean): string {
+    return Object.keys(this.optionsOrderBy).find(key => this.optionsOrderBy[key] === value) ?? '';
   }
+
 }

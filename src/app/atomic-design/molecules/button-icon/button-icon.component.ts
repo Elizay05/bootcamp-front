@@ -14,5 +14,4 @@ import { Component, Input } from '@angular/core';
     @Input() classIcon: string = "";
 
     constructor() { }
-
   }

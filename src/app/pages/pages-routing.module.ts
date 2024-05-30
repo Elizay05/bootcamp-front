@@ -21,7 +21,7 @@ const routes: Routes = [
       {path: 'bootcamps/:id/versions', component: VersionsBootcampComponent},
       {path: '**', redirectTo: 'technologies', pathMatch: 'full'}
     ]
-  },
+  }, 
   {path: '', redirectTo: 'home', pathMatch: 'full'}
 ];
 
