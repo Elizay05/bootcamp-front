@@ -70,6 +70,16 @@ describe('StatusMessagesService', () => {
     expect(result.message).toBe('Ya existe elemento con ese nombre');
   });
 
+  it ('should handle Unauthorized error with credentials for login are invalid', () => {
+    const errorResponse = new HttpErrorResponse({
+      error: { message: apiErrors.CREDENTIALS_LOGIN_EXCEPTION_MESSAGE },
+      status: HttpStatusCode.Unauthorized,
+    });
+    const result = service.handleError(errorResponse);
+    expect(result.status_svg).toBe(StatusSvg.WARNING);
+    expect(result.message).toBe('Correo o contraseña incorrectos');
+  })
+  
   it('should handle Unauthorized error', () => {
     const errorResponse = new HttpErrorResponse({
       error: { message: 'Unauthorized error message' },

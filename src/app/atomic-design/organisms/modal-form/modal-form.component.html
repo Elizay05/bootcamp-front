@@ -29,8 +29,8 @@
                         <select *ngIf="showSelect" class="poppins-regular modal__content__body__form__section__select__input" (change)="onSelectionChange($event)">
                             <option class="poppins-regular" *ngFor="let option of formData.options" [value]="option.id">{{ option.name }}</option>
                         </select>
-                        <molecule-button-icon class="modal__content__body__form__section__select__button" [icon]="icon_add" [classIcon]="'secondary'" (click)="toggleInputSelect()" [disabled]="hasToggledInputSelect"></molecule-button-icon>
-                    </div>   
+                        <molecule-button-icon class="modal__content__body__form__section__select__button" [icon]="icon_add" [classIcon]="'secondary'" (click)="toggleInputSelect()"></molecule-button-icon>
+                    </div>  
                     <p *ngIf="isIncorrectSize !== 'valid'" class="modal__content__body__form__section__error">
                         {{ isIncorrectSize }}
                     </p>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Capacity } from 'src/app/interfaces/capacity.interface';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { BootcampService } from 'src/app/services/bootcamp/bootcamp.service';
 import { StatusMessagesService } from 'src/app/services/status/status-messages.service';
 import { icons } from 'src/app/util/icons.enum';
@@ -37,7 +38,9 @@ export class StartComponent implements OnInit {
 
   constructor(private router: Router, 
     private bootcampService: BootcampService,
-    private statusMessages: StatusMessagesService) {}
+    private statusMessages: StatusMessagesService,
+    private authService: AuthService,
+  ) {}
 
     ngOnInit(): void {
     this.bootcampService.getCapacities().subscribe(capacities => {
@@ -47,7 +50,9 @@ export class StartComponent implements OnInit {
   }
 
   openCreateModal(): void {
-    this.isModalFormOpen = true;
+    if (this.authService.getUserRole() === 'ADMINISTRATOR') {
+      this.isModalFormOpen = true;
+    }
   }
 
   onFormSubmit(formData: any): void {

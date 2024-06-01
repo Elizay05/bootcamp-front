@@ -8,6 +8,7 @@ import { Component, Input } from '@angular/core';
 export class ButtonComponent {
   @Input() text: string = '';
   @Input() primary: boolean = true;
+  @Input() secondary: boolean = false;
   @Input() isButtomCircle: boolean = false;
   @Input() disabled: boolean = false;
   @Input() active: boolean = false;

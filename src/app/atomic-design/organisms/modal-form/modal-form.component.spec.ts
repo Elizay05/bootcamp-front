@@ -176,18 +176,10 @@ describe('ModalFormComponent', () => {
 
   it('should toggle showSelect and hasToggledInputSelect properties', () => {
     expect(component.showSelect).toBe(false);
-    expect(component.hasToggledInputSelect).toBe(false);
   
     component.toggleInputSelect();
   
     expect(component.showSelect).toBe(true);
-    expect(component.hasToggledInputSelect).toBe(true);
-  });
-
-  it('should set showSelect to false if hasToggledInputSelect is true', () => {
-    component.hasToggledInputSelect = true;
-    component.toggleInputSelect();
-    expect(component.showSelect).toBe(false);
   });
 
   it('should add selected option to selectedOptions if not already selected', () => {

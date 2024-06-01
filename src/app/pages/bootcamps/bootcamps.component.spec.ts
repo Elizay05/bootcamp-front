@@ -130,4 +130,10 @@ describe('BootcampsComponent', () => {
     component.onNavigateToDetail(bootcampId);
     expect(router.navigate).toHaveBeenCalledWith([PATH_BOOTCAMP, bootcampId]);
   });
+
+  it('should navigate to bootcamp version', () => {
+    const bootcampId = 1;
+    component.onNavigateToVersion(bootcampId);
+    expect(router.navigate).toHaveBeenCalledWith([PATH_BOOTCAMP, bootcampId, 'versions']);
+  });
 });

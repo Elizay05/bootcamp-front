@@ -15,6 +15,7 @@ import { BootcampsComponent } from './bootcamps/bootcamps.component';
 import { BootcampDetailComponent } from './bootcamp-detail/bootcamp-detail.component';
 import { VersionsBootcampComponent } from './versions-bootcamp/versions-bootcamp.component';
 import { AtomsModule } from '../atomic-design/atoms/atoms.module';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { AtomsModule } from '../atomic-design/atoms/atoms.module';
     CapacityDetailComponent,
     BootcampsComponent,
     BootcampDetailComponent,
-    VersionsBootcampComponent
+    VersionsBootcampComponent,
+    LoginComponent
   ],
   imports: [
     CommonModule, 

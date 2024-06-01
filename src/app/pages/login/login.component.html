@@ -1,0 +1,14 @@
+<section class="content">
+    <img src="./assets/images/Logo_login.png" alt="OnClass">
+    <section class="content__buttons">
+        <atom-button [secondary]="true" [text]="'Iniciar Sesión'" (click)='openLogin()'></atom-button>
+    </section>
+
+    <ng-container *ngIf="isModalLoginOpen">
+        <organism-login-modal (formSubmit)="onLoginSubmit($event)" (closeModal)="isModalLoginOpen = false" [formData]="formDataLogin"></organism-login-modal>
+    </ng-container>
+
+    <ng-container *ngIf="isModalStatusOpen">
+        <molecule-status-modal (closeModal)="onCloseStatusModal()" [status]="this.status"></molecule-status-modal>
+    </ng-container>
+</section>

@@ -8,9 +8,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FormVersionComponent } from './form-version/form-version.component';
+import { LoginModalComponent } from './login-modal/login-modal.component';
 
 
-const organisms = [AsideComponent, ModalFormComponent, FormVersionComponent];
+const organisms = [AsideComponent, ModalFormComponent, FormVersionComponent, LoginModalComponent];
 
 @NgModule({
   declarations: [...organisms],

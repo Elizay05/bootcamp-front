@@ -8,10 +8,13 @@ import { CapacityDetailComponent } from './capacity-detail/capacity-detail.compo
 import { BootcampsComponent } from './bootcamps/bootcamps.component';
 import { BootcampDetailComponent } from './bootcamp-detail/bootcamp-detail.component';
 import { VersionsBootcampComponent } from './versions-bootcamp/versions-bootcamp.component';
+import { LoginComponent } from './login/login.component';
+import { RoleGuard } from '../guards/role/role.guard';
 
 const routes: Routes = [
-  {path: 'home', component: StartComponent},
-  {path: 'library', component: LibraryComponent,
+  {path: 'login', component: LoginComponent},
+  {path: 'home', component: StartComponent, canActivate: [RoleGuard], data: { expectedRoles: ['STUDENT', 'TUTOR', 'ADMINISTRATOR'] } },
+  {path: 'library', component: LibraryComponent, canActivate: [RoleGuard], data: { expectedRoles: ['ADMINISTRATOR'] },
     children: [
       {path: 'technologies', component: TechnologiesComponent},
       {path: 'capacities', component: CapacitiesComponent},
@@ -22,7 +25,7 @@ const routes: Routes = [
       {path: '**', redirectTo: 'technologies', pathMatch: 'full'}
     ]
   }, 
-  {path: '', redirectTo: 'home', pathMatch: 'full'}
+  {path: '', redirectTo: 'login', pathMatch: 'full'}
 ];
 
 @NgModule({

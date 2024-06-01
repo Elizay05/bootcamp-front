@@ -35,6 +35,6 @@ describe('ButtonComponent', () => {
     component.primary = true;
     fixture.detectChanges();
     const buttonElement: HTMLElement = fixture.nativeElement.querySelector('button');
-    expect(buttonElement.classList.contains('button--primary')).toBe(true);
+    expect(buttonElement.classList.contains('button__primary')).toBe(true);
   });
 });

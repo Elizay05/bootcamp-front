@@ -42,9 +42,14 @@ export class StatusMessagesService {
           message = `Ya existe ${nameSelect} con ese nombre`;
           svg = StatusSvg.WARNING;
       }
-    } else if (error.error.message && error.status === HttpStatusCode.Unauthorized) {
-      message = "Tu sesión ha expirado, inicia nuevamente";
-      svg = StatusSvg.WARNING;
+    } else if (error.status === HttpStatusCode.Unauthorized) {
+      if (error.error.message === apiErrors.CREDENTIALS_LOGIN_EXCEPTION_MESSAGE) {
+        message = "Correo o contraseña incorrectos";
+        svg = StatusSvg.WARNING;
+      } else {
+        message = "Tu sesión ha expirado, inicia nuevamente";
+        svg = StatusSvg.WARNING;
+      }
     } else if (error.error.message && error.status === HttpStatusCode.Forbidden) {
       message = "No tienes permisos para realizar esta operación";
       svg = StatusSvg.WARNING;

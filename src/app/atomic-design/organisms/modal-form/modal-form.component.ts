@@ -16,7 +16,6 @@ export class ModalFormComponent {
   showSelect = false;
   selectedOptions: Option[] = [];
   isIncorrectSize: string = "";
-  hasToggledInputSelect = false;
   validationMessages: any;
 
   icon_close = icons.CLOSE;
@@ -84,10 +83,7 @@ export class ModalFormComponent {
 
 
   toggleInputSelect(): void {
-    if (!this.hasToggledInputSelect) {
-      this.showSelect = !this.showSelect;
-      this.hasToggledInputSelect = true;
-    }
+    this.showSelect = true;
   }
 
   onSelectionChange(event: Event): void {

@@ -12,7 +12,7 @@
     text-align: center;
     border: 1px solid $primary-color;
     border-radius: 50px;
-    &--primary{
+    &__primary{
         width: auto;
         padding: 12px 24px;
         background-color: $primary-color;
@@ -28,29 +28,17 @@
             cursor: not-allowed;
         }
     }
-    &--secondary{
-        width: 170px;
-        &-student{
-            padding: 0px 24px;
+    &__secondary{
+        padding: 16px 47px;
+        background-color: rgba(253, 241, 233, 1);
+        color: $primary-color;
+        &:hover{
             background-color: $primary-color;
             color: $secondary-color;
-            &:hover{
-                color: $primary-color;
-                background-color: rgba(253, 241, 233, 1);
-            }
-        }
-        //Cuando haga el Page del login puedo ponerles un width de 100% y que el contenedor les de el mismo tamaño a los 2.
-        &-tutor{
-            padding: 16px 47px; //Me tocó modificar el padding vertical porque estaba quedando más pequeño que el de student
-            background-color: rgba(253, 241, 233, 1);
-            color: $primary-color;
-            &:hover{
-                background-color: $primary-color;
-                color: $secondary-color;
-            }
+            box-shadow: 0 8px 20px 0 $primary-color;
         }
     }
-    &--circle{
+    &__circle{
         width: auto;
         height: auto;
         padding: 5px 10px;

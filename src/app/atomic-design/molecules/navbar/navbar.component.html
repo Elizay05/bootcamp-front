@@ -1,3 +1,10 @@
 <nav class="navbar">
-    <img class="img" src="{{pathImage}}" alt="{{nameAltImage}}">
+    <section class="navbar__dropdown">
+        <img class="img" src="{{pathImage}}" alt="{{nameAltImage}}">
+        <div class="poppins-regular navbar__dropdown__content">
+          <p class="navbar__dropdown__content__param" (click)="logout()">
+            Cerrar sesión
+          </p>
+        </div>
+    </section>
 </nav>
