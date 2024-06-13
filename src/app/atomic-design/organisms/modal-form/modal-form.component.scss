@@ -1,6 +1,6 @@
 @import 'src/assets/styles/variables.scss';
 
-.modal{
+.modal {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -11,7 +11,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 1; 
+    z-index: 1;
     &__content {
         display: flex;
         flex-direction: column;
@@ -21,7 +21,7 @@
         width: 35%;
         height: auto;
         text-align: center;
-        &__header{
+        &__header {
             display: flex;
             justify-content: space-between;
             font-size: $font-size-medium;
@@ -30,15 +30,15 @@
             color: $primary-color;
             margin-bottom: 4%;
         }
-        &__body{
+        &__body {
             display: flex;
             flex-direction: column;
-            align-items:flex-start;
+            align-items: flex-start;
             padding: 3%;
             height: auto;
-            &__form{
+            &__form {
                 width: 100%;
-                &__sectionGeneral{
+                &__sectionGeneral {
                     display: flex;
                     flex-direction: column;
                     align-items: flex-start;
@@ -48,8 +48,8 @@
                     font-weight: 700;
                     width: 100%;
                     height: 100px;
-                    margin-bottom: 4%;    
-                    &__input{
+                    margin-bottom: 4%;
+                    &__input {
                         margin-top: 3%;
                         width: 100%;
                         height: 40px;
@@ -57,12 +57,12 @@
                         padding: 0% 4%;
                         border: 1px solid $primary-color;
                         background-color: $tertiary-color;
-                        &:focus{
+                        &:focus {
                             outline: none;
                             box-shadow: 0 0 8px rgba(231, 131, 61, 0.5);
                         }
                     }
-                    &__error{
+                    &__error {
                         text-align: start;
                         margin-top: 3%;
                         color: red;
@@ -70,7 +70,7 @@
                         font-weight: 300;
                     }
                 }
-                &__section{
+                &__section {
                     display: flex;
                     flex-direction: column;
                     align-items: flex-start;
@@ -79,17 +79,18 @@
                     color: $primary-color;
                     font-weight: 700;
                     width: 100%;
-                    margin-bottom: 4%;    
-                    &__list{
+                    margin-bottom: 4%;
+                    &__list {
                         display: flex;
                         flex-wrap: wrap;
-                        max-height: 150px;
+                        max-height: 100px;
                         overflow-y: auto;
                         gap: 2%;
                         margin-top: 3%;
                         width: 100%;
                         height: auto;
-                        &__item{
+                        &__item {
+                            font-size: 14px;
                             display: flex;
                             align-items: center;
                             justify-content: space-between;
@@ -103,8 +104,8 @@
                             padding: 2%;
                             border-radius: 24px;
                         }
-                    }        
-                    &__input{
+                    }
+                    &__input {
                         margin-top: 3%;
                         width: 100%;
                         height: 40px;
@@ -112,30 +113,31 @@
                         padding: 0% 4%;
                         border: 1px solid $primary-color;
                         background-color: $tertiary-color;
-                        &:focus{
+                        &:focus {
                             outline: none;
                             box-shadow: 0 0 8px rgba(231, 131, 61, 0.5);
                         }
                     }
-                    &__error{
+                    &__error {
                         text-align: start;
                         margin-top: 3%;
                         color: red;
                         font-size: 12px;
                         font-weight: 300;
                     }
-                    &__select{
+                    &__select {
                         display: flex;
-                        justify-content: space-between;
-                        align-items: center;
+                        flex-direction: column;
                         width: 100%;
                         position: relative;
-                        select{
-                            -webkit-appearance: none;
-                            -moz-appearance: none;
-                            appearance: none;    
-                        }
-                        &__input{
+                        &__input {
+                            justify-content: start;
+                            display: flex;
+                            align-items: center;
+                            font-size: small;
+                            color: rgb(108, 108, 108);
+                            font-family: Arial, Helvetica, sans-serif;
+                            font-weight: 400;
                             margin-top: 3%;
                             width: 100%;
                             height: 40px;
@@ -143,21 +145,42 @@
                             padding: 0% 4%;
                             border: 1px solid $primary-color;
                             background-color: $tertiary-color;
-                            &:focus{
+                            &:focus {
                                 outline: none;
                                 box-shadow: 0 0 8px rgba(231, 131, 61, 0.5);
                             }
                         }
-                        &__button{
-                            position: absolute; //Agregado
-                            right: 0.4em; //Agregado
-                            margin-top: 3%;
+                        &__button {
+                            position: absolute;
+                            right: 0.4em;
+                            margin-top: 4%;
+                        }
+                        &__options {
+                            color: black;
+                            font-size: 12px;
+                            position: absolute;
+                            top: calc(100% + 0.5em);
+                            width: 100%;
+                            background-color: white;
+                            border: 1px solid $primary-color;
+                            border-radius: 24px;
+                            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+                            max-height: 130px;
+                            overflow-y: auto;
+                        }
+                        &__option {
+                            text-align: start;
+                            padding: 5px 16px;
+                            cursor: pointer;
+                            &:hover {
+                                background-color: rgba(231, 131, 61, 0.3);
+                            }
                         }
                     }
                 }
             }
         }
-        &__footer{
+        &__footer {
             display: flex;
             justify-content: center;
             align-items: center;

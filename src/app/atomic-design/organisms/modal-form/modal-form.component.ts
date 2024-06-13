@@ -2,9 +2,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Option } from 'src/app/interfaces/option.interface';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ValidationService } from 'src/app/services/validation/validation.service';
-import { icons } from 'src/app/util/icons.enum';
 import { FormData } from 'src/app/interfaces/form-data.interface';
-
+import { ICONS } from 'src/app/util/icons.constants';
 
 @Component({
   selector: 'organism-modal-form',
@@ -18,11 +17,13 @@ export class ModalFormComponent {
   isIncorrectSize: string = "";
   validationMessages: any;
 
-  icon_close = icons.CLOSE;
-  icon_add = icons.ADD;
+  icon_close = ICONS.CLOSE;
+  icon_add = ICONS.ADD;
 
   @Input() formData: any = {};
   @Output() closeModal: EventEmitter<any> = new EventEmitter<any>();
+
+  selectedPlaceholder: string = 'Selecciona una opción';
 
   constructor(private fb: FormBuilder, 
     private validationService: ValidationService,
@@ -31,11 +32,10 @@ export class ModalFormComponent {
    }
 
   ngOnInit(): void {
-    console.log(this.formData)
 
     this.form = this.fb.group({
       nombre: ['', this.validationService.getStandardValidators({ required: true, min: 3, max: 50 })],
-      descripcion: ['', this.validationService.getStandardValidators({ required: true, min: 5, max: 200 })]
+      descripcion: ['', this.validationService.getStandardValidators({ required: true, min: 5, max: 90 })]
     });
 
     this.form.get('nombre')?.valueChanges.subscribe(() => {
@@ -81,9 +81,17 @@ export class ModalFormComponent {
     }
   } 
 
-
   toggleInputSelect(): void {
-    this.showSelect = true;
+    this.showSelect = !this.showSelect;
+  }
+
+  selectOption(option: Option): void {
+    if (!this.selectedOptions.some(opt => opt.id === option.id)) {
+      this.selectedOptions.push(option);
+      this.selectedPlaceholder = option.name;
+      this.showSelect = false;
+    }
+    this.updateValidationState();
   }
 
   onSelectionChange(event: Event): void {
@@ -107,8 +115,8 @@ export class ModalFormComponent {
 
   updateValidationState() {
     const result = this.validationService.validateListSize(
-      this.formData.minOptionsSize, 
-      this.formData.maxOptionsSize, 
+      this.formData.minOptionsSize,
+      this.formData.maxOptionsSize,
       this.selectedOptions,
       this.formData.selectName
     );
@@ -130,5 +138,4 @@ export class ModalFormComponent {
   close(): void {
     this.closeModal.emit();
   }
-
 }

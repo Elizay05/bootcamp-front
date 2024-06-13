@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { icons } from 'src/app/util/icons.enum';
+import { ICONS } from 'src/app/util/icons.constants';
 
 @Component({
   selector: 'molecule-pagination',
@@ -11,8 +11,8 @@ export class PaginationComponent {
   @Input() totalPages: number = 0;
   @Output() pageChange = new EventEmitter<number>();
 
-  icon_right_arrow = icons.RIGTH_ARROW;
-  icon_left_arrow = icons.LEFT_ARROW;
+  icon_right_arrow = ICONS.RIGTH_ARROW;
+  icon_left_arrow = ICONS.LEFT_ARROW;
 
   constructor() { }
 
@@ -22,10 +22,8 @@ export class PaginationComponent {
     if (this.totalPages <= 3) {
       pages = Array.from({ length: this.totalPages }, (_, i) => i);
     } else if (this.currentPage <= 1) {
-        // Primeras páginas
         pages = [0, 1, 2];
       } else if (this.currentPage >= this.totalPages - 2) {
-        // Últimas páginas
         pages = [this.totalPages - 3, this.totalPages - 2, this.totalPages - 1];
       } else {
           pages = [this.currentPage - 1, this.currentPage, this.currentPage + 1];

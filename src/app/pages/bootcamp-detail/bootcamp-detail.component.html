@@ -2,9 +2,9 @@
     <section *ngIf="bootcamp" class="section">
         <h1 class="poppins-semibold section__title">{{ bootcamp.name }}</h1>
         <p class="poppins-regular section__description">{{ bootcamp.description }}</p>
-        <h3 class="poppins-semibold section__subtitle">Capacidades:</h3> <!--Organizar las prioridades de las etiquetas-->
+        <h3 class="poppins-semibold section__subtitle">Capacidades:</h3>
         <section class="section__information">
-            <ul class="poppins-regular section__information__list"> <!--Organizar estos ul y li-->
+            <ul class="poppins-regular section__information__list">
                 <li class="poppins-semibold section__information__list__capacity" *ngFor="let cap of bootcamp.capacities">{{ cap.name }}
                     <ul class="poppins-regular section__information__listTech">
                         <p class="section__information__listTech__tech" *ngFor="let tech of cap.technologies">{{ tech.name }}</p>
@@ -21,4 +21,6 @@
     <ng-container *ngIf="isModalStatusOpen">
         <molecule-status-modal (closeModal)="onCloseStatusModal()" [status]="this.status"></molecule-status-modal>
     </ng-container>
+    
+    <molecule-auth-modal></molecule-auth-modal>
 </template-home>

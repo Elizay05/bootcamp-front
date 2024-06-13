@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Capacity } from 'src/app/interfaces/capacity.interface';
 import { Technology } from 'src/app/interfaces/technology.interface'; 
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { CapacityService } from 'src/app/services/capacity/capacity.service';
 import { StatusMessagesService } from 'src/app/services/status/status-messages.service';
-import { icons } from 'src/app/util/icons.enum';
-import { PATH_CAPACITY } from 'src/app/util/path-variables';
-import { variables } from 'src/app/util/variables.enum';
+import { ICONS } from 'src/app/util/icons.constants';
+import { PATHS } from 'src/app/util/paths.constants';
+import { INTENGERS } from 'src/app/util/intenger.constants';
 
 @Component({
   selector: 'page-capacities',
@@ -18,7 +19,7 @@ export class CapacitiesComponent implements OnInit {
 
   capacities: Capacity[] = [];
   technologies: Technology[] = [];
-  path = PATH_CAPACITY;
+  path = PATHS.CAPACITY;
   totalPages: number = 0;
   currentPage: number = 0;
 
@@ -35,7 +36,7 @@ export class CapacitiesComponent implements OnInit {
   initialOrderBy: boolean = true;
   initialAscending: boolean = true;
 
-  icon_add: string = icons.ADD
+  icon_add: string = ICONS.ADD
 
   isModalFormOpen: boolean = false;
   isModalStatusOpen: boolean = false;
@@ -49,16 +50,16 @@ export class CapacitiesComponent implements OnInit {
     placeholderSelect:"Seleccione las tecnologías de la capacidad",
     options: this.technologies,  
     onFormSubmit: this.onFormSubmit.bind(this),
-    minOptionsSize: variables.MIN_TECHNOLOGIES_SIZE,
-    maxOptionsSize: variables.MAX_TECHNOLOGIES_SIZE,
+    minOptionsSize: INTENGERS.MIN_TECHNOLOGIES_SIZE,
+    maxOptionsSize: INTENGERS.MAX_TECHNOLOGIES_SIZE,
   }
 
   status = {message: '', status_svg:''}
   
   constructor(private router: Router, 
     private capacityService: CapacityService,
-    private statusMessages: StatusMessagesService) {
-  }
+    private statusMessages: StatusMessagesService,
+    public authService: AuthService) {}
 
   ngOnInit(): void {
     this.capacityService.data$.subscribe(result => {
@@ -122,10 +123,12 @@ export class CapacitiesComponent implements OnInit {
   onCloseStatusModal(): void {
     this.isModalStatusOpen = false;
     this.capacityService.refreshData();
+    if (this.status.message === "Tu sesión ha expirado, inicia nuevamente") {
+      this.authService.redirectToLogin();
+    }
   }
 
   onNavigateToDetail(capacityId: number): void {
-    console.log(capacityId);
-    this.router.navigate([PATH_CAPACITY, capacityId]);
+    this.router.navigate([PATHS.CAPACITY, capacityId]);
   }
 }

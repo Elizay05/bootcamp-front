@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ValidationService } from 'src/app/services/validation/validation.service';
-import { icons } from 'src/app/util/icons.enum';
+import { ICONS } from 'src/app/util/icons.constants';
 
 @Component({
   selector: 'organism-form-version',
@@ -12,8 +12,8 @@ export class FormVersionComponent implements OnInit {
   form: FormGroup = new FormGroup({});
   validationMessages: any;
 
-  icon_close = icons.CLOSE;
-  icon_add = icons.ADD;
+  icon_close = ICONS.CLOSE;
+  icon_add = ICONS.ADD;
 
 
   @Input() formData: any = {};

@@ -5,8 +5,8 @@ import { LoginComponent } from './login.component';
 import { LoginService } from 'src/app/services/login/login.service';
 import { StatusMessagesService } from 'src/app/services/status/status-messages.service';
 import { AuthToken } from 'src/app/interfaces/auth-token.interface';
-import { PATH_START } from 'src/app/util/path-variables';
 import { HttpErrorResponse } from '@angular/common/http';
+import { PATHS } from 'src/app/util/paths.constants';
 
 
 describe('LoginComponent', () => {
@@ -61,7 +61,7 @@ describe('LoginComponent', () => {
     expect(loginService.login).toHaveBeenCalledWith(formData);
     expect(localStorage.getItem('authToken')).toBe('mock-token');
     expect(component.isModalLoginOpen).toBeFalse();
-    expect(navigateSpy).toHaveBeenCalledWith([PATH_START]);
+    expect(navigateSpy).toHaveBeenCalledWith([PATHS.START]);
   });
 
   it('should handle form submission error', () => {

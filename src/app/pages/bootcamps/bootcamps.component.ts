@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Bootcamp } from 'src/app/interfaces/bootcamp.interface';
 import { Capacity } from 'src/app/interfaces/capacity.interface';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { BootcampService } from 'src/app/services/bootcamp/bootcamp.service';
 import { StatusMessagesService } from 'src/app/services/status/status-messages.service';
-import { icons } from 'src/app/util/icons.enum';
-import { PATH_BOOTCAMP } from 'src/app/util/path-variables';
-import { variables } from 'src/app/util/variables.enum';
+import { ICONS } from 'src/app/util/icons.constants';
+import { PATHS } from 'src/app/util/paths.constants';
+import { INTENGERS } from 'src/app/util/intenger.constants';
 
 @Component({
   selector: 'app-bootcamps',
@@ -18,7 +19,7 @@ export class BootcampsComponent implements OnInit {
 
   bootcamps: Bootcamp[] = [];
   capacities: Capacity[] = [];
-  path = PATH_BOOTCAMP;
+  path = PATHS.BOOTCAMP;
   totalPages: number = 0;
   currentPage: number = 0;
 
@@ -35,8 +36,8 @@ export class BootcampsComponent implements OnInit {
   initialOrderBy: boolean = true;
   initialAscending: boolean = true;
 
-  icon_add: string = icons.ADD
-  icon_arrow: string = icons.RIGTH_ARROW
+  icon_add: string = ICONS.ADD
+  icon_arrow: string = ICONS.RIGTH_ARROW
 
   isModalFormOpen: boolean = false;
   isModalStatusOpen: boolean = false;
@@ -50,16 +51,16 @@ export class BootcampsComponent implements OnInit {
     placeholderSelect:"Seleccione las capacidades del bootcamp",
     options: this.capacities,  
     onFormSubmit: this.onFormSubmit.bind(this),
-    minOptionsSize: variables.MIN_CAPACITY_SIZE,
-    maxOptionsSize: variables.MAX_CAPACITY_SIZE,
+    minOptionsSize: INTENGERS.MIN_CAPACITY_SIZE,
+    maxOptionsSize: INTENGERS.MAX_CAPACITY_SIZE,
   }
 
   status = {message: '', status_svg:''}
   
   constructor(private router: Router, 
     private bootcampService: BootcampService,
-    private statusMessages: StatusMessagesService) {
-  }
+    private statusMessages: StatusMessagesService,
+    private authService: AuthService) {}
 
   ngOnInit(): void {
     this.bootcampService.data$.subscribe(result => {
@@ -123,13 +124,16 @@ export class BootcampsComponent implements OnInit {
   onCloseStatusModal(): void {
     this.isModalStatusOpen = false;
     this.bootcampService.refreshData();
+    if (this.status.message === "Tu sesión ha expirado, inicia nuevamente") {
+      this.authService.redirectToLogin();
+    }
   }
 
   onNavigateToDetail(bootcampId: number): void {
-    this.router.navigate([PATH_BOOTCAMP, bootcampId]);
+    this.router.navigate([PATHS.BOOTCAMP, bootcampId]);
   }
 
   onNavigateToVersion(bootcampId: number): void {
-    this.router.navigate([PATH_BOOTCAMP, bootcampId, 'versions']);
+    this.router.navigate([PATHS.BOOTCAMP, bootcampId, 'versions']);
   }
 }

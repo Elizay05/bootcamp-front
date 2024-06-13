@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Bootcamp } from 'src/app/interfaces/bootcamp.interface';
 import { Capacity } from 'src/app/interfaces/capacity.interface';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { BootcampService } from 'src/app/services/bootcamp/bootcamp.service';
 import { StatusMessagesService } from 'src/app/services/status/status-messages.service';
-import { icons } from 'src/app/util/icons.enum';
-import { PATH_BOOTCAMP } from 'src/app/util/path-variables';
-import { variables } from 'src/app/util/variables.enum';
+import { ICONS } from 'src/app/util/icons.constants';
+import { PATHS } from 'src/app/util/paths.constants';
+import { INTENGERS } from 'src/app/util/intenger.constants';
 
 @Component({
   selector: 'app-bootcamp-detail',
@@ -17,7 +18,7 @@ export class BootcampDetailComponent implements OnInit {
   bootcamp: Bootcamp | undefined;
 
   capacities: Capacity[] = [];
-  icon_add: string = icons.ADD
+  icon_add: string = ICONS.ADD
   isModalFormOpen: boolean = false;
   isModalStatusOpen: boolean = false;
 
@@ -30,8 +31,8 @@ export class BootcampDetailComponent implements OnInit {
     placeholderSelect:"Seleccione las capacidades del bootcamp",
     options: this.capacities,  
     onFormSubmit: this.onFormSubmit.bind(this),
-    minOptionsSize: variables.MIN_CAPACITY_SIZE,
-    maxOptionsSize: variables.MAX_CAPACITY_SIZE,
+    minOptionsSize: INTENGERS.MIN_CAPACITY_SIZE,
+    maxOptionsSize: INTENGERS.MAX_CAPACITY_SIZE,
   }
 
   status = {message: '', status_svg:''}
@@ -40,7 +41,8 @@ export class BootcampDetailComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private bootcampService: BootcampService,
-    private statusMessages: StatusMessagesService
+    private statusMessages: StatusMessagesService,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -86,9 +88,13 @@ export class BootcampDetailComponent implements OnInit {
   }
 
   onCloseStatusModal(): void {
-    this.router.navigate([PATH_BOOTCAMP]);
-    this.isModalStatusOpen = false;
-    this.bootcampService.refreshData();
+    if (this.status.message === "Tu sesión ha expirado, inicia nuevamente") {
+      this.authService.redirectToLogin();
+    }else{
+      this.router.navigate([PATHS.BOOTCAMP]);
+      this.isModalStatusOpen = false;
+      this.bootcampService.refreshData();
+    }
   }
 }
 

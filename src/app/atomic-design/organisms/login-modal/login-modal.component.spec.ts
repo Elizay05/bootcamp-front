@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
 import { LoginModalComponent } from './login-modal.component';
 import { ValidationService } from 'src/app/services/validation/validation.service';
+import { VALIDATION_MESSAGES, formatValidationMessage } from 'src/app/util/validation-messages.constants';
 
 describe('LoginModalComponent', () => {
   let component: LoginModalComponent;
@@ -55,43 +56,51 @@ describe('LoginModalComponent', () => {
   });
 
   it('should return error message for required validation', () => {
+    const controlNameResponse = 'correo';
     const controlName = 'email';
     const control = component.form.get(controlName);
     control?.markAsTouched();
     control?.setErrors({ required: true });
 
     const errorMessage = component.getErrorMessage(controlName);
-    expect(errorMessage).toBe('ⓘ El campo correo es obligatorio.');
+    const expectedMessage = formatValidationMessage(VALIDATION_MESSAGES.REQUIRED, { fieldName: controlNameResponse });
+    expect(errorMessage).toBe(expectedMessage);
   });
 
   it('should return error message for minlength validation', () => {
+    const controlNameResponse = 'contraseña';
     const controlName = 'password';
     const control = component.form.get(controlName);
     control?.markAsTouched();
     control?.setErrors({ minlength: { requiredLength: 3, actualLength: 1 } });
 
     const errorMessage = component.getErrorMessage(controlName);
-    expect(errorMessage).toBe('ⓘ El campo contraseña debe tener al menos 3 caracteres.');
+    const expectedMessage = formatValidationMessage(VALIDATION_MESSAGES.MINLENGTH, { requiredLength: 3, fieldName: controlNameResponse });
+    expect(errorMessage).toBe(expectedMessage);
   });
 
   it('should return error message for maxlength validation', () => {
+    const controlNameResponse = 'correo';
     const controlName = 'email';
     const control = component.form.get(controlName);
     control?.markAsTouched();
     control?.setErrors({ maxlength: { requiredLength: 50, actualLength: 51 } });
 
     const errorMessage = component.getErrorMessage(controlName);
-    expect(errorMessage).toBe('ⓘ El campo correo no debe exceder los 50 caracteres.');
+    const expectedMessage = formatValidationMessage(VALIDATION_MESSAGES.MAXLENGTH, { requiredLength: 50, fieldName: controlNameResponse });
+    expect(errorMessage).toBe(expectedMessage);
   });
 
   it('should return error message for email validation', () => {
+    const controlNameResponse = 'correo';
     const controlName = 'email';
     const control = component.form.get(controlName);
     control?.markAsTouched();
     control?.setErrors({ email: true });
 
     const errorMessage = component.getErrorMessage(controlName);
-    expect(errorMessage).toBe('ⓘ El campo correo no es valido.');
+    const expectedMessage = formatValidationMessage(VALIDATION_MESSAGES.EMAIL, { fieldName: controlNameResponse });
+    expect(errorMessage).toBe(expectedMessage);
   });
 
   it('should return empty string if control is pristine', () => {

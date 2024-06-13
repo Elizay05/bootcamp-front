@@ -10,7 +10,6 @@ describe('AsideComponent', () => {
   let fixture: ComponentFixture<AsideComponent>;
   let authService: AuthService;
 
-  // Función para simular un token válido en localStorage
   const setupLocalStorage = (token: string) => {
     localStorage.setItem('authToken', token);
   };

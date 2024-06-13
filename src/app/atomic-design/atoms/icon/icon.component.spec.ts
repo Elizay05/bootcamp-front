@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { IconComponent } from './icon.component';
-import { icons } from 'src/app/util/icons.enum';
 import { AtomsModule } from '../atoms.module';
+import { ICONS } from 'src/app/util/icons.constants';
 
 class MockDomSanitizer {
   bypassSecurityTrustHtml(value: string): SafeHtml {
@@ -36,7 +36,7 @@ describe('IconComponent', () => {
   });
 
   it('should load SVG content', async () => {
-    const svgPath = icons.HOME;
+    const svgPath = ICONS.HOME;
     const mockSvgResponse = '<svg></svg>';
     spyOn(component, 'loadSVG').and.callThrough();
     spyOn(sanitizer, 'bypassSecurityTrustHtml').and.returnValue(mockSvgResponse as any);
@@ -61,7 +61,7 @@ describe('IconComponent', () => {
   });
 
   it('should call loadSVG when iconName changes', () => {
-    const svgPath = icons.HOME;
+    const svgPath = ICONS.HOME;
     const mockSvgResponse = '<svg></svg>';
     spyOn(component, 'loadSVG').and.callThrough();
     spyOn(sanitizer, 'bypassSecurityTrustHtml').and.returnValue(mockSvgResponse as any);

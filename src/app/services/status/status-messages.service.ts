@@ -1,58 +1,59 @@
 import { Injectable } from '@angular/core';
-import { StatusSvg } from 'src/app/util/status.enum';
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
-import { apiErrors } from 'src/app/util/api-errors.enum';
+import { CONTROL_RESPONSES, getControlResponseMessage } from 'src/app/util/control-responses.constants';
+import { STATUS_SVG } from 'src/app/util/status.constants';
+import { API_EXCEPTIONS } from 'src/app/util/api-errors.constants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StatusMessagesService {
   dataStatus = {
-    status_svg: StatusSvg.SUCCESS,
+    status_svg: STATUS_SVG.SUCCESS,
     message: ""
   };
 
   constructor() { }
 
   handleSuccess = (response: any, message: string): any => {
-    this.dataStatus.status_svg = StatusSvg.SUCCESS;
+    this.dataStatus.status_svg = STATUS_SVG.SUCCESS;
     this.dataStatus.message = message;
     return this.dataStatus;
   };
 
   handleError = (error: HttpErrorResponse, nameSelect?: string): any => {
-    let message = "Error desconocido";
-    let svg = StatusSvg.ERROR;
+    let message = CONTROL_RESPONSES.UNKNOWN_ERROR;
+    let svg = STATUS_SVG.ERROR;
 
     if (error.error.message && error.status === HttpStatusCode.BadRequest) {
       switch (error.error.message) {
-        case apiErrors.STARTDATE_BEFORE_CURRENTDATE_EXCEPTION_MESSAGE:
-          message = "La fecha de inicio no puede ser anterior a la fecha actual.";
-          svg = StatusSvg.WARNING;
+        case API_EXCEPTIONS.STARTDATE_BEFORE_CURRENTDATE_EXCEPTION_MESSAGE:
+          message = CONTROL_RESPONSES.STARTDATE_BEFORE_CURRENTDATE;
+          svg = STATUS_SVG.WARNING;
           break;
-        case apiErrors.STARTDATE_AFTER_ENDDATE_EXCEPTION_MESSAGE:
-          message = "La fecha de inicio no puede ser posterior a la fecha de fin.";
-          svg = StatusSvg.WARNING;
+        case API_EXCEPTIONS.STARTDATE_AFTER_ENDDATE_EXCEPTION_MESSAGE:
+          message = CONTROL_RESPONSES.STARTDATE_AFTER_ENDDATE;
+          svg = STATUS_SVG.WARNING;
           break;
-        case apiErrors.DATE_VERSIONBOOTCAMP_ALREADY_USE_EXCEPTION_MESSAGE:
-          message = "La fecha de inicio o finalización ya está en uso para este bootcamp."
-          svg = StatusSvg.WARNING;
+        case API_EXCEPTIONS.DATE_VERSIONBOOTCAMP_ALREADY_USE_EXCEPTION_MESSAGE:
+          message = CONTROL_RESPONSES.DATE_VERSIONBOOTCAMP_ALREADY_USE;
+          svg = STATUS_SVG.WARNING;
           break;
         default:
-          message = `Ya existe ${nameSelect} con ese nombre`;
-          svg = StatusSvg.WARNING;
+          message = getControlResponseMessage(CONTROL_RESPONSES.NAME_ALREADY_EXISTS, { name: nameSelect ?? 'elemento' });
+          svg = STATUS_SVG.WARNING;
       }
     } else if (error.status === HttpStatusCode.Unauthorized) {
-      if (error.error.message === apiErrors.CREDENTIALS_LOGIN_EXCEPTION_MESSAGE) {
-        message = "Correo o contraseña incorrectos";
-        svg = StatusSvg.WARNING;
+      if (error.error.message === API_EXCEPTIONS.CREDENTIALS_LOGIN_EXCEPTION_MESSAGE) {
+        message = CONTROL_RESPONSES.CREDENTIALS_LOGIN_EXCEPTION;
+        svg = STATUS_SVG.WARNING;
       } else {
-        message = "Tu sesión ha expirado, inicia nuevamente";
-        svg = StatusSvg.WARNING;
+        message = CONTROL_RESPONSES.SESSION_EXPIRED;
+        svg = STATUS_SVG.WARNING;
       }
     } else if (error.error.message && error.status === HttpStatusCode.Forbidden) {
-      message = "No tienes permisos para realizar esta operación";
-      svg = StatusSvg.WARNING;
+      message = CONTROL_RESPONSES.NO_PERMISSIONS;
+      svg = STATUS_SVG.WARNING;
     }
 
     this.dataStatus.message = message;

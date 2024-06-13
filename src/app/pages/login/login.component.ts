@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AuthToken } from 'src/app/interfaces/auth-token.interface';
 import { LoginService } from 'src/app/services/login/login.service';
 import { StatusMessagesService } from 'src/app/services/status/status-messages.service';
-import { PATH_START } from 'src/app/util/path-variables';
+import { PATHS } from 'src/app/util/paths.constants';
 
 @Component({
   selector: 'app-login',
@@ -37,7 +37,7 @@ export class LoginComponent {
         const token = login.token;
         localStorage.setItem('authToken', token);
         this.isModalLoginOpen = false;
-        this.router.navigate([PATH_START]);
+        this.router.navigate([PATHS.START]);
       },
       error: (error) => {
         this.isModalLoginOpen = false;

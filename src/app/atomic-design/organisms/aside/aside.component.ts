@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { icons } from 'src/app/util/icons.enum';
+import { ICONS } from 'src/app/util/icons.constants';
 
 @Component({
   selector: 'organism-aside',
@@ -10,8 +10,8 @@ import { icons } from 'src/app/util/icons.enum';
 export class AsideComponent {
   @Input() pathImage: string = '';
   @Input() nameAltImage: string = '';
-  public iconHome = icons.HOME;
-  public iconLibrary = icons.LIBRARY;
+  public iconHome = ICONS.HOME;
+  public iconLibrary = ICONS.LIBRARY;
   public isLoggedIn: boolean = false;
 
   constructor(public authService: AuthService) {

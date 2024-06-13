@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ValidationService } from 'src/app/services/validation/validation.service';
-import { icons } from 'src/app/util/icons.enum';
+import { ICONS } from 'src/app/util/icons.constants';
 
 @Component({
   selector: 'organism-login-modal',
@@ -12,7 +12,7 @@ export class LoginModalComponent implements OnInit {
   form: FormGroup = new FormGroup({});
   validationMessages: any;
 
-  icon_close = icons.CLOSE;
+  icon_close = ICONS.CLOSE;
 
   @Input() formData: any = {};
   @Output() closeModal: EventEmitter<any> = new EventEmitter<any>();

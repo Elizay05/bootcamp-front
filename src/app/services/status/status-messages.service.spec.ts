@@ -1,8 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { StatusMessagesService } from './status-messages.service';
-import { StatusSvg } from 'src/app/util/status.enum';
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
-import { apiErrors } from 'src/app/util/api-errors.enum';
+import { STATUS_SVG } from 'src/app/util/status.constants';
+import { API_EXCEPTIONS } from 'src/app/util/api-errors.constants';
+import { CONTROL_RESPONSES, getControlResponseMessage } from 'src/app/util/control-responses.constants';
 
 
 describe('StatusMessagesService', () => {
@@ -21,41 +22,41 @@ describe('StatusMessagesService', () => {
     const message = 'Operación exitosa';
     const response = {};
     const result = service.handleSuccess(response, message);
-    expect(result.status_svg).toBe(StatusSvg.SUCCESS);
+    expect(result.status_svg).toBe(STATUS_SVG.SUCCESS);
     expect(result.message).toBe(message);
   });
 
   it('should handle BadRequest error with specific message for STARTDATE_BEFORE_CURRENTDATE_EXCEPTION_MESSAGE', () => {
     const errorResponse = new HttpErrorResponse({
-      error: { message: apiErrors.STARTDATE_BEFORE_CURRENTDATE_EXCEPTION_MESSAGE },
+      error: { message: API_EXCEPTIONS.STARTDATE_BEFORE_CURRENTDATE_EXCEPTION_MESSAGE },
       status: HttpStatusCode.BadRequest,
     });
     const nameSelect = 'elemento';
     const result = service.handleError(errorResponse, nameSelect);
-    expect(result.status_svg).toBe(StatusSvg.WARNING);
-    expect(result.message).toBe('La fecha de inicio no puede ser anterior a la fecha actual.');
+    expect(result.status_svg).toBe(STATUS_SVG.WARNING);
+    expect(result.message).toBe(CONTROL_RESPONSES.STARTDATE_BEFORE_CURRENTDATE);
   });
 
   it('should handle BadRequest error with specific message for STARTDATE_AFTER_ENDDATE_EXCEPTION_MESSAGE', () => {
     const errorResponse = new HttpErrorResponse({
-      error: { message: apiErrors.STARTDATE_AFTER_ENDDATE_EXCEPTION_MESSAGE },
+      error: { message: API_EXCEPTIONS.STARTDATE_AFTER_ENDDATE_EXCEPTION_MESSAGE },
       status: HttpStatusCode.BadRequest,
     });
     const nameSelect = 'elemento';
     const result = service.handleError(errorResponse, nameSelect);
-    expect(result.status_svg).toBe(StatusSvg.WARNING);
-    expect(result.message).toBe('La fecha de inicio no puede ser posterior a la fecha de fin.');
+    expect(result.status_svg).toBe(STATUS_SVG.WARNING);
+    expect(result.message).toBe(CONTROL_RESPONSES.STARTDATE_AFTER_ENDDATE);
   });
 
   it('should handle BadRequest error with specific message for DATE_VERSIONBOOTCAMP_ALREADY_USE_EXCEPTION_MESSAGE', () => {
     const errorResponse = new HttpErrorResponse({
-      error: { message: apiErrors.DATE_VERSIONBOOTCAMP_ALREADY_USE_EXCEPTION_MESSAGE },
+      error: { message: API_EXCEPTIONS.DATE_VERSIONBOOTCAMP_ALREADY_USE_EXCEPTION_MESSAGE },
       status: HttpStatusCode.BadRequest,
     });
     const nameSelect = 'elemento';
     const result = service.handleError(errorResponse, nameSelect);
-    expect(result.status_svg).toBe(StatusSvg.WARNING);
-    expect(result.message).toBe('La fecha de inicio o finalización ya está en uso para este bootcamp.');
+    expect(result.status_svg).toBe(STATUS_SVG.WARNING);
+    expect(result.message).toBe(CONTROL_RESPONSES.DATE_VERSIONBOOTCAMP_ALREADY_USE);
   });
 
 
@@ -65,19 +66,20 @@ describe('StatusMessagesService', () => {
       status: HttpStatusCode.BadRequest,
     });
     const nameSelect = 'elemento';
+    const expectedControlMessage = getControlResponseMessage(CONTROL_RESPONSES.NAME_ALREADY_EXISTS, { name: nameSelect }); 
     const result = service.handleError(errorResponse, nameSelect);
-    expect(result.status_svg).toBe(StatusSvg.WARNING);
-    expect(result.message).toBe('Ya existe elemento con ese nombre');
+    expect(result.status_svg).toBe(STATUS_SVG.WARNING);
+    expect(result.message).toBe(expectedControlMessage);
   });
 
   it ('should handle Unauthorized error with credentials for login are invalid', () => {
     const errorResponse = new HttpErrorResponse({
-      error: { message: apiErrors.CREDENTIALS_LOGIN_EXCEPTION_MESSAGE },
+      error: { message: API_EXCEPTIONS.CREDENTIALS_LOGIN_EXCEPTION_MESSAGE },
       status: HttpStatusCode.Unauthorized,
     });
     const result = service.handleError(errorResponse);
-    expect(result.status_svg).toBe(StatusSvg.WARNING);
-    expect(result.message).toBe('Correo o contraseña incorrectos');
+    expect(result.status_svg).toBe(STATUS_SVG.WARNING);
+    expect(result.message).toBe(CONTROL_RESPONSES.CREDENTIALS_LOGIN_EXCEPTION);
   })
   
   it('should handle Unauthorized error', () => {
@@ -86,8 +88,8 @@ describe('StatusMessagesService', () => {
       status: HttpStatusCode.Unauthorized,
     });
     const result = service.handleError(errorResponse);
-    expect(result.status_svg).toBe(StatusSvg.WARNING);
-    expect(result.message).toBe('Tu sesión ha expirado, inicia nuevamente');
+    expect(result.status_svg).toBe(STATUS_SVG.WARNING);
+    expect(result.message).toBe(CONTROL_RESPONSES.SESSION_EXPIRED);
   });
 
   it('should handle Forbidden error', () => {
@@ -96,8 +98,8 @@ describe('StatusMessagesService', () => {
       status: HttpStatusCode.Forbidden,
     });
     const result = service.handleError(errorResponse);
-    expect(result.status_svg).toBe(StatusSvg.WARNING);
-    expect(result.message).toBe('No tienes permisos para realizar esta operación');
+    expect(result.status_svg).toBe(STATUS_SVG.WARNING);
+    expect(result.message).toBe(CONTROL_RESPONSES.NO_PERMISSIONS);
   });
 
   it('should handle unknown error', () => {
@@ -106,7 +108,7 @@ describe('StatusMessagesService', () => {
       status: HttpStatusCode.InternalServerError,
     });
     const result = service.handleError(errorResponse);
-    expect(result.status_svg).toBe(StatusSvg.ERROR);
-    expect(result.message).toBe('Error desconocido');
+    expect(result.status_svg).toBe(STATUS_SVG.ERROR);
+    expect(result.message).toBe(CONTROL_RESPONSES.UNKNOWN_ERROR);
   });
 });

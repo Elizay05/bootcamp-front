@@ -1,0 +1,16 @@
+<section class="status" *ngIf="openModalAuth">
+    <article class="status__modal">
+        <section class="status__modal__content">
+            <header class="status__modal__content__header">
+                <img [src]="status.status_svg" alt="success" class="status__modal__content__header__sgv-responsive">
+                <atom-icon (click)="onCloseModal()" [iconName]="icon_close" [classIcon]="'primary__closeForm'"></atom-icon>
+            </header>
+            <body class="status__modal__content__body">
+                <h2 class="poppins-regular">{{ status.message }}</h2>
+            </body>
+            <footer class="status__modal__content__footer">
+                <atom-button [primary]="true" [text]="'Aceptar'" (click)="onCloseModal()"></atom-button>
+            </footer>
+        </section>
+    </article>
+</section>

@@ -9,6 +9,7 @@ export class RoleGuard implements CanActivate {
 
   constructor(private authService: AuthService, private router: Router) { }
 
+
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean | UrlTree {

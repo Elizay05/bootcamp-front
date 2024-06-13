@@ -5,6 +5,7 @@ import { ValidationService } from 'src/app/services/validation/validation.servic
 import { Option } from 'src/app/interfaces/option.interface';
 import { OrganismsModule } from '../organisms.module';
 import { MoleculesModule } from '../../molecules/molecules.module';
+import { VALIDATION_MESSAGES, formatValidationMessage } from 'src/app/util/validation-messages.constants';
 
 describe('ModalFormComponent', () => {
   let component: ModalFormComponent;
@@ -71,7 +72,8 @@ describe('ModalFormComponent', () => {
     control?.setErrors({ required: true });
 
     const errorMessage = component.getErrorMessage(controlName);
-    expect(errorMessage).toBe('ⓘ El campo nombre es obligatorio.');
+    const expectedMessage = formatValidationMessage(VALIDATION_MESSAGES.REQUIRED, { fieldName: controlName });
+    expect(errorMessage).toBe(expectedMessage);
   });
 
   it('should return error message for minlength validation', () => {
@@ -81,7 +83,8 @@ describe('ModalFormComponent', () => {
     control?.setErrors({ minlength: { requiredLength: 3, actualLength: 1 } });
 
     const errorMessage = component.getErrorMessage(controlName);
-    expect(errorMessage).toBe('ⓘ El campo nombre debe tener al menos 3 caracteres.');
+    const expectedMessage = formatValidationMessage(VALIDATION_MESSAGES.MINLENGTH, { requiredLength: 3, fieldName: controlName });
+    expect(errorMessage).toBe(expectedMessage);
   });
 
   it('should return error message for maxlength validation', () => {
@@ -91,7 +94,8 @@ describe('ModalFormComponent', () => {
     control?.setErrors({ maxlength: { requiredLength: 50, actualLength: 51 } });
 
     const errorMessage = component.getErrorMessage(controlName);
-    expect(errorMessage).toBe('ⓘ El campo nombre no debe exceder los 50 caracteres.');
+    const expectedMessage = formatValidationMessage(VALIDATION_MESSAGES.MAXLENGTH, { requiredLength: 50, fieldName: controlName });
+    expect(errorMessage).toBe(expectedMessage);
   });
 
   it('should return empty string if control is pristine', () => {
@@ -135,32 +139,6 @@ describe('ModalFormComponent', () => {
     });
   });
 
-
-    /*
-    it('should submit form with technologies data if isSelectCapacity is true', () => {
-      component.formData.isSelectCapacity = true;
-      spyOn(component.formData, 'onFormSubmit');
-      component.selectedOptions = [
-        { id: 1, name: 'Technology 1' },
-        { id: 2, name: 'Technology 2' },
-        { id: 3, name: 'Technology 3' }
-      ];
-    
-      component.form.setValue({
-        nombre: 'Test Name',
-        descripcion: 'Test Description'
-      });
-    
-      component.submitForm();
-    
-      expect(component.formData.onFormSubmit).toHaveBeenCalledWith({
-        name: 'Test Name',
-        description: 'Test Description',
-        technologies: [1, 2, 3]
-      });
-    });
-    */
-
   it('should not submit form with incorrect data', () => {
     component.formData.onFormSubmit = jasmine.createSpy('onFormSubmit');
   
@@ -180,6 +158,37 @@ describe('ModalFormComponent', () => {
     component.toggleInputSelect();
   
     expect(component.showSelect).toBe(true);
+  });
+
+  it('should add selected option if not already selected, update placeholder, hide select and update validation state', () => {
+    const mockOption: Option = { id: 1, name: 'Option 1' };
+    component.selectedOptions = [];
+    component.showSelect = true;
+  
+    spyOn(component, 'updateValidationState');
+  
+    component.selectOption(mockOption);
+  
+    expect(component.selectedOptions).toContain(mockOption);
+    expect(component.selectedPlaceholder).toBe(mockOption.name);
+    expect(component.showSelect).toBe(false);
+    expect(component.updateValidationState).toHaveBeenCalled();
+  });
+  
+  it('should not add selected option if already selected and should not change placeholder or showSelect', () => {
+    const mockOption: Option = { id: 1, name: 'Option 1' };
+    component.selectedOptions = [mockOption];
+    component.selectedPlaceholder = 'Option 1';
+    component.showSelect = true;
+  
+    spyOn(component, 'updateValidationState');
+  
+    component.selectOption(mockOption);
+  
+    expect(component.selectedOptions.length).toBe(1);
+    expect(component.selectedPlaceholder).toBe('Option 1');
+    expect(component.showSelect).toBe(true);
+    expect(component.updateValidationState).toHaveBeenCalled();
   });
 
   it('should add selected option to selectedOptions if not already selected', () => {

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ValidatorFn, Validators } from '@angular/forms';
+import { Validators, ValidatorFn } from '@angular/forms';
+import { VALIDATION_MESSAGES, formatValidationMessage } from 'src/app/util/validation-messages.constants';
 
 @Injectable({
   providedIn: 'root'
@@ -10,11 +11,11 @@ export class ValidationService {
 
   static getValidationMessages() {
     return {
-      required: (fieldName: string) => `ⓘ El campo ${fieldName} es obligatorio.`,
-      minlength: (fieldName: string, requiredLength: number) => `ⓘ El campo ${fieldName} debe tener al menos ${requiredLength} caracteres.`,
-      maxlength: (fieldName: string, requiredLength: number) => `ⓘ El campo ${fieldName} no debe exceder los ${requiredLength} caracteres.`,
-      email: (fieldName: string) =>  `ⓘ El campo ${fieldName} no es valido.`,
-      pattern: (fieldName: string) => `ⓘ El campo ${fieldName} no es valido.`,
+      required: (fieldName: string) => formatValidationMessage(VALIDATION_MESSAGES.REQUIRED, { fieldName }),
+      minlength: (fieldName: string, requiredLength: number) => formatValidationMessage(VALIDATION_MESSAGES.MINLENGTH, { fieldName, requiredLength }),
+      maxlength: (fieldName: string, requiredLength: number) => formatValidationMessage(VALIDATION_MESSAGES.MAXLENGTH, { fieldName, requiredLength }),
+      email: (fieldName: string) => formatValidationMessage(VALIDATION_MESSAGES.EMAIL, { fieldName }),
+      pattern: (fieldName: string) => formatValidationMessage(VALIDATION_MESSAGES.PATTERN, { fieldName }),
     };
   }
 
@@ -36,19 +37,20 @@ export class ValidationService {
 
   validateListSize(minSize: number, maxSize: number, list: any[], fieldName: string): { valid: boolean, message?: string } {
     let message;
-  
+    let fieldNameMinus = fieldName.charAt(0).toLowerCase() + fieldName.slice(1);
+
     if (list.length === 0) {
-      message = `Seleccione las ${fieldName}.`;
+      message = formatValidationMessage(VALIDATION_MESSAGES.SELECT_ITEMS, { fieldName: fieldNameMinus });
     } else if (list.length < minSize) {
-      message = `Debe seleccionar mínimo ${minSize} ${fieldName}.`;
+      message = formatValidationMessage(VALIDATION_MESSAGES.MIN_ITEMS, { minSize, fieldName: fieldNameMinus });
     } else if (list.length > maxSize) {
-      message = `Debe seleccionar máximo ${maxSize} ${fieldName}.`;
+      message = formatValidationMessage(VALIDATION_MESSAGES.MAX_ITEMS, { maxSize, fieldName: fieldNameMinus });
     }
-  
+
     return { valid: !message, message };
   }
 
-  getStandardValidators(config: { required?: boolean, min?: number, max?: number, pattern?: string, email?:boolean }): ValidatorFn[] {
+  getStandardValidators(config: { required?: boolean, min?: number, max?: number, pattern?: string, email?: boolean }): ValidatorFn[] {
     const validators: ValidatorFn[] = [];
     if (config.required) {
       validators.push(ValidationService.required());
@@ -62,7 +64,7 @@ export class ValidationService {
     if (config.pattern) {
       validators.push(Validators.pattern(config.pattern));
     }
-    if (config.email){
+    if (config.email) {
       validators.push(ValidationService.email());
     }
     return validators;

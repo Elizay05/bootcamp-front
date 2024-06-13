@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TechnologyService } from 'src/app/services/technology/technology.service';
 import { StatusMessagesService } from 'src/app/services/status/status-messages.service';
-import { icons } from 'src/app/util/icons.enum';
 import { Technology } from 'src/app/interfaces/technology.interface';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { ICONS } from 'src/app/util/icons.constants';
 
 
 
@@ -25,7 +26,7 @@ export class TechnologiesComponent implements OnInit {
   initialAscending: boolean = true;
 
 
-  icon_add: string = icons.ADD
+  icon_add: string = ICONS.ADD
 
   isModalFormOpen: boolean = false;
   isModalStatusOpen: boolean = false;
@@ -41,8 +42,8 @@ export class TechnologiesComponent implements OnInit {
   
   constructor(private router: Router, 
     private technologyService: TechnologyService, 
-    private statusMessages: StatusMessagesService) {
-  }
+    private statusMessages: StatusMessagesService,
+    private authService: AuthService) {}
 
   ngOnInit(): void {
     this.technologyService.data$.subscribe(result => {
@@ -71,7 +72,6 @@ export class TechnologiesComponent implements OnInit {
     this.technologyService.updateOrder(isAscending);
   }
 
-
   openCreateModal(): void {
     this.isModalFormOpen = true;
   }
@@ -95,5 +95,8 @@ export class TechnologiesComponent implements OnInit {
   onCloseStatusModal(): void {
     this.isModalStatusOpen = false;
     this.technologyService.refreshData();
+    if (this.status.message === "Tu sesión ha expirado, inicia nuevamente") {
+      this.authService.redirectToLogin();
+    }
   }
 }

@@ -6,18 +6,22 @@ import { mockTechnology1, mockTechnology2, mockTechnology3, mockPaginatedCapacit
 import { CapacityService } from 'src/app/services/capacity/capacity.service';
 import { StatusMessagesService } from 'src/app/services/status/status-messages.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { PATH_CAPACITY } from 'src/app/util/path-variables';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { PATHS } from 'src/app/util/paths.constants';
+import { CONTROL_RESPONSES } from 'src/app/util/control-responses.constants';
 
 describe('CapacitiesComponent', () => {
   let component: CapacitiesComponent;
   let fixture: ComponentFixture<CapacitiesComponent>;
   let capacityService: jasmine.SpyObj<CapacityService>;
   let statusMessagesService: jasmine.SpyObj<StatusMessagesService>;
+  let authService: jasmine.SpyObj<AuthService>;
   let router: jasmine.SpyObj<Router>;
 
   beforeEach(async () => {
     const capacityServiceSpy = jasmine.createSpyObj('CapacityService', ['getTechnologies', 'getPaginationState', 'updatePage', 'updateSize', 'updateOrder', 'updateOrderBy', 'createCapacity', 'refreshData']);
     const statusMessagesServiceSpy = jasmine.createSpyObj('StatusMessagesService', ['handleSuccess', 'handleError']);
+    const authServiceSpy = jasmine.createSpyObj('AuthService', ['redirectToLogin']);
     const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
   
     await TestBed.configureTestingModule({
@@ -25,6 +29,7 @@ describe('CapacitiesComponent', () => {
       providers: [
         { provide: CapacityService, useValue: capacityServiceSpy },
         { provide: StatusMessagesService, useValue: statusMessagesServiceSpy },
+        { provide: AuthService, useValue: authServiceSpy },
         { provide: Router, useValue: routerSpy }
       ]
     }).compileComponents();
@@ -33,6 +38,7 @@ describe('CapacitiesComponent', () => {
     component = fixture.componentInstance;
     capacityService = TestBed.inject(CapacityService) as jasmine.SpyObj<CapacityService>;
     statusMessagesService = TestBed.inject(StatusMessagesService) as jasmine.SpyObj<StatusMessagesService>;
+    authService = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
     router = TestBed.inject(Router) as jasmine.SpyObj<Router>;
 
     Object.defineProperty(capacityService, 'data$', { value: of(mockPaginatedCapacityResult) });
@@ -118,6 +124,13 @@ describe('CapacitiesComponent', () => {
     expect(statusMessagesService.handleError).toHaveBeenCalledWith(mockError, "una capacidad");
   });
   
+  it('should redirect to login if session expired message is shown', () => {
+    component.status = { message: CONTROL_RESPONSES.SESSION_EXPIRED, status_svg: '' };
+
+    component.onCloseStatusModal();
+
+    expect(authService.redirectToLogin).toHaveBeenCalled();
+  });
 
   it('should close the modal and refresh data on close status modal', () => {
     component.onCloseStatusModal();
@@ -129,6 +142,6 @@ describe('CapacitiesComponent', () => {
   it('should navigate to capacity detail', () => {
     const capacityId = 1;
     component.onNavigateToDetail(capacityId);
-    expect(router.navigate).toHaveBeenCalledWith([PATH_CAPACITY, capacityId]);
+    expect(router.navigate).toHaveBeenCalledWith([PATHS.CAPACITY, capacityId]);
   });
 });

@@ -15,7 +15,9 @@
     
     <ng-container *ngIf="(bootcamps.length === 0) && (totalPages === 0)">
         <p class="text title">Crea un bootcamp</p>
-        <molecule-button-icon class="button add-button" [icon]="icon_add" [text]="'Crear'" [classButton]="'primary'" [classIcon]="'secondary'" (click)='openCreateModal()'></molecule-button-icon>
+        <div class="container-button" >
+            <molecule-button-icon class="button container-button__add" [icon]="icon_add" [text]="'Crear'" [classButton]="'primary'" [classIcon]="'secondary'" (click)="openCreateModal()"></molecule-button-icon>
+        </div>
     </ng-container>
 
     <ng-container *ngIf="(bootcamps.length > 0) && (totalPages > 0)">
@@ -47,4 +49,6 @@
     <ng-container *ngIf="isModalStatusOpen">
         <molecule-status-modal (closeModal)="onCloseStatusModal()" [status]="this.status"></molecule-status-modal>
     </ng-container>
+
+    <molecule-auth-modal></molecule-auth-modal>
 </template-home>

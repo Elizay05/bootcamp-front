@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { SimpleChange, SimpleChanges } from '@angular/core';
 import { FilterComponent } from './filter.component';
-import { icons } from 'src/app/util/icons.enum';
 import { MoleculesModule } from '../molecules.module';
 import { AtomsModule } from '../../atoms/atoms.module';
+import { ICONS } from 'src/app/util/icons.constants';
 
 describe('FilterComponent', () => {
   let component: FilterComponent;
@@ -68,16 +68,16 @@ describe('FilterComponent', () => {
   it('should update icon_arrows and emit ascendingChange event', () => {
     spyOn(component.ascendingChange, 'emit');
   
-    component.icon_arrows = icons.ARROWS_UP;
+    component.icon_arrows = ICONS.ARROWS_UP;
     component.updateButtonIcon();
   
-    expect(component.icon_arrows).toBe(icons.ARROWS_DOWN);
+    expect(component.icon_arrows).toBe(ICONS.ARROWS_DOWN);
   
     expect(component.ascendingChange.emit).toHaveBeenCalledWith(false);
   
     component.updateButtonIcon();
   
-    expect(component.icon_arrows).toBe(icons.ARROWS_UP);
+    expect(component.icon_arrows).toBe(ICONS.ARROWS_UP);
   
     expect(component.ascendingChange.emit).toHaveBeenCalledWith(true);
   });

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
-import { PATH_BOOTCAMP, PATH_CAPACITY, PATH_TECHNOLOGY } from 'src/app/util/path-variables';
+import { PATHS } from 'src/app/util/paths.constants';
 
 @Component({
   selector: 'template-home',
@@ -14,15 +14,15 @@ export class HomeComponent {
 
   listItem = [
       {
-        route: PATH_TECHNOLOGY,
+        route: PATHS.TECHNOLOGY,
         item: 'Tecnologías',
       },
       {
-        route: PATH_CAPACITY,
+        route: PATHS.CAPACITY,
         item: 'Capacidades',
       },
       {
-        route: PATH_BOOTCAMP,
+        route: PATHS.BOOTCAMP,
         item: 'Bootcamps',
       }
     ];
@@ -37,8 +37,8 @@ export class HomeComponent {
 
 
   private isRelevantRoute(url: string): boolean {
-    return url === PATH_TECHNOLOGY ||
-           url.startsWith(PATH_CAPACITY) ||
-           url.startsWith(PATH_BOOTCAMP);
+    return url === PATHS.TECHNOLOGY ||
+           url.startsWith(PATHS.CAPACITY) ||
+           url.startsWith(PATHS.BOOTCAMP);
   }
 }

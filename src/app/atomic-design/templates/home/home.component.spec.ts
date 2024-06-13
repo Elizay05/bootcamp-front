@@ -2,9 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router, NavigationEnd, RouterEvent } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HomeComponent } from './home.component';
-import { PATH_TECHNOLOGY, PATH_CAPACITY, PATH_BOOTCAMP } from 'src/app/util/path-variables';
 import { Subject } from 'rxjs';
 import { MoleculesModule } from '../../molecules/molecules.module';
+import { PATHS } from 'src/app/util/paths.constants';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -42,13 +42,13 @@ describe('HomeComponent', () => {
   });
 
   it('should set showMoleculeListItem to true for relevant routes', () => {
-    routerEventsSubject.next(new NavigationEnd(0, '/', PATH_TECHNOLOGY));
+    routerEventsSubject.next(new NavigationEnd(0, '/', PATHS.TECHNOLOGY));
     expect(component.showMoleculeListItem).toBe(true);
 
-    routerEventsSubject.next(new NavigationEnd(0, '/', PATH_CAPACITY));
+    routerEventsSubject.next(new NavigationEnd(0, '/', PATHS.CAPACITY));
     expect(component.showMoleculeListItem).toBe(true);
 
-    routerEventsSubject.next(new NavigationEnd(0, '/', PATH_BOOTCAMP));
+    routerEventsSubject.next(new NavigationEnd(0, '/', PATHS.BOOTCAMP));
     expect(component.showMoleculeListItem).toBe(true);
   });
 

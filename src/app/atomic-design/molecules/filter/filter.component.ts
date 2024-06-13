@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
-import { icons } from 'src/app/util/icons.enum';
+import { ICONS } from 'src/app/util/icons.constants';
 
 @Component({
   selector: 'molecule-filter',
@@ -17,8 +17,8 @@ export class FilterComponent {
   @Input() optionsOrderBy: { [key: string]: boolean } = {};
   initialDropdownOrderBy: string = '';
 
-  icon_arrows: string = icons.ARROWS_UP
-  icon_down_arrow: string = icons.DOWN_ARROW
+  icon_arrows: string = ICONS.ARROWS_UP
+  icon_down_arrow: string = ICONS.DOWN_ARROW
 
   @Output() sizeChange = new EventEmitter<number>();
   @Output() orderByChange = new EventEmitter<boolean>();
@@ -34,7 +34,7 @@ export class FilterComponent {
       this.initialDropdownOrderBy = this.getOrderKeyByValue(this.initialOrderBy);
     }
     if (changes['initialAscending']) {
-      this.icon_arrows = this.initialAscending ? icons.ARROWS_UP : icons.ARROWS_DOWN;
+      this.icon_arrows = this.initialAscending ? ICONS.ARROWS_UP : ICONS.ARROWS_DOWN;
     }
   }
 
@@ -51,11 +51,11 @@ export class FilterComponent {
   }
 
   updateButtonIcon(): void {
-    if (this.icon_arrows === icons.ARROWS_UP) {
-      this.icon_arrows = icons.ARROWS_DOWN;
+    if (this.icon_arrows === ICONS.ARROWS_UP) {
+      this.icon_arrows = ICONS.ARROWS_DOWN;
       this.ascendingChange.emit(false);
     } else {
-      this.icon_arrows = icons.ARROWS_UP;
+      this.icon_arrows = ICONS.ARROWS_UP;
       this.ascendingChange.emit(true);
     }
   }

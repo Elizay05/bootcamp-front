@@ -7,20 +7,22 @@ import { StatusMessagesService } from 'src/app/services/status/status-messages.s
 import { HttpErrorResponse } from '@angular/common/http';
 import { mockPaginatedTechnologyResult } from 'src/app/testing/mock-data';
 import { RouterTestingModule } from '@angular/router/testing';
-import { TemplatesModule } from 'src/app/atomic-design/templates/templates.module';
-import { OrganismsModule } from 'src/app/atomic-design/organisms/organisms.module';
-import { MoleculesModule } from 'src/app/atomic-design/molecules/molecules.module';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { CONTROL_RESPONSES } from 'src/app/util/control-responses.constants';
+
 
 describe('TechnologiesComponent', () => {
   let component: TechnologiesComponent;
   let fixture: ComponentFixture<TechnologiesComponent>;
   let technologyService: jasmine.SpyObj<TechnologyService>;
   let statusMessagesService: jasmine.SpyObj<StatusMessagesService>;
+  let authService: jasmine.SpyObj<AuthService>;
   let router: jasmine.SpyObj<Router>;
 
   beforeEach(async () => {
     const technologyServiceSpy = jasmine.createSpyObj('TechnologyService', ['getPaginationState', 'updatePage', 'updateSize', 'updateOrder', 'createTechnology', 'refreshData']);
     const statusMessagesServiceSpy = jasmine.createSpyObj('StatusMessagesService', ['handleSuccess', 'handleError']);
+    const authServiceSpy = jasmine.createSpyObj('AuthService', ['redirectToLogin']);
     const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
 
     await TestBed.configureTestingModule({
@@ -29,6 +31,7 @@ describe('TechnologiesComponent', () => {
       providers: [
         { provide: TechnologyService, useValue: technologyServiceSpy },
         { provide: StatusMessagesService, useValue: statusMessagesServiceSpy },
+        { provide: AuthService, useValue: authServiceSpy },
         { provide: Router, useValue: routerSpy }
       ]
     }).compileComponents();
@@ -37,6 +40,7 @@ describe('TechnologiesComponent', () => {
     component = fixture.componentInstance;
     technologyService = TestBed.inject(TechnologyService) as jasmine.SpyObj<TechnologyService>;
     statusMessagesService = TestBed.inject(StatusMessagesService) as jasmine.SpyObj<StatusMessagesService>;
+    authService = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
     router = TestBed.inject(Router) as jasmine.SpyObj<Router>;
 
     Object.defineProperty(technologyService, 'data$', { value: of(mockPaginatedTechnologyResult) });
@@ -112,6 +116,14 @@ describe('TechnologiesComponent', () => {
     expect(component.isModalStatusOpen).toBeTrue();
     expect(component.status).toEqual({ message: 'Error creating technology', status_svg: 'error' });
     expect(statusMessagesService.handleError).toHaveBeenCalledWith(mockError, "una tecnologia");
+  });
+
+  it('should redirect to login if session expired message is shown', () => {
+    component.status = { message: CONTROL_RESPONSES.SESSION_EXPIRED, status_svg: '' };
+
+    component.onCloseStatusModal();
+
+    expect(authService.redirectToLogin).toHaveBeenCalled();
   });
 
   it('should close the modal and refresh data on close status modal', () => {

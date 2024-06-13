@@ -6,18 +6,22 @@ import { mockCapacity1, mockCapacity2, mockCapacity3, mockPaginatedBootcampResul
 import { BootcampService } from 'src/app/services/bootcamp/bootcamp.service';
 import { StatusMessagesService } from 'src/app/services/status/status-messages.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { PATH_BOOTCAMP } from 'src/app/util/path-variables';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { PATHS } from 'src/app/util/paths.constants';
+import { CONTROL_RESPONSES } from 'src/app/util/control-responses.constants';
 
 describe('BootcampsComponent', () => {
   let component: BootcampsComponent;
   let fixture: ComponentFixture<BootcampsComponent>;
   let bootcampService: jasmine.SpyObj<BootcampService>;
   let statusMessagesService: jasmine.SpyObj<StatusMessagesService>;
+  let authService: jasmine.SpyObj<AuthService>;
   let router: jasmine.SpyObj<Router>;
 
   beforeEach(async () => {
     const bootcampServiceSpy = jasmine.createSpyObj('BootcampService', ['getCapacities', 'getPaginationState', 'updatePage', 'updateSize', 'updateOrder', 'updateOrderBy', 'createBootcamp', 'refreshData']);
     const statusMessagesServiceSpy = jasmine.createSpyObj('StatusMessagesService', ['handleSuccess', 'handleError']);
+    const authServiceSpy = jasmine.createSpyObj('AuthService', ['redirectToLogin']);
     const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
   
     await TestBed.configureTestingModule({
@@ -25,6 +29,7 @@ describe('BootcampsComponent', () => {
       providers: [
         { provide: BootcampService, useValue: bootcampServiceSpy },
         { provide: StatusMessagesService, useValue: statusMessagesServiceSpy },
+        { provide: AuthService, useValue: authServiceSpy },
         { provide: Router, useValue: routerSpy }
       ]
     }).compileComponents();
@@ -33,6 +38,7 @@ describe('BootcampsComponent', () => {
     component = fixture.componentInstance;
     bootcampService = TestBed.inject(BootcampService) as jasmine.SpyObj<BootcampService>;
     statusMessagesService = TestBed.inject(StatusMessagesService) as jasmine.SpyObj<StatusMessagesService>;
+    authService = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
     router = TestBed.inject(Router) as jasmine.SpyObj<Router>;
 
     Object.defineProperty(bootcampService, 'data$', { value: of(mockPaginatedBootcampResult) });
@@ -118,6 +124,14 @@ describe('BootcampsComponent', () => {
     expect(statusMessagesService.handleError).toHaveBeenCalledWith(mockError, "un bootcamp");
   });
 
+  it('should redirect to login if session expired message is shown', () => {
+    component.status = { message: CONTROL_RESPONSES.SESSION_EXPIRED, status_svg: '' };
+
+    component.onCloseStatusModal();
+
+    expect(authService.redirectToLogin).toHaveBeenCalled();
+  });
+
   it('should navigate, close the modal, and refresh data on close status modal', () => {
     component.onCloseStatusModal();
 
@@ -128,12 +142,12 @@ describe('BootcampsComponent', () => {
   it('should navigate to bootcamp detail', () => {
     const bootcampId = 1;
     component.onNavigateToDetail(bootcampId);
-    expect(router.navigate).toHaveBeenCalledWith([PATH_BOOTCAMP, bootcampId]);
+    expect(router.navigate).toHaveBeenCalledWith([PATHS.BOOTCAMP, bootcampId]);
   });
 
   it('should navigate to bootcamp version', () => {
     const bootcampId = 1;
     component.onNavigateToVersion(bootcampId);
-    expect(router.navigate).toHaveBeenCalledWith([PATH_BOOTCAMP, bootcampId, 'versions']);
+    expect(router.navigate).toHaveBeenCalledWith([PATHS.BOOTCAMP, bootcampId, 'versions']);
   });
 });

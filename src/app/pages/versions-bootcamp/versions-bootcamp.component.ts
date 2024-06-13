@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Bootcamp } from 'src/app/interfaces/bootcamp.interface';
 import { Capacity } from 'src/app/interfaces/capacity.interface';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { BootcampService } from 'src/app/services/bootcamp/bootcamp.service';
+import { DateFormatService } from 'src/app/services/date-format/date-format.service';
 import { StatusMessagesService } from 'src/app/services/status/status-messages.service';
 import { VersionBootcampService } from 'src/app/services/version-bootcamp/version-bootcamp.service';
-import { icons } from 'src/app/util/icons.enum';
-import { PATH_BOOTCAMP } from 'src/app/util/path-variables';
-import { variables } from 'src/app/util/variables.enum';
+import { ICONS } from 'src/app/util/icons.constants';
+import { INTENGERS } from 'src/app/util/intenger.constants';
+import { PATHS } from 'src/app/util/paths.constants';
 
 @Component({
   selector: 'app-versions-bootcamp',
@@ -32,7 +34,7 @@ export class VersionsBootcampComponent implements OnInit {
   };
 
   capacities: Capacity[] = [];
-  icon_add: string = icons.ADD
+  icon_add: string = ICONS.ADD
   isModalVersionFormOpen: boolean = false;
   isModalFormOpen: boolean = false;
   isModalStatusOpen: boolean = false;
@@ -50,8 +52,8 @@ export class VersionsBootcampComponent implements OnInit {
     placeholderSelect:"Seleccione las capacidades del bootcamp",
     options: this.capacities,  
     onFormSubmit: this.onFormSubmit.bind(this),
-    minOptionsSize: variables.MIN_CAPACITY_SIZE,
-    maxOptionsSize: variables.MAX_CAPACITY_SIZE,
+    minOptionsSize: INTENGERS.MIN_CAPACITY_SIZE,
+    maxOptionsSize: INTENGERS.MAX_CAPACITY_SIZE,
   }
 
   status = {message: '', status_svg:''}
@@ -61,7 +63,9 @@ export class VersionsBootcampComponent implements OnInit {
     private route: ActivatedRoute,
     private bootcampService: BootcampService,
     private versionBootcampService: VersionBootcampService,
-    private statusMessages: StatusMessagesService
+    private statusMessages: StatusMessagesService,
+    private authService: AuthService,
+    private dateFormatService: DateFormatService
   ) { }
 
   ngOnInit(): void {
@@ -123,6 +127,10 @@ export class VersionsBootcampComponent implements OnInit {
     this.versionBootcampService.updateOrderBy(orderBy);
   }
 
+  getFormattedStartDate(startDate: string): string {
+    return this.dateFormatService.formatDateToSemester(startDate);
+  }
+
   openCreateVersionModal(): void {
     this.isModalVersionFormOpen = true;
   }
@@ -166,10 +174,14 @@ export class VersionsBootcampComponent implements OnInit {
   }
 
   onCloseStatusModal(): void {
-    this.route.paramMap.subscribe(params => {
-      const bootcampId = Number(params.get('id'));
-      this.router.navigate([PATH_BOOTCAMP, bootcampId, 'versions']);
-    });
-    this.isModalStatusOpen = false;
+    if (this.status.message === "Tu sesión ha expirado, inicia nuevamente") {
+      this.authService.redirectToLogin();
+    }else{
+      this.route.paramMap.subscribe(params => {
+        const bootcampId = Number(params.get('id'));
+        this.router.navigate([PATHS.BOOTCAMP, bootcampId, 'versions']);
+      });
+      this.isModalStatusOpen = false;
+    }
   }
 }

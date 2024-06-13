@@ -1,9 +1,8 @@
 import { TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
 import { RoleGuard } from './role.guard';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 
 describe('RoleGuard', () => {
   let guard: RoleGuard;

@@ -22,7 +22,7 @@ import { PagesRoutingModule } from './pages/pages-routing.module';
   ],
   providers: [ 
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
-   ],
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,5 +1,6 @@
 import { Component, Input} from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'molecule-navbar',
@@ -10,10 +11,9 @@ export class NavbarComponent {
   @Input() pathImage: string = '';
   @Input() nameAltImage: string = '';
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private authService: AuthService) { }
 
   logout(): void {
-    localStorage.clear();
-    this.router.navigate(['login']);
+    this.authService.redirectToLogin();
   }
 }

@@ -5,12 +5,12 @@ import { AtomsModule } from '../atoms/atoms.module';
 import { FilterComponent } from './filter/filter.component';
 import { InfoBackComponent } from './info-back/info-back.component';
 import { ListItemComponent } from './list-item/list-item.component';
-import { AppRoutingModule } from 'src/app/app-routing.module';
 import { NavbarComponent } from './navbar/navbar.component';
 import { OptionAsideComponent } from './option-aside/option-aside.component';
 import { PaginationComponent } from './pagination/pagination.component';
 import { StatusModalComponent } from './status-modal/status-modal.component';
 import { RouterModule } from '@angular/router';
+import { AuthModalComponent } from './auth-modal/auth-modal.component';
 
 
 const molecules = [
@@ -21,7 +21,8 @@ const molecules = [
   NavbarComponent,
   OptionAsideComponent,
   PaginationComponent,
-  StatusModalComponent
+  StatusModalComponent,
+  AuthModalComponent
 ];
 
 @NgModule({

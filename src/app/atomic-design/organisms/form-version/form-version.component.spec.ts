@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormVersionComponent } from './form-version.component';
 import { ReactiveFormsModule, FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { ValidationService } from 'src/app/services/validation/validation.service';
+import { VALIDATION_MESSAGES, formatValidationMessage } from 'src/app/util/validation-messages.constants';
 
 describe('FormVersionComponent', () => {
   let component: FormVersionComponent;
@@ -61,13 +62,15 @@ describe('FormVersionComponent', () => {
   });
 
   it('should return error message for required validation', () => {
+    const responseControlName = 'fecha de lanzamiento';
     const controlName = 'release_date';
     const control = component.form.get(controlName);
     control?.markAsTouched();
     control?.setErrors({ required: true });
 
     const errorMessage = component.getErrorMessage(controlName);
-    expect(errorMessage).toBe('ⓘ El campo fecha de lanzamiento es obligatorio.');
+    const expectedMessage = formatValidationMessage(VALIDATION_MESSAGES.REQUIRED, { fieldName: responseControlName });
+    expect(errorMessage).toBe(expectedMessage);
   });
 
   it('should return empty string if control is pristine', () => {
@@ -77,13 +80,15 @@ describe('FormVersionComponent', () => {
   });
 
   it('should return error message for pattern validation', () => {
+    const responseControlName = 'cupo máximo';
     const controlName = 'maximum_quota';
     const control = component.form.get(controlName);
     control?.markAsTouched();
     control?.setErrors({ pattern: true });
 
     const errorMessage = component.getErrorMessage(controlName);
-    expect(errorMessage).toBe('ⓘ El campo cupo máximo no es valido.');
+    const expectedMessage = formatValidationMessage(VALIDATION_MESSAGES.PATTERN, { fieldName: responseControlName });
+    expect(errorMessage).toBe(expectedMessage);
   });
 
   it('should return empty string if control has no errors', () => {

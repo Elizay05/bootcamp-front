@@ -16,7 +16,7 @@
     justify-content: center;
     height: 50%;
     width: 100%;
-    margin-top: 15%;
+    margin-top: 23%;
 }
 .button{
     display: flex;
@@ -57,6 +57,19 @@
     position: fixed;
     z-index: 1;
     bottom: 0;
+}
+.container-button{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8%;
+    margin-bottom: 5%;
+    width: 63%;
+    position: fixed;
+    z-index: 1;
+    bottom: 0;
+    &__add{
+        width: 18%;
+    }
 }
 .pagination{
     display: flex;

@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { ValidationService } from './validation.service';
 import { FormControl } from '@angular/forms';
+import { VALIDATION_MESSAGES, formatValidationMessage } from 'src/app/util/validation-messages.constants';
 
 describe('ValidationService', () => {
   let service: ValidationService;
@@ -17,11 +18,19 @@ describe('ValidationService', () => {
   });
 
   it('should get validation messages', () => {
+    const controlName = 'nombre';
     const messages = ValidationService.getValidationMessages();
-    expect(messages.required('campo')).toBe('ⓘ El campo campo es obligatorio.');
-    expect(messages.minlength('campo', 3)).toBe('ⓘ El campo campo debe tener al menos 3 caracteres.');
-    expect(messages.maxlength('campo', 5)).toBe('ⓘ El campo campo no debe exceder los 5 caracteres.');
-    expect(messages.pattern('campo')).toBe('ⓘ El campo campo no es valido.');
+
+    const expectedMessageRequired = formatValidationMessage(VALIDATION_MESSAGES.REQUIRED, { fieldName: controlName });
+    const expectedMessageMinLength = formatValidationMessage(VALIDATION_MESSAGES.MINLENGTH, { requiredLength: 3, fieldName: controlName });
+    const expectedMessageMaxLength = formatValidationMessage(VALIDATION_MESSAGES.MAXLENGTH, { requiredLength: 50, fieldName: controlName });
+    const expectedMessagePattern = formatValidationMessage(VALIDATION_MESSAGES.PATTERN, { fieldName: controlName });
+
+
+    expect(messages.required(controlName)).toBe(expectedMessageRequired);
+    expect(messages.minlength(controlName, 3)).toBe(expectedMessageMinLength);
+    expect(messages.maxlength(controlName, 50)).toBe(expectedMessageMaxLength);
+    expect(messages.pattern(controlName)).toBe(expectedMessagePattern);
   });
 
   it('should validate required field', () => {

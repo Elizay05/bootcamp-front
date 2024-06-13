@@ -6,7 +6,6 @@ import { PaginatedResult } from 'src/app/interfaces/paginated-result.interface';
 import { mockVersionBootcamp1, mockVersionBootcamp2, mockVersionBootcamp3 } from 'src/app/testing/mock-data';
 import { of, take } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Bootcamp } from 'src/app/interfaces/bootcamp.interface';
 
 describe('VersionBootcampService', () => {
   let service: VersionBootcampService;

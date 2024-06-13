@@ -1,13 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
-import { mockCapacity1, mockCapacity2, mockCapacity3, mockPaginatedBootcampResult } from 'src/app/testing/mock-data';
+import { mockCapacity1, mockCapacity2, mockCapacity3 } from 'src/app/testing/mock-data';
 import { BootcampService } from 'src/app/services/bootcamp/bootcamp.service';
 import { StatusMessagesService } from 'src/app/services/status/status-messages.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { PATH_BOOTCAMP } from 'src/app/util/path-variables';
 import { StartComponent } from './start.component';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { CONTROL_RESPONSES } from 'src/app/util/control-responses.constants';
+import { PATHS } from 'src/app/util/paths.constants';
 
 describe('StartComponent', () => {
   let component: StartComponent;
@@ -18,10 +19,10 @@ describe('StartComponent', () => {
   let authService: jasmine.SpyObj<AuthService>;
 
   beforeEach(async () => {
-    const bootcampServiceSpy = jasmine.createSpyObj('BootcampService', ['getCapacities', 'createBootcamp']);
+    const bootcampServiceSpy = jasmine.createSpyObj('BootcampService', ['getCapacities', 'createBootcamp', 'updatePage', 'updateSize', 'updateOrder', 'updateOrderBy']);
     const statusMessagesServiceSpy = jasmine.createSpyObj('StatusMessagesService', ['handleSuccess', 'handleError']);
     const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
-    const authServiceSpy = jasmine.createSpyObj('AuthService', ['getUserRole']);
+    const authServiceSpy = jasmine.createSpyObj('AuthService', ['getUserRole', 'isLoggedIn', 'hasAnyRole', 'redirectToLogin']);
   
     await TestBed.configureTestingModule({
       declarations: [StartComponent],
@@ -41,6 +42,8 @@ describe('StartComponent', () => {
     authService = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
 
     bootcampService.getCapacities.and.returnValue(of([mockCapacity1, mockCapacity2, mockCapacity3]));
+    bootcampServiceSpy.data$ = of({ content: [], totalPages: 1, pageNumber: 0 });
+    authService.isLoggedIn.and.returnValue(true);
   });
 
   it('should create', () => {
@@ -52,6 +55,30 @@ describe('StartComponent', () => {
     fixture.detectChanges();
 
     expect(component.capacities).toEqual([mockCapacity1, mockCapacity2, mockCapacity3]);
+  });
+  
+  it('should update page', () => {
+    const newPage = 2;
+    component.onPageChange(newPage);
+    expect(bootcampService.updatePage).toHaveBeenCalledWith(newPage);
+  });
+
+  it('should update size', () => {
+    const newSize = 20;
+    component.onSizeChange(newSize);
+    expect(bootcampService.updateSize).toHaveBeenCalledWith(newSize);
+  });
+
+  it('should update order', () => {
+    const newAscending = true;
+    component.onAscendingChange(newAscending);
+    expect(bootcampService.updateOrder).toHaveBeenCalledWith(newAscending);
+  });
+
+  it('should update order by', () => {
+    const newOrderBy = false;
+    component.onOrderByChange(newOrderBy);
+    expect(bootcampService.updateOrderBy).toHaveBeenCalledWith(newOrderBy);
   });
 
   it('should open the modal if user role is ADMINISTRATOR', () => {
@@ -90,7 +117,7 @@ describe('StartComponent', () => {
     const mockError = new HttpErrorResponse({ error: 'Error creating bootcamp', status: 500 });
     const mockFormData = { name: 'New Bootcamp', description: 'New description', capacities: [mockCapacity1] };
 
-    bootcampService.createBootcamp.and.returnValue(throwError(mockError));
+    bootcampService.createBootcamp.and.returnValue(throwError(() => mockError));
     statusMessagesService.handleError.and.returnValue({ message: 'Error creating bootcamp', status_svg: 'error' });
 
     component.onFormSubmit(mockFormData);
@@ -102,10 +129,30 @@ describe('StartComponent', () => {
     expect(statusMessagesService.handleError).toHaveBeenCalledWith(mockError, "un bootcamp");
   });
 
+  it('should redirect to login if session expired message is shown', () => {
+    component.status = { message: CONTROL_RESPONSES.SESSION_EXPIRED, status_svg: '' };
+
+    component.onCloseStatusModal();
+
+    expect(authService.redirectToLogin).toHaveBeenCalled();
+  });
+
   it('should navigate and close the modal on close status modal', () => {
     component.onCloseStatusModal();
 
     expect(component.isModalStatusOpen).toBeFalse();
-    expect(router.navigate).toHaveBeenCalledWith([PATH_BOOTCAMP]);
+    expect(router.navigate).toHaveBeenCalledWith([PATHS.BOOTCAMP]);
+  });
+
+  it('should navigate to bootcamp detail', () => {
+    const bootcampId = 1;
+    component.onNavigateToDetail(bootcampId);
+    expect(router.navigate).toHaveBeenCalledWith([PATHS.BOOTCAMP, bootcampId]);
+  });
+
+  it('should navigate to bootcamp version', () => {
+    const bootcampId = 1;
+    component.onNavigateToVersion(bootcampId);
+    expect(router.navigate).toHaveBeenCalledWith([PATHS.BOOTCAMP, bootcampId, 'versions']);
   });
 });
