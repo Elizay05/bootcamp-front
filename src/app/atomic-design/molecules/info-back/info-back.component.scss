@@ -1,0 +1,35 @@
+@import 'src/assets/styles/variables.scss';
+
+.section{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-height: auto;
+    border-bottom: 1px solid $primary-color;
+    padding: 0 23px 0px 10px;
+    font-family: "Poppins", sans-serif;
+    &__information{
+        width: 100%;
+        min-height: 80px;
+        height: auto;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        gap: 5px;
+        &__title{
+            font-size: 24px;
+            font-weight: 700;
+        }
+        &__description{
+            font-size: $font-size-small;
+            font-weight: 400;
+        }
+    }
+    &__button{
+        display: flex;
+        width: 7%;
+        justify-content: end;
+        align-items: center;
+        gap: 20px;
+    }
+}

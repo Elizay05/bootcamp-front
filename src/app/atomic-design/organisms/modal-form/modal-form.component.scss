@@ -1,0 +1,189 @@
+@import 'src/assets/styles/variables.scss';
+
+.modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(134, 66, 18, 0.17);
+    backdrop-filter: blur(4px);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    &__content {
+        display: flex;
+        flex-direction: column;
+        background-color: white;
+        padding: 1.5% 2%;
+        border-radius: 25px;
+        width: 35%;
+        height: auto;
+        text-align: center;
+        &__header {
+            display: flex;
+            justify-content: space-between;
+            font-size: $font-size-medium;
+            font-family: "Poppins", sans-serif;
+            font-weight: 700;
+            color: $primary-color;
+            margin-bottom: 4%;
+        }
+        &__body {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 3%;
+            height: auto;
+            &__form {
+                width: 100%;
+                &__sectionGeneral {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    font-size: $font-size-small;
+                    font-family: "Poppins", sans-serif;
+                    color: $primary-color;
+                    font-weight: 700;
+                    width: 100%;
+                    height: 100px;
+                    margin-bottom: 4%;
+                    &__input {
+                        margin-top: 3%;
+                        width: 100%;
+                        height: 40px;
+                        border-radius: 24px;
+                        padding: 0% 4%;
+                        border: 1px solid $primary-color;
+                        background-color: $tertiary-color;
+                        &:focus {
+                            outline: none;
+                            box-shadow: 0 0 8px rgba(231, 131, 61, 0.5);
+                        }
+                    }
+                    &__error {
+                        text-align: start;
+                        margin-top: 3%;
+                        color: red;
+                        font-size: 12px;
+                        font-weight: 300;
+                    }
+                }
+                &__section {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    font-size: $font-size-small;
+                    font-family: "Poppins", sans-serif;
+                    color: $primary-color;
+                    font-weight: 700;
+                    width: 100%;
+                    margin-bottom: 4%;
+                    &__list {
+                        display: flex;
+                        flex-wrap: wrap;
+                        max-height: 100px;
+                        overflow-y: auto;
+                        gap: 2%;
+                        margin-top: 3%;
+                        width: 100%;
+                        height: auto;
+                        &__item {
+                            font-size: 14px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            gap: 2%;
+                            margin-top: 2%;
+                            background-color: rgba(231, 131, 61, 0.3);
+                            width: auto;
+                            color: rgb(49, 49, 49);
+                            font-weight: 300;
+                            height: 20%;
+                            padding: 2%;
+                            border-radius: 24px;
+                        }
+                    }
+                    &__input {
+                        margin-top: 3%;
+                        width: 100%;
+                        height: 40px;
+                        border-radius: 24px;
+                        padding: 0% 4%;
+                        border: 1px solid $primary-color;
+                        background-color: $tertiary-color;
+                        &:focus {
+                            outline: none;
+                            box-shadow: 0 0 8px rgba(231, 131, 61, 0.5);
+                        }
+                    }
+                    &__error {
+                        text-align: start;
+                        margin-top: 3%;
+                        color: red;
+                        font-size: 12px;
+                        font-weight: 300;
+                    }
+                    &__select {
+                        display: flex;
+                        flex-direction: column;
+                        width: 100%;
+                        position: relative;
+                        &__input {
+                            justify-content: start;
+                            display: flex;
+                            align-items: center;
+                            font-size: small;
+                            color: rgb(108, 108, 108);
+                            font-family: Arial, Helvetica, sans-serif;
+                            font-weight: 400;
+                            margin-top: 3%;
+                            width: 100%;
+                            height: 40px;
+                            border-radius: 24px;
+                            padding: 0% 4%;
+                            border: 1px solid $primary-color;
+                            background-color: $tertiary-color;
+                            &:focus {
+                                outline: none;
+                                box-shadow: 0 0 8px rgba(231, 131, 61, 0.5);
+                            }
+                        }
+                        &__button {
+                            position: absolute;
+                            right: 0.4em;
+                            margin-top: 4%;
+                        }
+                        &__options {
+                            color: black;
+                            font-size: 12px;
+                            position: absolute;
+                            top: calc(100% + 0.5em);
+                            width: 100%;
+                            background-color: white;
+                            border: 1px solid $primary-color;
+                            border-radius: 24px;
+                            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+                            max-height: 130px;
+                            overflow-y: auto;
+                        }
+                        &__option {
+                            text-align: start;
+                            padding: 5px 16px;
+                            cursor: pointer;
+                            &:hover {
+                                background-color: rgba(231, 131, 61, 0.3);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        &__footer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}

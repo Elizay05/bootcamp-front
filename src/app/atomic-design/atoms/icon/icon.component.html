@@ -1,0 +1,9 @@
+<div [innerHTML]="svgContent" class="icon"
+     [ngClass]="{
+        'icon__primary': classIcon === 'primary', 
+        'icon__primary--closeForm': classIcon === 'primary__closeForm',
+        'icon__secondary': classIcon === 'secondary',
+        'icon__tertiary': classIcon === 'tertiary'
+    }">
+</div>
+

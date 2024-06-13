@@ -1,0 +1,65 @@
+@import 'src/assets/styles/variables.scss';
+
+.button{
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    font-size: $font-size-small;
+    line-height: 19.2px;
+    text-align: center;
+    border: 1px solid $primary-color;
+    border-radius: 50px;
+    &__primary{
+        width: auto;
+        padding: 12px 24px;
+        background-color: $primary-color;
+        color: $secondary-color;
+        &:hover{
+            color: $primary-color;
+            background-color: $secondary-color;
+        }
+        &:disabled{
+            background-color: gray;
+            border: none;
+            pointer-events: none;
+            cursor: not-allowed;
+        }
+    }
+    &__secondary{
+        padding: 16px 47px;
+        background-color: rgba(253, 241, 233, 1);
+        color: $primary-color;
+        &:hover{
+            background-color: $primary-color;
+            color: $secondary-color;
+            box-shadow: 0 8px 20px 0 $primary-color;
+        }
+    }
+    &__circle{
+        width: auto;
+        height: auto;
+        padding: 5px 10px;
+        background-color: transparent;
+        color: rgba(130, 130, 133, 1);
+        border: none;
+        &:hover{
+            background-color: $tertiary-color;
+            box-shadow: 0 8px 16px 0 $primary-color;
+        }
+        &--active{
+            width: 26px;
+            height: 26px;
+            background-color: $primary-color;
+            color: $secondary-color;
+            box-shadow: 0 8px 16px 0 $primary-color;
+            &:hover{
+                background-color: $primary-color;
+                color: $secondary-color;
+                box-shadow: 0 8px 16px 0 $primary-color;
+            }
+        }
+    }
+}

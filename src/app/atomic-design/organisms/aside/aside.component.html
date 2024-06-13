@@ -1,0 +1,7 @@
+<aside class="aside">
+    <img class="aside__logo" [src]="pathImage" [alt]="nameAltImage">
+    <section class="aside__options">
+        <molecule-option-aside [route]="'/home'" [icon]="iconHome" [text]="'Inicio'"></molecule-option-aside>
+        <molecule-option-aside *ngIf="isLoggedIn && authService.hasAnyRole(['ADMINISTRATOR'])" [route]="'/library'" [icon]="iconLibrary" [text]="'Biblioteca'"></molecule-option-aside>
+    </section>
+</aside>

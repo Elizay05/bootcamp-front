@@ -1,0 +1,8 @@
+<button class="poppins-semibold button" [ngClass]="{ 
+    'button__primary': primary,
+    'button__secondary': secondary,
+    'button__circle': isButtomCircle,
+    'button__circle--active': isButtomCircle && active
+    }" [disabled]="disabled">
+    {{ text }}
+</button>

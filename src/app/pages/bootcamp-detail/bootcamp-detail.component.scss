@@ -1,0 +1,85 @@
+@import 'src/assets/styles/variables.scss';
+
+.section{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    margin-top: 4%;
+    &__title{
+        color: $primary-color;
+        font-size: 30px;
+        font-weight: 700;
+    }
+    &__description{
+        margin-top: 2%;
+        font-size: $font-size-small;
+    }
+    &__subtitle{
+        color: $primary-color;
+        margin-top: 3%;
+        font-size: 24px;
+        font-weight: 700;
+    }
+    &__information{
+        height: 300px;
+        width: 100%;
+        overflow-y: auto;
+        &__list{
+            display: flex;
+            margin-top: 3%;
+            height: auto;
+            flex-wrap: wrap;
+            width: 90%;
+            gap: 1%;
+            &__capacity{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                background-color: rgba(231, 131, 61, 0.3);
+                width: auto;
+                color: rgb(49, 49, 49);
+                font-weight: 600;
+                height: 10%;
+                padding: 1% 2% 1% 2%;
+                border-radius: 24px;
+                margin-bottom: 2%;
+            }
+        }
+        &__listTech{
+            display: flex;
+            margin-top: 10px;
+            height: auto;
+            flex-wrap: wrap;
+            width: auto;
+            gap: 1%;
+            &__tech{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                width: auto;
+                background-color: $tertiary-color;
+                border: 1px solid $primary-color;
+                color: rgb(49, 49, 49);
+                height: 10%;
+                padding: 6px;
+                font-size: 17px;
+                border-radius: 24px;
+                margin-top: 5px;
+            }
+        }
+    }
+}
+
+.add-button{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8%;
+    margin-bottom: 5%;
+    width: 63%;
+    position: fixed;
+    z-index: 1;
+    bottom: 0;
+}

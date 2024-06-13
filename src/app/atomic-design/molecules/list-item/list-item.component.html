@@ -1,0 +1,7 @@
+<nav>
+  <ul class="poppins-regular item__container">
+      <li *ngFor="let item of items" class="item" [routerLink]="[item.route]" [routerLinkActive]="'item__active'" (click)="navigateTo(item.route)">
+        {{ item.item }}
+      </li>
+  </ul>
+</nav>

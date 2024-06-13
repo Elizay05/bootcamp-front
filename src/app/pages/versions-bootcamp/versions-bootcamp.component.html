@@ -1,0 +1,71 @@
+<template-home>
+    <ng-container *ngIf="(totalPages > 0)">
+        <header class="filter">
+            <molecule-filter class="filter__dropdown" 
+            [optionsOrderBy]="optionsOrderBy" 
+            [initialPageSize]="initialPageSize"
+            [initialOrderBy]="initialOrderBy"
+            [initialAscending]="initialAscending"
+            (sizeChange)="onSizeChange($event)" 
+            (orderByChange)="onOrderByChange($event)"  
+            (ascendingChange)="onAscendingChange($event)">
+            </molecule-filter>
+        </header>
+    </ng-container>
+    
+    <section *ngIf="bootcamp" class="header">
+        <h1 class="poppins-semibold header__title">{{ bootcamp.name }}</h1>
+        <atom-button [primary]="true" [text]="'Crear versión'" (click)='openCreateVersionModal()'></atom-button>
+    </section>
+
+    <ng-container *ngIf="(totalPages === 0)">
+        <p class="text title text-center">Crea una versión</p>
+    </ng-container>
+
+    <ng-container *ngIf="(totalPages > 0)">
+        <table class="poppins-regular table">
+            <thead class="table__header">
+                <tr>
+                    <th>Versión</th>
+                    <th>Fecha lanzamiento</th>
+                    <th>Cupo máximo</th>
+                </tr>
+            </thead>
+        </table>
+        
+        <div class="table__body-container">
+            <table class="poppins-regular table">
+                <th></th>
+                <tbody class="table__body">
+                    <tr *ngFor="let version of (data$ | async)?.content">
+                        <td class="table__body__left">{{ getFormattedStartDate(version.startDate) }}</td>
+                        <td>{{ version.startDate }}</td>
+                        <td class="table__body__right">{{ version.maximumQuota }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </ng-container>
+
+    <section class="add-button">
+    <molecule-button-icon class="button add-button" [icon]="icon_add" [text]="'Crear'" [classButton]="'primary'" [classIcon]="'secondary'" (click)='openCreateModal()'></molecule-button-icon>
+    </section>
+
+    <footer class="pagination" *ngIf="totalPages > 1">
+        <molecule-pagination [currentPage]="currentPage" [totalPages]="totalPages" (pageChange)="onPageChange($event)"></molecule-pagination>
+    </footer>
+
+    <ng-container *ngIf="isModalFormOpen">
+        <organism-modal-form (formSubmit)="onFormSubmit($event)" (closeModal)="isModalFormOpen = false" [formData]="formData"></organism-modal-form>
+    </ng-container>
+
+    <ng-container *ngIf="isModalStatusOpen">
+        <molecule-status-modal (closeModal)="onCloseStatusModal()" [status]="this.status"></molecule-status-modal>
+    </ng-container>
+
+    <ng-container *ngIf="isModalVersionFormOpen">
+        <organism-form-version (formSubmit)="onFormVersionSubmit($event)" [formData]="formDataVersion" (closeModal)="isModalVersionFormOpen = false"></organism-form-version>
+    </ng-container>
+
+    <molecule-auth-modal></molecule-auth-modal>
+</template-home>

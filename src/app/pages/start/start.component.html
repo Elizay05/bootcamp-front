@@ -1,0 +1,63 @@
+<template-home>
+    <section class="start" *ngIf="isLoggedIn && !authService.hasAnyRole(['ADMINISTRATOR'])">
+        <div class="start__section" *ngIf="authService.hasAnyRole(['TUTOR'])">
+            <p class="text start__title">No eres tutor de ningún Bootcamp</p>
+            <atom-button [primary]="true" [text]="'Unirse'" [disabled]="true"></atom-button>
+        </div>
+        <div Class="start__section" *ngIf="authService.hasAnyRole(['STUDENT'])">
+            <p class="text start__title">No estás inscrito en ningún Bootcamp</p>
+            <atom-button [primary]="true" [text]="'Inscribirme'" [disabled]="true"></atom-button>
+        </div>
+    </section>
+
+    <section class="start" *ngIf="isLoggedIn && authService.hasAnyRole(['ADMINISTRATOR']) && (bootcamps.length === 0)">
+        <p class="text start__title" >Aún no has creado ningún Bootcamp</p>
+        <molecule-button-icon [icon]="icon_add" [text]="'Crear'" [classButton]="'primary'" [classIcon]="'secondary'" (click)='openCreateModal()'></molecule-button-icon>
+    </section>
+
+    <ng-container *ngIf="isLoggedIn && authService.hasAnyRole(['ADMINISTRATOR']) && (bootcamps.length > 0) && (totalPages > 0)">
+        <header class="filter">
+            <molecule-filter class="filter__dropdown" 
+            [optionsOrderBy]="optionsOrderBy" 
+            [initialPageSize]="initialPageSize"
+            [initialOrderBy]="initialOrderBy"
+            [initialAscending]="initialAscending"
+            (sizeChange)="onSizeChange($event)" 
+            (orderByChange)="onOrderByChange($event)"  
+            (ascendingChange)="onAscendingChange($event)">
+            </molecule-filter>
+        </header>
+    </ng-container>
+
+    <ng-container *ngIf="isLoggedIn && authService.hasAnyRole(['ADMINISTRATOR']) && (bootcamps.length > 0) && (totalPages > 0)">
+        <section class="information">
+            <article *ngFor="let boot of (data$ | async)?.content" class="information__back">
+                <molecule-info-back 
+                [text]="boot.name"
+                [itemsCount]="boot.capacities.length"
+                [icon]="icon_arrow" 
+                (navigateSection)="onNavigateToDetail(boot.id)"
+                (navigateButton)="onNavigateToVersion(boot.id)">
+                </molecule-info-back>
+            </article>
+        </section>
+
+        <section class="add-button">
+            <molecule-button-icon [icon]="icon_add" [text]="'Crear'" [classButton]="'primary'" [classIcon]="'secondary'" (click)='openCreateModal()'></molecule-button-icon>
+        </section>
+
+        <footer class="pagination" *ngIf="totalPages > 1">
+            <molecule-pagination [currentPage]="currentPage" [totalPages]="totalPages" (pageChange)="onPageChange($event)"></molecule-pagination>
+        </footer>
+    </ng-container>
+
+    <ng-container *ngIf="isLoggedIn && authService.hasAnyRole(['ADMINISTRATOR']) && isModalFormOpen">
+        <organism-modal-form (formSubmit)="onFormSubmit($event)" (closeModal)="isModalFormOpen = false" [formData]="formData"></organism-modal-form>
+    </ng-container>
+
+    <ng-container *ngIf="isLoggedIn && authService.hasAnyRole(['ADMINISTRATOR']) && isModalStatusOpen">
+        <molecule-status-modal (closeModal)="onCloseStatusModal()" [status]="this.status"></molecule-status-modal>
+    </ng-container>
+
+    <molecule-auth-modal></molecule-auth-modal>
+</template-home>

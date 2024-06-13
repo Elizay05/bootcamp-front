@@ -1,0 +1,46 @@
+@import 'src/assets/styles/variables.scss';
+
+.button {
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    line-height: 19.2px;
+    text-align: center;
+    background-color: $primary-color;
+    font-size: $font-size-small;
+    color: $secondary-color;
+    border: none;
+    &__primary{
+        width: auto;
+        height: 40px;
+        padding: 16px 24px;
+        border-radius: 50px;
+        &:hover{
+            background-color: $secondary-color;
+            border: 1px solid $primary-color;
+            color: $primary-color;
+        }
+    }
+    &__small{
+        width: 32px;
+        height: 32px;
+        border-radius: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &:hover{
+            color: $primary-color;
+            background-color: $secondary-color;
+            border: 1px solid $primary-color;
+            stroke: $primary-color;
+        }
+        &:disabled{
+            background-color: gray;
+            border: 1px solid gray;
+            pointer-events: none;
+        }
+    }
+}

@@ -1,0 +1,26 @@
+.header{
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+    height: 150px;
+    margin-left: 25%;
+    z-index: 1000;
+    &__navbar{
+        position: fixed;
+        width: 75%;
+        z-index: 1;
+    }
+    &__routes{
+        width: 25%;
+        position:absolute;
+        z-index: 1;
+        margin-top: 110px;
+        margin-left: 4%;
+    }
+}
+.pages{
+    display: flex;
+    flex-direction: column;
+    margin: 0% 0% 7% 29%;
+    height: 100%;
+}

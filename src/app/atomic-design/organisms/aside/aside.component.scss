@@ -1,0 +1,24 @@
+@import 'src/assets/styles/variables.scss';
+
+.aside{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 25%;
+    position: fixed;
+    height: 100%;
+    padding: 1% 0%;
+    background-color: $tertiary-color;
+    gap: 10%;
+    &__logo{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 55%;     
+        height: 2.875rem;   
+    }
+    &__options{
+        width: 100%;
+    }
+}
